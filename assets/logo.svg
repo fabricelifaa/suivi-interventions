@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Définitions -->
+  <defs>
+    <!-- Gradient principal -->
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradient secondaire -->
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#45a049;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Ombre -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Cercle de fond -->
+  <circle cx="100" cy="100" r="90" fill="url(#mainGradient)" opacity="0.1"/>
+  
+  <!-- Presse-papiers principal -->
+  <g filter="url(#shadow)">
+    <!-- Clip du presse-papiers -->
+    <rect x="60" y="35" width="80" height="15" rx="7.5" fill="url(#mainGradient)"/>
+    
+    <!-- Corps du presse-papiers -->
+    <rect x="50" y="40" width="100" height="130" rx="8" fill="white" stroke="url(#mainGradient)" stroke-width="4"/>
+    
+    <!-- Lignes de texte -->
+    <line x1="70" y1="70" x2="130" y2="70" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
+    <line x1="70" y1="85" x2="120" y2="85" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
+    <line x1="70" y1="100" x2="130" y2="100" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Case à cocher 1 (cochée) -->
+    <rect x="70" y="115" width="15" height="15" rx="3" fill="url(#secondaryGradient)"/>
+    <polyline points="73,122 77,126 82,118" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="90" y1="122" x2="130" y2="122" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Case à cocher 2 (vide) -->
+    <rect x="70" y="140" width="15" height="15" rx="3" fill="none" stroke="#E0E0E0" stroke-width="2"/>
+    <line x1="90" y1="147" x2="120" y2="147" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Badge de notification -->
+  <g filter="url(#shadow)">
+    <circle cx="140" cy="60" r="20" fill="url(#secondaryGradient)"/>
+    <text x="140" y="68" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">✓</text>
+  </g>
+  
+  <!-- Icône d'engrenage (coin inférieur droit) -->
+  <g transform="translate(145, 145)" opacity="0.8">
+    <circle cx="0" cy="0" r="15" fill="url(#mainGradient)"/>
+    <circle cx="0" cy="0" r="8" fill="white"/>
+    <!-- Dents de l'engrenage -->
+    <rect x="-2" y="-18" width="4" height="6" rx="1" fill="url(#mainGradient)"/>
+    <rect x="-2" y="12" width="4" height="6" rx="1" fill="url(#mainGradient)"/>
+    <rect x="12" y="-2" width="6" height="4" rx="1" fill="url(#mainGradient)"/>
+    <rect x="-18" y="-2" width="6" height="4" rx="1" fill="url(#mainGradient)"/>
+  </g>
+  
+  <!-- Texte du logo (optionnel) -->
+  <text x="100" y="195" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#mainGradient)" text-anchor="middle">SUIVI</text>
+</svg>

@@ -1,0 +1,347 @@
+/**
+ * Styles pour l'administration du plugin Suivi des Interventions
+ * 
+ * @package SuiviInterventions
+ * @since 1.0.0
+ */
+
+/* === BARRES DE PROGRESSION === */
+.quota-progress-container {
+    width: 180px;
+    min-width: 150px;
+}
+
+.quota-progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.quota-progress-fill {
+    height: 100%;
+    transition: width 0.4s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.quota-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255,255,255,.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255,255,255,.2) 50%,
+        rgba(255,255,255,.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 30px 30px;
+    animation: move 2s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 30px 30px;
+    }
+}
+
+/* Couleurs des barres de progression */
+.quota-green {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.quota-blue {
+    background: linear-gradient(135deg, #2196F3 0%, #1976d2 100%);
+}
+
+.quota-red {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+}
+
+.quota-text {
+    font-size: 11px;
+    text-align: center;
+    color: #666;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+/* === STATUTS DES INTERVENTIONS === */
+.status-completed {
+    color: #46b450;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-pending {
+    color: #ffb900;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.intervention-date {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.intervention-date-empty,
+.no-projet,
+.no-quota {
+    color: #999;
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* === COLONNES PERSONNALISÉES === */
+.wp-list-table .column-intervention_date {
+    width: 120px;
+}
+
+.wp-list-table .column-projet {
+    width: 140px;
+}
+
+.wp-list-table .column-quota_progress {
+    width: 200px;
+}
+
+.wp-list-table .column-status {
+    width: 100px;
+}
+
+/* === FILTRES === */
+.tablenav .actions select,
+.tablenav .actions input[type="date"] {
+    margin-right: 5px;
+    min-width: 140px;
+}
+
+.tablenav .actions input[type="date"] {
+    padding: 3px 8px;
+    border: 1px solid #7e8993;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+/* === BANNIÈRE CLIENT === */
+.client-info-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    margin: 15px 0 25px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.client-info-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-size: 20px 20px;
+}
+
+.client-info-banner h3 {
+    margin: 0 0 12px 0;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.client-info-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.client-projets-list {
+    background: rgba(255,255,255,0.25);
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* === FORMULAIRES === */
+.form-table th {
+    font-weight: 600;
+    color: #23282d;
+    padding-left: 0;
+}
+
+.form-table .description {
+    font-size: 13px;
+    color: #666;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.form-table input[type="date"],
+.form-table input[type="number"],
+.form-table input[type="url"],
+.form-table input[type="tel"] {
+    border: 1px solid #7e8993;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-table input[type="date"]:focus,
+.form-table input[type="number"]:focus,
+.form-table input[type="url"]:focus,
+.form-table input[type="tel"]:focus {
+    border-color: #0073aa;
+    box-shadow: 0 0 0 1px #0073aa;
+    outline: none;
+}
+
+/* === NOTICES === */
+.notice.si-notice {
+    border-left-width: 4px;
+    padding: 15px 20px;
+}
+
+.notice.si-notice.notice-warning {
+    border-left-color: #ffb900;
+    background: #fff8e1;
+}
+
+.notice.si-notice.notice-info {
+    border-left-color: #00a0d2;
+    background: #e1f5fe;
+}
+
+/* === TAXONOMIE PROJET === */
+.project-meta-section {
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.project-meta-section h4 {
+    margin: 0 0 10px 0;
+    color: #23282d;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* === TABLEAUX RESPONSIFS === */
+@media screen and (max-width: 782px) {
+    .client-info-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .quota-progress-container {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .wp-list-table .column-quota_progress {
+        display: none;
+    }
+    
+    .tablenav .actions select,
+    .tablenav .actions input[type="date"] {
+        min-width: auto;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* === ÉTATS DE CHARGEMENT === */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === ACCESSIBILITÉ === */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* === IMPRESSION === */
+@media print {
+    .client-info-banner,
+    .tablenav,
+    .row-actions,
+    .page-title-action {
+        display: none !important;
+    }
+    
+    .quota-progress-bar {
+        border: 2px solid #333;
+        background: white !important;
+    }
+    
+    .quota-progress-fill {
+        background: #333 !important;
+    }
+}
+
+/* === THÈME SOMBRE (si activé) === */
+@media (prefers-color-scheme: dark) {
+    .quota-progress-bar {
+        background-color: #2a2a2a;
+        border-color: #444;
+    }
+    
+    .quota-text {
+        color: #ccc;
+    }
+    
+    .client-info-banner {
+        background: linear-gradient(135deg, #2a2a3e 0%, #3a3a5c 100%);
+    }
+}
