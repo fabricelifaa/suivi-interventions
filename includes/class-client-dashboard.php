@@ -32,7 +32,7 @@ class SI_Client_Dashboard {
             'read',
             'client-interventions',
             array($this, 'render_interventions_page'),
-            SUIVI_INTERVENTIONS_PLUGIN_URL . 'assets/logo-badge.svg',
+            'dashicons-clipboard',
             3
         );
     }
@@ -91,7 +91,7 @@ class SI_Client_Dashboard {
                     <p><?php _e('Bienvenue sur votre tableau de bord. Vous pouvez consulter toutes les interventions réalisées sur vos projets.', 'suivi-interventions'); ?></p>
                 </div>
                 <div class="welcome-badge">
-                    <span class="badge-icon"><img src="' . SUIVI_INTERVENTIONS_PLUGIN_URL . 'assets/logo.svg" alt="Suivi Interventions" style="width: 100px; margin-bottom: 20px;"></span>
+                    <span class="badge-icon"><img src="<?php echo SUIVI_INTERVENTIONS_PLUGIN_URL . 'assets/logo.svg'; ?>" alt="Suivi Interventions" style="width: 100px; margin-bottom: 20px;"></span>
                     <span class="badge-text"><?php _e('Mode Consultation', 'suivi-interventions'); ?></span>
                 </div>
             </div>
