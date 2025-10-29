@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Suivi des Interventions
- * Plugin URI: https://blackspiderdigital.com
+ * Plugin URI: https://github.com/fabricelifaa/suivi-interventions/releases
  * Description: 📋 Plugin professionnel de suivi des interventions et mises à jour
  * Version: 1.1.0
  * Author: FAB2DEV
