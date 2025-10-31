@@ -28,8 +28,8 @@ class SI_Client_Management {
     public function add_management_page() {
         add_submenu_page(
             'edit.php?post_type=intervention',
-            __('Gestion des Clients', 'suivi-interventions'),
-            __('Clients & Projets', 'suivi-interventions'),
+            esc_attr__('Gestion des Clients', 'suivi-interventions'),
+            esc_attr__('Clients & Projets', 'suivi-interventions'),
             'manage_options',
             'si-client-management',
             array($this, 'render_management_page')
@@ -57,9 +57,9 @@ class SI_Client_Management {
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('si_client_management'),
             'strings' => array(
-                'confirm_delete' => __('Êtes-vous sûr de vouloir supprimer cette liaison ?', 'suivi-interventions'),
-                'success_update' => __('Liaisons mises à jour avec succès', 'suivi-interventions'),
-                'error_update' => __('Erreur lors de la mise à jour', 'suivi-interventions')
+                'confirm_delete' => esc_attr_e('Êtes-vous sûr de vouloir supprimer cette liaison ?', 'suivi-interventions'),
+                'success_update' => esc_attr_e('Liaisons mises à jour avec succès', 'suivi-interventions'),
+                'error_update' => esc_attr_e('Erreur lors de la mise à jour', 'suivi-interventions')
             )
         ));
     }
@@ -79,35 +79,35 @@ class SI_Client_Management {
         $unassigned_clients = $this->get_unassigned_clients();
         ?>
         <div class="wrap">
-            <h1><?php _e('Gestion des Clients et Projets', 'suivi-interventions'); ?></h1>
+            <h1><?php esc_attr_e('Gestion des Clients et Projets', 'suivi-interventions'); ?></h1>
             
             <!-- Statistiques rapides -->
             <div class="si-stats-cards">
                 <div class="stats-card">
                     <h3><?php echo count($clients); ?></h3>
-                    <p><?php _e('Clients avec projets', 'suivi-interventions'); ?></p>
+                    <p><?php esc_attr_e('Clients avec projets', 'suivi-interventions'); ?></p>
                 </div>
                 <div class="stats-card">
                     <h3><?php echo count($projects); ?></h3>
-                    <p><?php _e('Projets total', 'suivi-interventions'); ?></p>
+                    <p><?php esc_attr_e('Projets total', 'suivi-interventions'); ?></p>
                 </div>
                 <div class="stats-card">
                     <h3><?php echo count($unassigned_clients); ?></h3>
-                    <p><?php _e('Clients sans projet', 'suivi-interventions'); ?></p>
+                    <p><?php esc_attr_e('Clients sans projet', 'suivi-interventions'); ?></p>
                 </div>
             </div>
             
             <!-- Clients sans projets -->
             <?php if (!empty($unassigned_clients)) : ?>
             <div class="si-unassigned-section">
-                <h2><?php _e('⚠ Clients sans projets assignés', 'suivi-interventions'); ?></h2>
+                <h2><?php esc_attr_e('⚠ Clients sans projets assignés', 'suivi-interventions'); ?></h2>
                 <div class="unassigned-clients">
                     <?php foreach ($unassigned_clients as $client) : ?>
                         <div class="unassigned-client">
                             <strong><?php echo esc_html($client->display_name); ?></strong>
                             <span>(<?php echo esc_html($client->user_email); ?>)</span>
                             <a href="<?php echo admin_url('user-edit.php?user_id=' . $client->ID); ?>" class="button button-small">
-                                <?php _e('Assigner des projets', 'suivi-interventions'); ?>
+                                <?php esc_attr_e('Assigner des projets', 'suivi-interventions'); ?>
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -116,7 +116,7 @@ class SI_Client_Management {
             <?php endif; ?>
             
             <!-- Liaisons existantes -->
-            <h2><?php _e('Liaisons Client ↔ Projet existantes', 'suivi-interventions'); ?></h2>
+            <h2><?php esc_attr_e('Liaisons Client ↔ Projet existantes', 'suivi-interventions'); ?></h2>
             
             <div class="si-client-projects-grid">
                 <?php foreach ($clients as $client_data) : ?>
@@ -126,13 +126,13 @@ class SI_Client_Management {
                             <span class="client-email"><?php echo esc_html($client_data['client']->user_email); ?></span>
                             <div class="client-actions">
                                 <a href="<?php echo admin_url('user-edit.php?user_id=' . $client_data['client']->ID); ?>" class="button button-small">
-                                    <?php _e('Modifier', 'suivi-interventions'); ?>
+                                    <?php esc_attr_e('Modifier', 'suivi-interventions'); ?>
                                 </a>
                             </div>
                         </div>
                         
                         <div class="client-projects">
-                            <h4><?php _e('Projets assignés:', 'suivi-interventions'); ?></h4>
+                            <h4><?php esc_attr_e('Projets assignés:', 'suivi-interventions'); ?></h4>
                             <?php if (!empty($client_data['projects'])) : ?>
                                 <ul class="project-list">
                                     <?php foreach ($client_data['projects'] as $project) : ?>
@@ -153,7 +153,7 @@ class SI_Client_Management {
                                     <?php endforeach; ?>
                                 </ul>
                             <?php else : ?>
-                                <p class="no-projects"><?php _e('Aucun projet assigné', 'suivi-interventions'); ?></p>
+                                <p class="no-projects"><?php esc_attr_e('Aucun projet assigné', 'suivi-interventions'); ?></p>
                             <?php endif; ?>
                             
                             <!-- Statistiques du client -->
@@ -163,11 +163,11 @@ class SI_Client_Management {
                                 ?>
                                 <div class="stat-item">
                                     <span class="stat-number"><?php echo $stats['total_interventions']; ?></span>
-                                    <span class="stat-label"><?php _e('Interventions visibles', 'suivi-interventions'); ?></span>
+                                    <span class="stat-label"><?php esc_attr_e('Interventions visibles', 'suivi-interventions'); ?></span>
                                 </div>
                                 <div class="stat-item">
                                     <span class="stat-number"><?php echo $stats['interventions_terminees']; ?></span>
-                                    <span class="stat-label"><?php _e('Terminées', 'suivi-interventions'); ?></span>
+                                    <span class="stat-label"><?php esc_attr_e('Terminées', 'suivi-interventions'); ?></span>
                                 </div>
                             </div>
                         </div>
@@ -177,17 +177,17 @@ class SI_Client_Management {
             
             <!-- Assignation en lot -->
             <div class="si-bulk-assignment">
-                <h2><?php _e('Assignation rapide', 'suivi-interventions'); ?></h2>
+                <h2><?php esc_attr_e('Assignation rapide', 'suivi-interventions'); ?></h2>
                 <form method="post" id="bulk-assignment-form">
                     <?php wp_nonce_field('si_bulk_assign'); ?>
                     <input type="hidden" name="action" value="bulk_assign">
                     
                     <table class="form-table">
                         <tr>
-                            <th scope="row"><?php _e('Sélectionner un projet', 'suivi-interventions'); ?></th>
+                            <th scope="row"><?php esc_attr_e('Sélectionner un projet', 'suivi-interventions'); ?></th>
                             <td>
                                 <select name="bulk_project" id="bulk_project" required>
-                                    <option value=""><?php _e('-- Choisir un projet --', 'suivi-interventions'); ?></option>
+                                    <option value=""><?php esc_attr_e('-- Choisir un projet --', 'suivi-interventions'); ?></option>
                                     <?php foreach ($projects as $project) : ?>
                                         <option value="<?php echo $project->term_id; ?>"><?php echo esc_html($project->name); ?></option>
                                     <?php endforeach; ?>
@@ -195,7 +195,7 @@ class SI_Client_Management {
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Sélectionner des clients', 'suivi-interventions'); ?></th>
+                            <th scope="row"><?php esc_attr_e('Sélectionner des clients', 'suivi-interventions'); ?></th>
                             <td>
                                 <div class="client-checkboxes">
                                     <?php
@@ -208,12 +208,12 @@ class SI_Client_Management {
                                         </label>
                                     <?php endforeach; ?>
                                 </div>
-                                <p class="description"><?php _e('Le projet sera ajouté aux clients sélectionnés (sans supprimer leurs projets existants)', 'suivi-interventions'); ?></p>
+                                <p class="description"><?php esc_attr_e('Le projet sera ajouté aux clients sélectionnés (sans supprimer leurs projets existants)', 'suivi-interventions'); ?></p>
                             </td>
                         </tr>
                     </table>
                     
-                    <?php submit_button(__('Assigner le projet aux clients sélectionnés', 'suivi-interventions'), 'primary', 'submit', false); ?>
+                    <?php submit_button(esc_attr_e('Assigner le projet aux clients sélectionnés', 'suivi-interventions'), 'primary', 'submit', false); ?>
                 </form>
             </div>
         </div>

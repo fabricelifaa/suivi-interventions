@@ -8,6 +8,7 @@
  * Author URI: https://fab2dev.com
  * Text Domain: suivi-interventions
  * Domain Path: /languages
+ * License: GPLv2
  */
 
 // Empêcher l'accès direct

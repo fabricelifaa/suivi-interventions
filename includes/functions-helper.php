@@ -68,13 +68,20 @@ function si_get_global_stats() {
     $total_interventions = wp_count_posts('intervention')->publish;
     
     // Compter les interventions terminées
-    $completed_interventions = $wpdb->get_var(
-        "SELECT COUNT(*) FROM {$wpdb->postmeta} pm
-         INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-         WHERE pm.meta_key = '_intervention_terminee' 
-         AND pm.meta_value = '1' 
-         AND p.post_type = 'intervention' 
-         AND p.post_status = 'publish'"
+    // Requête sécurisée : utiliser $wpdb->prepare et COUNT(DISTINCT p.ID)
+    $completed_interventions = (int) $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+             WHERE pm.meta_key = %s
+             AND pm.meta_value = %s
+             AND p.post_type = %s
+             AND p.post_status = %s",
+             '_intervention_terminee',
+             '1',
+             'intervention',
+             'publish'
+        )
     );
     
     // Compter les projets
@@ -85,7 +92,7 @@ function si_get_global_stats() {
     
     // Projet le plus actif
     $most_active_projet = $wpdb->get_row(
-        "SELECT t.term_id, t.name, COUNT(tr.object_id) as intervention_count
+        $wpdb->prepare("SELECT t.term_id, t.name, COUNT(tr.object_id) as intervention_count
          FROM {$wpdb->terms} t
          INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
          INNER JOIN {$wpdb->term_relationships} tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
@@ -96,7 +103,7 @@ function si_get_global_stats() {
          GROUP BY t.term_id, t.name
          ORDER BY intervention_count DESC
          LIMIT 1"
-    );
+    ));
     
     return array(
         'total_interventions' => (int) $total_interventions,
@@ -389,7 +396,7 @@ function si_check_wordpress_compatibility() {
     
     if (version_compare($wp_version, $required_wp_version, '<')) {
         return sprintf(
-            __('Le plugin Suivi des Interventions nécessite WordPress %s ou supérieur. Version actuelle: %s', 'suivi-interventions'),
+            esc_attr_e('Le plugin Suivi des Interventions nécessite WordPress %1s ou supérieur. Version actuelle: %2s', 'suivi-interventions'),
             $required_wp_version,
             $wp_version
         );

@@ -61,10 +61,10 @@ class SI_Admin {
         $new_columns = array();
         $new_columns['cb'] = $columns['cb'];
         $new_columns['title'] = $columns['title'];
-        $new_columns['intervention_date'] = __('Date d\'intervention', 'suivi-interventions');
-        $new_columns['projet'] = __('Projet', 'suivi-interventions');
-        $new_columns['quota_progress'] = __('Progression Quota', 'suivi-interventions');
-        $new_columns['status'] = __('Statut', 'suivi-interventions');
+        $new_columns['intervention_date'] = _e('Date d\'intervention', 'suivi-interventions');
+        $new_columns['projet'] = _e('Projet', 'suivi-interventions');
+        $new_columns['quota_progress'] = _e('Progression Quota', 'suivi-interventions');
+        $new_columns['status'] = _e('Statut', 'suivi-interventions');
         $new_columns['date'] = $columns['date'];
         
         return $new_columns;
@@ -163,8 +163,8 @@ class SI_Admin {
         echo '<div class="quota-progress-fill ' . esc_attr($color_class) . '" style="width: ' . min(100, $percentage) . '%"></div>';
         echo '</div>';
         echo '<div class="quota-text">';
-        printf(
-            __('%d/%d restant (%.1f%%)', 'suivi-interventions'),
+        /* translators: %1$d: remaining, %2$d: quota, %3$.1f: percentage with one decimal */ printf(
+            __('%1$d/%2$d restant (%3$.1f%%)', 'suivi-interventions'),
             $progression['remaining'],
             $progression['quota'],
             $percentage

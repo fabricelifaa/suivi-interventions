@@ -23,48 +23,48 @@ if ($is_edit_mode) {
     ?>
     <tr class="form-field">
         <th scope="row" valign="top">
-            <label for="quota"><?php _e('Quota d\'interventions', 'suivi-interventions'); ?></label>
+            <label for="quota"><?php esc_attr_e('Quota d\'interventions', 'suivi-interventions'); ?></label>
         </th>
         <td>
             <input type="number" name="quota" id="quota" value="<?php echo esc_attr($quota); ?>" min="0" class="regular-text" />
-            <p class="description"><?php _e('Nombre maximum d\'interventions autorisées pour ce projet.', 'suivi-interventions'); ?></p>
+            <p class="description"><?php esc_attr_e('Nombre maximum d\'interventions autorisées pour ce projet.', 'suivi-interventions'); ?></p>
         </td>
     </tr>
     
     <tr class="form-field">
         <th scope="row" valign="top">
-            <label for="date_expiration"><?php _e('Date d\'expiration du quota', 'suivi-interventions'); ?></label>
+            <label for="date_expiration"><?php esc_attr_e('Date d\'expiration du quota', 'suivi-interventions'); ?></label>
         </th>
         <td>
             <input type="date" name="date_expiration" id="date_expiration" value="<?php echo esc_attr($date_expiration); ?>" class="regular-text" />
-            <p class="description"><?php _e('Date à partir de laquelle le quota sera réinitialisé (optionnel).', 'suivi-interventions'); ?></p>
+            <p class="description"><?php esc_attr_e('Date à partir de laquelle le quota sera réinitialisé (optionnel).', 'suivi-interventions'); ?></p>
         </td>
     </tr>
     
     <tr class="form-field">
         <th scope="row" valign="top">
-            <label for="projet_url"><?php _e('URL du projet', 'suivi-interventions'); ?></label>
+            <label for="projet_url"><?php esc_html_e('URL du projet', 'suivi-interventions'); ?></label>
         </th>
         <td>
             <input type="url" name="projet_url" id="projet_url" value="<?php echo esc_attr($projet_url); ?>" class="regular-text" />
-            <p class="description"><?php _e('URL du site web ou du projet (optionnel).', 'suivi-interventions'); ?></p>
+            <p class="description"><?php esc_attr_e('URL du site web ou du projet (optionnel).', 'suivi-interventions'); ?></p>
         </td>
     </tr>
     
     <tr class="form-field">
         <th scope="row" valign="top">
-            <label for="client_info"><?php _e('Informations client', 'suivi-interventions'); ?></label>
+            <label for="client_info"><?php esc_html_e('Informations client', 'suivi-interventions'); ?></label>
         </th>
         <td>
             <textarea name="client_info" id="client_info" rows="4" cols="50" class="large-text"><?php echo esc_textarea($client_info); ?></textarea>
-            <p class="description"><?php _e('Informations sur le client : contact, notes spéciales, etc. (optionnel).', 'suivi-interventions'); ?></p>
+            <p class="description"><?php esc_attr_e('Informations sur le client : contact, notes spéciales, etc. (optionnel).', 'suivi-interventions'); ?></p>
         </td>
     </tr>
     
     <?php if ($quota): ?>
     <tr class="form-field">
         <th scope="row" valign="top">
-            <?php _e('Progression actuelle', 'suivi-interventions'); ?>
+            <?php esc_html_e('Progression actuelle', 'suivi-interventions'); ?>
         </th>
         <td>
             <?php
@@ -79,12 +79,13 @@ if ($is_edit_mode) {
             ?>
             <div class="quota-progress-display">
                 <div class="quota-progress-bar-large">
-                    <div class="quota-progress-fill-large <?php echo $color_class; ?>" style="width: <?php echo min(100, $percentage); ?>%"></div>
+                    <div class="quota-progress-fill-large <?php esc_attr_e($color_class); ?>" style="width: <?php echo min(100, $percentage); ?>%"></div>
                 </div>
                 <p class="quota-stats">
-                    <strong><?php printf(__('%d interventions terminées sur %d autorisées', 'suivi-interventions'), $progression['used'], $progression['quota']); ?></strong><br>
+                    <strong><?php /* translators: %1$d: used, %2$d: quota */ printf(_e('%1$d interventions terminées sur %2$d autorisées', 'suivi-interventions'), $progression['used'], $progression['quota']); ?></strong><br>
                     <span class="quota-details">
-                        <?php printf(__('Restant : %d | Pourcentage utilisé : %.1f%%', 'suivi-interventions'), $progression['remaining'], $percentage); ?>
+                        
+                        <?php /* translators: %1$d: remaining, %2$.1f: percentage  */ printf(__('Restant : %1$d | Pourcentage utilisé : %2$.1f%%', 'suivi-interventions'), $progression['remaining'], $percentage); ?>
                     </span>
                 </p>
             </div>
@@ -127,27 +128,27 @@ if ($is_edit_mode) {
     // Mode ajout - utiliser les div
     ?>
     <div class="form-field">
-        <label for="quota"><?php _e('Quota d\'interventions', 'suivi-interventions'); ?></label>
+        <label for="quota"><?php esc_attr_e('Quota d\'interventions', 'suivi-interventions'); ?></label>
         <input type="number" name="quota" id="quota" min="0" class="regular-text" />
-        <p><?php _e('Nombre maximum d\'interventions autorisées pour ce projet.', 'suivi-interventions'); ?></p>
+        <p><?php esc_attr_e('Nombre maximum d\'interventions autorisées pour ce projet.', 'suivi-interventions'); ?></p>
     </div>
     
     <div class="form-field">
-        <label for="date_expiration"><?php _e('Date d\'expiration du quota', 'suivi-interventions'); ?></label>
+        <label for="date_expiration"><?php esc_attr_e('Date d\'expiration du quota', 'suivi-interventions'); ?></label>
         <input type="date" name="date_expiration" id="date_expiration" class="regular-text" />
-        <p><?php _e('Date à partir de laquelle le quota sera réinitialisé (optionnel).', 'suivi-interventions'); ?></p>
+        <p><?php esc_attr_e('Date à partir de laquelle le quota sera réinitialisé (optionnel).', 'suivi-interventions'); ?></p>
     </div>
     
     <div class="form-field">
-        <label for="projet_url"><?php _e('URL du projet', 'suivi-interventions'); ?></label>
+        <label for="projet_url"><?php esc_attr_e('URL du projet', 'suivi-interventions'); ?></label>
         <input type="url" name="projet_url" id="projet_url" class="regular-text" placeholder="https://" />
-        <p><?php _e('URL du site web ou du projet (optionnel).', 'suivi-interventions'); ?></p>
+        <p><?php esc_attr_e('URL du site web ou du projet (optionnel).', 'suivi-interventions'); ?></p>
     </div>
     
     <div class="form-field">
-        <label for="client_info"><?php _e('Informations client', 'suivi-interventions'); ?></label>
+        <label for="client_info"><?php esc_attr_e('Informations client', 'suivi-interventions'); ?></label>
         <textarea name="client_info" id="client_info" rows="4" cols="50"></textarea>
-        <p><?php _e('Informations sur le client : contact, notes spéciales, etc. (optionnel).', 'suivi-interventions'); ?></p>
+        <p><?php esc_attr_e('Informations sur le client : contact, notes spéciales, etc. (optionnel).', 'suivi-interventions'); ?></p>
     </div>
     <?php
 }

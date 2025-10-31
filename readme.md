@@ -1,4 +1,4 @@
-# Plugin WordPress - Suivi des Interventions
+# Suivi des Interventions
 
 Plugin professionnel de suivi des mises à jour et interventions sur les sites web.
 

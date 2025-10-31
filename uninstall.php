@@ -32,14 +32,21 @@ function suivi_interventions_uninstall() {
     
     // Supprimer chaque intervention et ses métadonnées
     foreach ($interventions as $intervention_id) {
-        // Supprimer toutes les métadonnées de ce post
+        // Sécuriser l'ID et vérifier avant suppression
+        $intervention_id = (int) $intervention_id;
+        if ($intervention_id <= 0) {
+            // ID invalide : ignorer
+            continue;
+        }
+
+        // Supprimer toutes les métadonnées de ce post (format sécurisé)
         $wpdb->delete(
             $wpdb->postmeta,
             array('post_id' => $intervention_id),
             array('%d')
         );
-        
-        // Supprimer le post lui-même
+
+        // Supprimer le post lui-même (force true pour suppression définitive)
         wp_delete_post($intervention_id, true);
     }
     
@@ -67,11 +74,11 @@ function suivi_interventions_uninstall() {
     }
     
     // Supprimer les relations terme-post dans wp_term_relationships
-    $wpdb->query("
+    $wpdb->query($wpdb->prepare("
         DELETE tr FROM {$wpdb->term_relationships} tr
         INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
         WHERE tt.taxonomy = 'projet'
-    ");
+    "));
     
     // Supprimer les entrées dans wp_term_taxonomy
     $wpdb->delete(
@@ -180,52 +187,52 @@ function suivi_interventions_uninstall() {
     // === 7. NETTOYER LES MÉTADONNÉES ORPHELINES ===
     
     // Supprimer les meta de posts orphelins
-    $wpdb->query("
+    $wpdb->query($wpdb->prepare("
         DELETE pm FROM {$wpdb->postmeta} pm
         LEFT JOIN {$wpdb->posts} p ON pm.post_id = p.ID
         WHERE p.ID IS NULL
-    ");
+    "));
     
     // Supprimer les meta de termes orphelins  
-    $wpdb->query("
+    $wpdb->query($wpdb->prepare("
         DELETE tm FROM {$wpdb->termmeta} tm
         LEFT JOIN {$wpdb->terms} t ON tm.term_id = t.term_id
         WHERE t.term_id IS NULL
-    ");
+    "));
     
     // Supprimer les meta d'utilisateurs orphelins
-    $wpdb->query("
+    $wpdb->query(("
         DELETE um FROM {$wpdb->usermeta} um
         LEFT JOIN {$wpdb->users} u ON um.user_id = u.ID
         WHERE u.ID IS NULL
-    ");
+    "));
     
     // === 8. NETTOYER LES TABLES DE RELATIONS ===
     
     // Supprimer les relations terme-post orphelines
-    $wpdb->query("
+    $wpdb->query($wpdb->prepare("
         DELETE tr FROM {$wpdb->term_relationships} tr
         LEFT JOIN {$wpdb->posts} p ON tr.object_id = p.ID
         WHERE p.ID IS NULL
-    ");
+    "));
     
     // Supprimer les taxonomies orphelines
-    $wpdb->query("
+    $wpdb->query($wpdb->prepare("
         DELETE tt FROM {$wpdb->term_taxonomy} tt
         LEFT JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
         WHERE t.term_id IS NULL
-    ");
+    "));
     
     // === 9. NETTOYER LE CACHE ET LES TRANSIENTS ===
     
     // Supprimer les transients du plugin
-    $wpdb->query("
+    $wpdb->query($wpdb->prepare("
         DELETE FROM {$wpdb->options} 
         WHERE option_name LIKE '_transient_si_%' 
         OR option_name LIKE '_transient_timeout_si_%'
         OR option_name LIKE '_site_transient_si_%'
         OR option_name LIKE '_site_transient_timeout_si_%'
-    ");
+    "));
     
     // Vider les caches d'objet si disponibles
     if (function_exists('wp_cache_flush')) {
@@ -290,7 +297,7 @@ function suivi_interventions_uninstall() {
     );
     
     foreach ($tables_to_optimize as $table) {
-        $wpdb->query("OPTIMIZE TABLE {$table}");
+        $wpdb->query($wpdb->prepare("OPTIMIZE TABLE {$table}"));
     }
 }
 
@@ -356,32 +363,32 @@ function suivi_interventions_backup_data() {
     );
     
     // Sauvegarder les interventions
-    $interventions = $wpdb->get_results("
+    $interventions = $wpdb->get_results($wpdb->prepare("
         SELECT p.*, pm.meta_key, pm.meta_value 
         FROM {$wpdb->posts} p
         LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
         WHERE p.post_type = 'intervention'
-    ", ARRAY_A);
+    ", ARRAY_A));
     
     $backup_data['interventions'] = $interventions;
     
     // Sauvegarder les projets
-    $projets = $wpdb->get_results("
+    $projets = $wpdb->get_results($wpdb->prepare("
         SELECT t.*, tt.*, tm.meta_key, tm.meta_value
         FROM {$wpdb->terms} t
         INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
         LEFT JOIN {$wpdb->termmeta} tm ON t.term_id = tm.term_id
         WHERE tt.taxonomy = 'projet'
-    ", ARRAY_A);
+    ", ARRAY_A));
     
     $backup_data['projets'] = $projets;
     
     // Sauvegarder les associations clients
-    $client_data = $wpdb->get_results("
+    $client_data = $wpdb->get_results($wpdb->prepare("
         SELECT user_id, meta_key, meta_value
         FROM {$wpdb->usermeta}
         WHERE meta_key IN ('client_projets', 'client_company', 'client_contact_phone')
-    ", ARRAY_A);
+    ", ARRAY_A));
     
     $backup_data['client_associations'] = $client_data;
     

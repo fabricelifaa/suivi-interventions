@@ -289,22 +289,22 @@ class SI_Client_Restrictions {
         jQuery(document).ready(function($) {
             // Ajouter la bannière d'informations client
             var bannerHtml = '<div class="client-info-banner">' +
-                '<h3><?php _e("Tableau de bord Client", "suivi-interventions"); ?></h3>' +
+                '<h3><?php esc_attr_e("Tableau de bord Client", "suivi-interventions"); ?></h3>' +
                 '<div class="client-info-content">' +
                 '<div>' +
-                '<strong><?php _e("Vos projets autorisés :", "suivi-interventions"); ?></strong><br>' +
+                '<strong><?php esc_attr_e("Vos projets autorisés :", "suivi-interventions"); ?></strong><br>' +
                 '<span class="client-projets-list">';
             
             <?php if (!empty($projet_names)) : ?>
                 bannerHtml += '<?php echo implode(", ", $projet_names); ?>';
             <?php else : ?>
-                bannerHtml += '<?php _e("Aucun projet assigné", "suivi-interventions"); ?>';
+                bannerHtml += '<?php esc_attr_e("Aucun projet assigné", "suivi-interventions"); ?>';
             <?php endif; ?>
             
             bannerHtml += '</span>' +
                 '</div>' +
                 '<div>' +
-                '<small><?php _e("Mode lecture seule", "suivi-interventions"); ?></small>' +
+                '<small><?php esc_attr_e("Mode lecture seule", "suivi-interventions"); ?></small>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -527,8 +527,8 @@ class SI_Client_Restrictions {
             ?>
             <div class="notice notice-warning">
                 <p>
-                    <strong><?php _e('Attention :', 'suivi-interventions'); ?></strong>
-                    <?php _e('Aucun projet ne vous a été assigné. Contactez l\'administrateur pour accéder aux interventions.', 'suivi-interventions'); ?>
+                    <strong><?php esc_attr_e('Attention :', 'suivi-interventions'); ?></strong>
+                    <?php esc_attr_e('Aucun projet ne vous a été assigné. Contactez l\'administrateur pour accéder aux interventions.', 'suivi-interventions'); ?>
                 </p>
             </div>
             <?php

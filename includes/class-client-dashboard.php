@@ -87,7 +87,7 @@ class SI_Client_Dashboard {
             <!-- Bannière d'accueil -->
             <div class="client-welcome-banner">
                 <div class="welcome-content">
-                    <h2><?php printf(__('Bonjour, %s', 'suivi-interventions'), esc_html($user->display_name)); ?></h2>
+                    <h2><?php /* translators: %s: Nom de l'utilisateur */ printf(__('Bonjour, %s', 'suivi-interventions'), esc_html($user->display_name)); ?></h2>
                     <p><?php _e('Bienvenue sur votre tableau de bord. Vous pouvez consulter toutes les interventions réalisées sur vos projets.', 'suivi-interventions'); ?></p>
                 </div>
                 <div class="welcome-badge">
@@ -141,7 +141,7 @@ class SI_Client_Dashboard {
                             <div class="project-header">
                                 <h3><?php echo esc_html($projet['name']); ?></h3>
                                 <?php if ($projet['quota'] > 0) : ?>
-                                    <span class="project-quota"><?php printf(__('%d/%d', 'suivi-interventions'), $projet['progression']['used'], $projet['quota']); ?></span>
+                                    <span class="project-quota"><?php /* translators: %1$d: used, %2$d: quota */ printf(__('%1$d/%2$d', 'suivi-interventions'), $projet['progression']['used'], $projet['quota']); ?></span>
                                 <?php endif; ?>
                             </div>
                             
@@ -155,7 +155,7 @@ class SI_Client_Dashboard {
                                         <div class="progress-fill <?php echo $color_class; ?>" style="width: <?php echo min(100, $percentage); ?>%"></div>
                                     </div>
                                     <div class="progress-text">
-                                        <?php printf(__('%d interventions restantes (%.1f%% utilisé)', 'suivi-interventions'), $projet['progression']['remaining'], $percentage); ?>
+                                        <?php /* translators: %1$d: remaining, %2$.1f: percentage with one decimal */ printf(__('%1$d interventions restantes (%2$.1f%% utilisé)', 'suivi-interventions'), $projet['progression']['remaining'], $percentage); ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -163,7 +163,7 @@ class SI_Client_Dashboard {
                             <?php if ($projet['date_expiration']) : ?>
                                 <div class="project-expiration">
                                     <span class="expiration-icon">📅</span>
-                                    <?php printf(__('Expire le : %s', 'suivi-interventions'), date_i18n(get_option('date_format'), strtotime($projet['date_expiration']))); ?>
+                                    <?php /* translators: %1$s: expiration date */ printf(__('Expire le : %1$s', 'suivi-interventions'), date_i18n(get_option('date_format'), strtotime($projet['date_expiration']))); ?>
                                 </div>
                             <?php endif; ?>
                             
@@ -276,7 +276,7 @@ class SI_Client_Dashboard {
                             
                             <div class="intervention-footer">
                                 <span class="intervention-date-created">
-                                    <?php printf(__('Créée le %s', 'suivi-interventions'), date_i18n(get_option('date_format'), strtotime($intervention['date_created']))); ?>
+                                    <?php /* translators: %1$s: Date */ printf(__('Créée le %1$s', 'suivi-interventions'), date_i18n(get_option('date_format'), strtotime($intervention['date_created']))); ?>
                                 </span>
                             </div>
                         </div>

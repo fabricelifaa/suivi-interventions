@@ -26,8 +26,8 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
         <tr>
             <th scope="row">
                 <label for="date_intervention">
-                    <?php _e('Date d\'intervention', 'suivi-interventions'); ?>
-                    <span class="description"><?php _e('(requis)', 'suivi-interventions'); ?></span>
+                    <?php esc_html_e('Date d\'intervention', 'suivi-interventions'); ?>
+                    <span class="description"><?php esc_html_e('(requis)', 'suivi-interventions'); ?></span>
                 </label>
             </th>
             <td>
@@ -47,12 +47,12 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
         
         <tr>
             <th scope="row">
-                <?php _e('Statut de l\'intervention', 'suivi-interventions'); ?>
+                <?php esc_html_e('Statut de l\'intervention', 'suivi-interventions'); ?>
             </th>
             <td>
                 <fieldset>
                     <legend class="screen-reader-text">
-                        <span><?php _e('Statut de l\'intervention', 'suivi-interventions'); ?></span>
+                        <span><?php esc_html_e('Statut de l\'intervention', 'suivi-interventions'); ?></span>
                     </legend>
                     <label for="intervention_terminee">
                         <input 
@@ -62,10 +62,10 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                             value="1" 
                             <?php checked($intervention_terminee, '1'); ?>
                         />
-                        <?php _e('Intervention terminée', 'suivi-interventions'); ?>
+                        <?php esc_html_e('Intervention terminée', 'suivi-interventions'); ?>
                     </label>
                     <p class="description">
-                        <?php _e('Cochez cette case si l\'intervention est terminée. Cela comptera dans le quota du projet.', 'suivi-interventions'); ?>
+                        <?php esc_html_e('Cochez cette case si l\'intervention est terminée. Cela comptera dans le quota du projet.', 'suivi-interventions'); ?>
                     </p>
                 </fieldset>
             </td>
@@ -74,7 +74,7 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
         <tr>
             <th scope="row">
                 <label for="intervention_description">
-                    <?php _e('Description détaillée', 'suivi-interventions'); ?>
+                    <?php esc_html_e('Description détaillée', 'suivi-interventions'); ?>
                 </label>
             </th>
             <td>
@@ -91,7 +91,7 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                 );
                 ?>
                 <p class="description">
-                    <?php _e('Description détaillée de l\'intervention (optionnel).', 'suivi-interventions'); ?>
+                    <?php esc_html_e('Description détaillée de l\'intervention (optionnel).', 'suivi-interventions'); ?>
                 </p>
             </td>
         </tr>
@@ -105,7 +105,7 @@ jQuery(document).ready(function($) {
         var dateIntervention = $('#date_intervention').val();
         if (!dateIntervention) {
             e.preventDefault();
-            alert('<?php _e("La date d'intervention est requise.", "suivi-interventions"); ?>');
+            alert('<?php esc_html_e("La date d'intervention est requise.", "suivi-interventions"); ?>');
             $('#date_intervention').focus();
             return false;
         }
@@ -120,9 +120,9 @@ jQuery(document).ready(function($) {
         }
         
         if ($(this).is(':checked')) {
-            $status.html('<strong style="color: green;">✓ <?php _e("Cette intervention sera comptabilisée dans le quota", "suivi-interventions"); ?></strong>');
+            $status.html('<strong style="color: green;">✓ <?php esc_html_e("Cette intervention sera comptabilisée dans le quota", "suivi-interventions"); ?></strong>');
         } else {
-            $status.html('<strong style="color: orange;">⏳ <?php _e("Cette intervention ne sera pas comptabilisée dans le quota", "suivi-interventions"); ?></strong>');
+            $status.html('<strong style="color: orange;">⏳ <?php esc_html_e("Cette intervention ne sera pas comptabilisée dans le quota", "suivi-interventions"); ?></strong>');
         }
     }).trigger('change');
 });
