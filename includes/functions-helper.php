@@ -396,7 +396,7 @@ function si_check_wordpress_compatibility() {
     
     if (version_compare($wp_version, $required_wp_version, '<')) {
         return sprintf(
-            esc_attr_e('Le plugin Suivi des Interventions nécessite WordPress %1s ou supérieur. Version actuelle: %2s', 'suivi-interventions'),
+            esc_attr_e('Le plugin Suivi des Interventions nécessite WordPress %1s ou supérieur. Version actuelle: %2s', 'suivi-des-interventions'),
             $required_wp_version,
             $wp_version
         );

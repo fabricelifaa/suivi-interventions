@@ -27,8 +27,8 @@ class SI_Client_Dashboard {
     public function add_client_menu() {
         // Menu principal - Mes Interventions
         add_menu_page(
-            __('Mes Interventions', 'suivi-interventions'),
-            __('Mes Interventions', 'suivi-interventions'),
+            __('Mes Interventions', 'suivi-des-interventions'),
+            __('Mes Interventions', 'suivi-des-interventions'),
             'read',
             'client-interventions',
             array($this, 'render_interventions_page'),
@@ -82,17 +82,17 @@ class SI_Client_Dashboard {
         
         ?>
         <div class="wrap si-client-dashboard">
-            <h1><?php _e('Mes Interventions', 'suivi-interventions'); ?></h1>
+            <h1><?php _e('Mes Interventions', 'suivi-des-interventions'); ?></h1>
             
             <!-- Bannière d'accueil -->
             <div class="client-welcome-banner">
                 <div class="welcome-content">
-                    <h2><?php /* translators: %s: Nom de l'utilisateur */ printf(__('Bonjour, %s', 'suivi-interventions'), esc_html($user->display_name)); ?></h2>
-                    <p><?php _e('Bienvenue sur votre tableau de bord. Vous pouvez consulter toutes les interventions réalisées sur vos projets.', 'suivi-interventions'); ?></p>
+                    <h2><?php /* translators: %s: Nom de l'utilisateur */ printf(__('Bonjour, %s', 'suivi-des-interventions'), esc_html($user->display_name)); ?></h2>
+                    <p><?php _e('Bienvenue sur votre tableau de bord. Vous pouvez consulter toutes les interventions réalisées sur vos projets.', 'suivi-des-interventions'); ?></p>
                 </div>
                 <div class="welcome-badge">
                     <span class="badge-icon"><img src="<?php echo SUIVI_INTERVENTIONS_PLUGIN_URL . 'assets/logo.svg'; ?>" alt="Suivi Interventions" style="width: 100px; margin-bottom: 20px;"></span>
-                    <span class="badge-text"><?php _e('Mode Consultation', 'suivi-interventions'); ?></span>
+                    <span class="badge-text"><?php _e('Mode Consultation', 'suivi-des-interventions'); ?></span>
                 </div>
             </div>
             
@@ -102,7 +102,7 @@ class SI_Client_Dashboard {
                     <div class="stat-icon">📊</div>
                     <div class="stat-content">
                         <div class="stat-number"><?php echo $stats['projets_count']; ?></div>
-                        <div class="stat-label"><?php _e('Projet(s)', 'suivi-interventions'); ?></div>
+                        <div class="stat-label"><?php _e('Projet(s)', 'suivi-des-interventions'); ?></div>
                     </div>
                 </div>
                 
@@ -110,7 +110,7 @@ class SI_Client_Dashboard {
                     <div class="stat-icon">✓</div>
                     <div class="stat-content">
                         <div class="stat-number"><?php echo $stats['interventions_terminees']; ?></div>
-                        <div class="stat-label"><?php _e('Interventions terminées', 'suivi-interventions'); ?></div>
+                        <div class="stat-label"><?php _e('Interventions terminées', 'suivi-des-interventions'); ?></div>
                     </div>
                 </div>
                 
@@ -118,7 +118,7 @@ class SI_Client_Dashboard {
                     <div class="stat-icon">⏳</div>
                     <div class="stat-content">
                         <div class="stat-number"><?php echo $stats['interventions_en_cours']; ?></div>
-                        <div class="stat-label"><?php _e('En cours', 'suivi-interventions'); ?></div>
+                        <div class="stat-label"><?php _e('En cours', 'suivi-des-interventions'); ?></div>
                     </div>
                 </div>
                 
@@ -126,7 +126,7 @@ class SI_Client_Dashboard {
                     <div class="stat-icon">📝</div>
                     <div class="stat-content">
                         <div class="stat-number"><?php echo $stats['total_interventions']; ?></div>
-                        <div class="stat-label"><?php _e('Total interventions', 'suivi-interventions'); ?></div>
+                        <div class="stat-label"><?php _e('Total interventions', 'suivi-des-interventions'); ?></div>
                     </div>
                 </div>
             </div>
@@ -134,14 +134,14 @@ class SI_Client_Dashboard {
             <!-- Projets -->
             <?php if (!empty($projets_info)) : ?>
             <div class="projects-section">
-                <h2><?php _e('Vos Projets', 'suivi-interventions'); ?></h2>
+                <h2><?php _e('Vos Projets', 'suivi-des-interventions'); ?></h2>
                 <div class="projects-grid">
                     <?php foreach ($projets_info as $projet) : ?>
                         <div class="project-card">
                             <div class="project-header">
                                 <h3><?php echo esc_html($projet['name']); ?></h3>
                                 <?php if ($projet['quota'] > 0) : ?>
-                                    <span class="project-quota"><?php /* translators: %1$d: used, %2$d: quota */ printf(__('%1$d/%2$d', 'suivi-interventions'), $projet['progression']['used'], $projet['quota']); ?></span>
+                                    <span class="project-quota"><?php /* translators: %1$d: used, %2$d: quota */ printf(__('%1$d/%2$d', 'suivi-des-interventions'), $projet['progression']['used'], $projet['quota']); ?></span>
                                 <?php endif; ?>
                             </div>
                             
@@ -155,7 +155,7 @@ class SI_Client_Dashboard {
                                         <div class="progress-fill <?php echo $color_class; ?>" style="width: <?php echo min(100, $percentage); ?>%"></div>
                                     </div>
                                     <div class="progress-text">
-                                        <?php /* translators: %1$d: remaining, %2$.1f: percentage with one decimal */ printf(__('%1$d interventions restantes (%2$.1f%% utilisé)', 'suivi-interventions'), $projet['progression']['remaining'], $percentage); ?>
+                                        <?php /* translators: %1$d: remaining, %2$.1f: percentage with one decimal */ printf(__('%1$d interventions restantes (%2$.1f%% utilisé)', 'suivi-des-interventions'), $projet['progression']['remaining'], $percentage); ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -163,14 +163,14 @@ class SI_Client_Dashboard {
                             <?php if ($projet['date_expiration']) : ?>
                                 <div class="project-expiration">
                                     <span class="expiration-icon">📅</span>
-                                    <?php /* translators: %1$s: expiration date */ printf(__('Expire le : %1$s', 'suivi-interventions'), date_i18n(get_option('date_format'), strtotime($projet['date_expiration']))); ?>
+                                    <?php /* translators: %1$s: expiration date */ printf(__('Expire le : %1$s', 'suivi-des-interventions'), date_i18n(get_option('date_format'), strtotime($projet['date_expiration']))); ?>
                                 </div>
                             <?php endif; ?>
                             
                             <?php if ($projet['url']) : ?>
                                 <div class="project-url">
                                     <a href="<?php echo esc_url($projet['url']); ?>" target="_blank" rel="noopener">
-                                        <?php _e('Voir le site', 'suivi-interventions'); ?> ↗
+                                        <?php _e('Voir le site', 'suivi-des-interventions'); ?> ↗
                                     </a>
                                 </div>
                             <?php endif; ?>
@@ -181,8 +181,8 @@ class SI_Client_Dashboard {
             <?php else : ?>
             <div class="no-projects-message">
                 <div class="message-icon">⚠️</div>
-                <h3><?php _e('Aucun projet assigné', 'suivi-interventions'); ?></h3>
-                <p><?php _e('Aucun projet ne vous a été assigné pour le moment. Veuillez contacter l\'administrateur.', 'suivi-interventions'); ?></p>
+                <h3><?php _e('Aucun projet assigné', 'suivi-des-interventions'); ?></h3>
+                <p><?php _e('Aucun projet ne vous a été assigné pour le moment. Veuillez contacter l\'administrateur.', 'suivi-des-interventions'); ?></p>
             </div>
             <?php endif; ?>
             
@@ -191,44 +191,44 @@ class SI_Client_Dashboard {
             <div class="filters-bar">
                 <div class="filters-left">
                     <select id="filter-projet" class="filter-select">
-                        <option value=""><?php _e('Tous les projets', 'suivi-interventions'); ?></option>
+                        <option value=""><?php _e('Tous les projets', 'suivi-des-interventions'); ?></option>
                         <?php foreach ($projets_info as $projet) : ?>
                             <option value="<?php echo $projet['term_id']; ?>"><?php echo esc_html($projet['name']); ?></option>
                         <?php endforeach; ?>
                     </select>
                     
                     <select id="filter-status" class="filter-select">
-                        <option value=""><?php _e('Tous les statuts', 'suivi-interventions'); ?></option>
-                        <option value="completed"><?php _e('Terminées', 'suivi-interventions'); ?></option>
-                        <option value="pending"><?php _e('En cours', 'suivi-interventions'); ?></option>
+                        <option value=""><?php _e('Tous les statuts', 'suivi-des-interventions'); ?></option>
+                        <option value="completed"><?php _e('Terminées', 'suivi-des-interventions'); ?></option>
+                        <option value="pending"><?php _e('En cours', 'suivi-des-interventions'); ?></option>
                     </select>
                     
                     <div class="date-filter-wrapper">
                         <div class="date-filter-group">
-                            <input type="date" id="filter-date-from" class="filter-date" placeholder="<?php _e('Date de début', 'suivi-interventions'); ?>">
+                            <input type="date" id="filter-date-from" class="filter-date" placeholder="<?php _e('Date de début', 'suivi-des-interventions'); ?>">
                             <span class="date-separator">→</span>
-                            <input type="date" id="filter-date-to" class="filter-date" placeholder="<?php _e('Date de fin', 'suivi-interventions'); ?>">
+                            <input type="date" id="filter-date-to" class="filter-date" placeholder="<?php _e('Date de fin', 'suivi-des-interventions'); ?>">
                         </div>
                         <div class="date-shortcuts">
-                            <button type="button" class="date-shortcut" data-period="today"><?php _e('Aujourd\'hui', 'suivi-interventions'); ?></button>
-                            <button type="button" class="date-shortcut" data-period="week"><?php _e('Cette semaine', 'suivi-interventions'); ?></button>
-                            <button type="button" class="date-shortcut" data-period="month"><?php _e('Ce mois', 'suivi-interventions'); ?></button>
-                            <button type="button" class="date-shortcut" data-period="year"><?php _e('Cette année', 'suivi-interventions'); ?></button>
+                            <button type="button" class="date-shortcut" data-period="today"><?php _e('Aujourd\'hui', 'suivi-des-interventions'); ?></button>
+                            <button type="button" class="date-shortcut" data-period="week"><?php _e('Cette semaine', 'suivi-des-interventions'); ?></button>
+                            <button type="button" class="date-shortcut" data-period="month"><?php _e('Ce mois', 'suivi-des-interventions'); ?></button>
+                            <button type="button" class="date-shortcut" data-period="year"><?php _e('Cette année', 'suivi-des-interventions'); ?></button>
                         </div>
                     </div>
                     
-                    <input type="search" id="search-interventions" class="filter-search" placeholder="<?php _e('Rechercher...', 'suivi-interventions'); ?>">
+                    <input type="search" id="search-interventions" class="filter-search" placeholder="<?php _e('Rechercher...', 'suivi-des-interventions'); ?>">
                 </div>
                 
                 <div class="filters-right">
-                    <button type="button" id="reset-filters" class="button"><?php _e('Réinitialiser', 'suivi-interventions'); ?></button>
+                    <button type="button" id="reset-filters" class="button"><?php _e('Réinitialiser', 'suivi-des-interventions'); ?></button>
                 </div>
             </div>
             
             <!-- Liste des interventions -->
             <div class="interventions-list">
                 <h2>
-                    <?php _e('Liste des interventions', 'suivi-interventions'); ?>
+                    <?php _e('Liste des interventions', 'suivi-des-interventions'); ?>
                     <span class="interventions-count">(<?php echo count($interventions); ?>)</span>
                 </h2>
                 
@@ -243,20 +243,20 @@ class SI_Client_Dashboard {
                             <div class="intervention-header">
                                 <h3 class="intervention-title"><?php echo esc_html($intervention['title']); ?></h3>
                                 <span class="intervention-status <?php echo $intervention['terminee'] ? 'status-completed' : 'status-pending'; ?>">
-                                    <?php echo $intervention['terminee'] ? '✓ ' . __('Terminée', 'suivi-interventions') : '⏳ ' . __('En cours', 'suivi-interventions'); ?>
+                                    <?php echo $intervention['terminee'] ? '✓ ' . __('Terminée', 'suivi-des-interventions') : '⏳ ' . __('En cours', 'suivi-des-interventions'); ?>
                                 </span>
                             </div>
                             
                             <div class="intervention-meta">
                                 <div class="meta-item">
                                     <span class="meta-icon">📅</span>
-                                    <span class="meta-label"><?php _e('Date :', 'suivi-interventions'); ?></span>
+                                    <span class="meta-label"><?php _e('Date :', 'suivi-des-interventions'); ?></span>
                                     <span class="meta-value"><?php echo $intervention['date_formatted']; ?></span>
                                 </div>
                                 
                                 <div class="meta-item">
                                     <span class="meta-icon">🏷️</span>
-                                    <span class="meta-label"><?php _e('Projet :', 'suivi-interventions'); ?></span>
+                                    <span class="meta-label"><?php _e('Projet :', 'suivi-des-interventions'); ?></span>
                                     <span class="meta-value"><?php echo esc_html($intervention['projet_name']); ?></span>
                                 </div>
                             </div>
@@ -269,14 +269,14 @@ class SI_Client_Dashboard {
                             
                             <?php if (!empty($intervention['description'])) : ?>
                                 <div class="intervention-description">
-                                    <strong><?php _e('Description :', 'suivi-interventions'); ?></strong>
+                                    <strong><?php _e('Description :', 'suivi-des-interventions'); ?></strong>
                                     <?php echo wpautop($intervention['description']); ?>
                                 </div>
                             <?php endif; ?>
                             
                             <div class="intervention-footer">
                                 <span class="intervention-date-created">
-                                    <?php /* translators: %1$s: Date */ printf(__('Créée le %1$s', 'suivi-interventions'), date_i18n(get_option('date_format'), strtotime($intervention['date_created']))); ?>
+                                    <?php /* translators: %1$s: Date */ printf(__('Créée le %1$s', 'suivi-des-interventions'), date_i18n(get_option('date_format'), strtotime($intervention['date_created']))); ?>
                                 </span>
                             </div>
                         </div>
@@ -284,14 +284,14 @@ class SI_Client_Dashboard {
                 </div>
                 
                 <div class="no-results" style="display: none;">
-                    <p><?php _e('Aucune intervention ne correspond à vos critères de recherche.', 'suivi-interventions'); ?></p>
+                    <p><?php _e('Aucune intervention ne correspond à vos critères de recherche.', 'suivi-des-interventions'); ?></p>
                 </div>
             </div>
             <?php else : ?>
             <div class="no-interventions-message">
                 <div class="message-icon">📭</div>
-                <h3><?php _e('Aucune intervention', 'suivi-interventions'); ?></h3>
-                <p><?php _e('Aucune intervention n\'a encore été créée pour vos projets.', 'suivi-interventions'); ?></p>
+                <h3><?php _e('Aucune intervention', 'suivi-des-interventions'); ?></h3>
+                <p><?php _e('Aucune intervention n\'a encore été créée pour vos projets.', 'suivi-des-interventions'); ?></p>
             </div>
             <?php endif; ?>
         </div>
@@ -329,7 +329,7 @@ class SI_Client_Dashboard {
         foreach ($posts as $post) {
             $meta = SI_Post_Types::get_intervention_meta($post->ID);
             $terms = wp_get_post_terms($post->ID, 'projet');
-            $projet_name = !empty($terms) ? $terms[0]->name : __('Sans projet', 'suivi-interventions');
+            $projet_name = !empty($terms) ? $terms[0]->name : __('Sans projet', 'suivi-des-interventions');
             $projet_id = !empty($terms) ? $terms[0]->term_id : 0;
             
             $interventions[] = array(
@@ -338,7 +338,7 @@ class SI_Client_Dashboard {
                 'content' => $post->post_content,
                 'date_created' => $post->post_date,
                 'date_intervention' => $meta['date_intervention'],
-                'date_formatted' => $meta['date_intervention'] ? date_i18n(get_option('date_format'), strtotime($meta['date_intervention'])) : __('Non définie', 'suivi-interventions'),
+                'date_formatted' => $meta['date_intervention'] ? date_i18n(get_option('date_format'), strtotime($meta['date_intervention'])) : __('Non définie', 'suivi-des-interventions'),
                 'terminee' => $meta['intervention_terminee'] == '1',
                 'description' => $meta['description'],
                 'projet_name' => $projet_name,

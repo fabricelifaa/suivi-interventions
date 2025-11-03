@@ -33,20 +33,20 @@ class SI_Post_Types {
         }
         
         $labels = array(
-            'name'                  => __('Interventions', 'suivi-interventions'),
-            'singular_name'         => __('Intervention', 'suivi-interventions'),
-            'menu_name'            => __('Interventions', 'suivi-interventions'),
-            'name_admin_bar'       => __('Intervention', 'suivi-interventions'),
-            'add_new'              => __('Ajouter une intervention', 'suivi-interventions'),
-            'add_new_item'         => __('Ajouter une nouvelle intervention', 'suivi-interventions'),
-            'new_item'             => __('Nouvelle intervention', 'suivi-interventions'),
-            'edit_item'            => __('Modifier l\'intervention', 'suivi-interventions'),
-            'view_item'            => __('Voir l\'intervention', 'suivi-interventions'),
-            'all_items'            => __('Toutes les interventions', 'suivi-interventions'),
-            'search_items'         => __('Rechercher des interventions', 'suivi-interventions'),
-            'parent_item_colon'    => __('Intervention parent :', 'suivi-interventions'),
-            'not_found'            => __('Aucune intervention trouvée.', 'suivi-interventions'),
-            'not_found_in_trash'   => __('Aucune intervention trouvée dans la corbeille.', 'suivi-interventions')
+            'name'                  => __('Interventions', 'suivi-des-interventions'),
+            'singular_name'         => __('Intervention', 'suivi-des-interventions'),
+            'menu_name'            => __('Interventions', 'suivi-des-interventions'),
+            'name_admin_bar'       => __('Intervention', 'suivi-des-interventions'),
+            'add_new'              => __('Ajouter une intervention', 'suivi-des-interventions'),
+            'add_new_item'         => __('Ajouter une nouvelle intervention', 'suivi-des-interventions'),
+            'new_item'             => __('Nouvelle intervention', 'suivi-des-interventions'),
+            'edit_item'            => __('Modifier l\'intervention', 'suivi-des-interventions'),
+            'view_item'            => __('Voir l\'intervention', 'suivi-des-interventions'),
+            'all_items'            => __('Toutes les interventions', 'suivi-des-interventions'),
+            'search_items'         => __('Rechercher des interventions', 'suivi-des-interventions'),
+            'parent_item_colon'    => __('Intervention parent :', 'suivi-des-interventions'),
+            'not_found'            => __('Aucune intervention trouvée.', 'suivi-des-interventions'),
+            'not_found_in_trash'   => __('Aucune intervention trouvée dans la corbeille.', 'suivi-des-interventions')
         );
         
         $args = array(
@@ -90,7 +90,7 @@ class SI_Post_Types {
     public function add_meta_boxes() {
         add_meta_box(
             'intervention_details',
-            __('Détails de l\'intervention', 'suivi-interventions'),
+            __('Détails de l\'intervention', 'suivi-des-interventions'),
             array($this, 'render_meta_box'),
             'intervention',
             'normal',

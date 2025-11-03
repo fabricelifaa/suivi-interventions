@@ -36,17 +36,17 @@ class SI_Taxonomies {
         }
         
         $labels = array(
-            'name'              => __('Projets', 'suivi-interventions'),
-            'singular_name'     => __('Projet', 'suivi-interventions'),
-            'search_items'      => __('Rechercher des projets', 'suivi-interventions'),
-            'all_items'         => __('Tous les projets', 'suivi-interventions'),
-            'parent_item'       => __('Projet parent', 'suivi-interventions'),
-            'parent_item_colon' => __('Projet parent :', 'suivi-interventions'),
-            'edit_item'         => __('Modifier le projet', 'suivi-interventions'),
-            'update_item'       => __('Mettre à jour le projet', 'suivi-interventions'),
-            'add_new_item'      => __('Ajouter un nouveau projet', 'suivi-interventions'),
-            'new_item_name'     => __('Nouveau nom de projet', 'suivi-interventions'),
-            'menu_name'         => __('Projets', 'suivi-interventions')
+            'name'              => __('Projets', 'suivi-des-interventions'),
+            'singular_name'     => __('Projet', 'suivi-des-interventions'),
+            'search_items'      => __('Rechercher des projets', 'suivi-des-interventions'),
+            'all_items'         => __('Tous les projets', 'suivi-des-interventions'),
+            'parent_item'       => __('Projet parent', 'suivi-des-interventions'),
+            'parent_item_colon' => __('Projet parent :', 'suivi-des-interventions'),
+            'edit_item'         => __('Modifier le projet', 'suivi-des-interventions'),
+            'update_item'       => __('Mettre à jour le projet', 'suivi-des-interventions'),
+            'add_new_item'      => __('Ajouter un nouveau projet', 'suivi-des-interventions'),
+            'new_item_name'     => __('Nouveau nom de projet', 'suivi-des-interventions'),
+            'menu_name'         => __('Projets', 'suivi-des-interventions')
         );
         
         $args = array(

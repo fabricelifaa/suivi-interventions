@@ -37,7 +37,7 @@ class SI_User_Roles {
         remove_role('bsdclient');
         
         // Créer le rôle avec toutes les capacités nécessaires
-        add_role('bsdclient', __('Client', 'suivi-interventions'), array(
+        add_role('bsdclient', __('Client', 'suivi-des-interventions'), array(
             'read' => true,
             'read_intervention' => true,
             'read_interventions' => true,

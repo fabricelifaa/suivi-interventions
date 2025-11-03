@@ -16,12 +16,12 @@ $client_company = get_user_meta($user->ID, 'client_company', true);
 $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
 ?>
 
-<h3><?php esc_attr_e('Informations Client', 'suivi-interventions'); ?></h3>
+<h3><?php esc_attr_e('Informations Client', 'suivi-des-interventions'); ?></h3>
 
 <table class="form-table">
     <tr>
         <th>
-            <label for="client_company"><?php esc_attr_e('Société/Organisation', 'suivi-interventions'); ?></label>
+            <label for="client_company"><?php esc_attr_e('Société/Organisation', 'suivi-des-interventions'); ?></label>
         </th>
         <td>
             <input 
@@ -31,13 +31,13 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
                 value="<?php echo esc_attr($client_company); ?>" 
                 class="regular-text" 
             />
-            <p class="description"><?php esc_attr_e('Nom de la société ou organisation du client.', 'suivi-interventions'); ?></p>
+            <p class="description"><?php esc_attr_e('Nom de la société ou organisation du client.', 'suivi-des-interventions'); ?></p>
         </td>
     </tr>
     
     <tr>
         <th>
-            <label for="client_contact_phone"><?php esc_attr_e('Téléphone de contact', 'suivi-interventions'); ?></label>
+            <label for="client_contact_phone"><?php esc_attr_e('Téléphone de contact', 'suivi-des-interventions'); ?></label>
         </th>
         <td>
             <input 
@@ -47,17 +47,17 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
                 value="<?php echo esc_attr($client_phone); ?>" 
                 class="regular-text" 
             />
-            <p class="description"><?php esc_attr_e('Numéro de téléphone de contact du client.', 'suivi-interventions'); ?></p>
+            <p class="description"><?php esc_attr_e('Numéro de téléphone de contact du client.', 'suivi-des-interventions'); ?></p>
         </td>
     </tr>
 </table>
 
-<h3><?php esc_attr_e('Projets autorisés', 'suivi-interventions'); ?></h3>
+<h3><?php esc_attr_e('Projets autorisés', 'suivi-des-interventions'); ?></h3>
 
 <table class="form-table">
     <tr>
         <th>
-            <label><?php esc_attr_e('Projets', 'suivi-interventions'); ?></label>
+            <label><?php esc_attr_e('Projets', 'suivi-des-interventions'); ?></label>
         </th>
         <td>
             <?php wp_nonce_field('save_client_projets', 'client_projets_nonce'); ?>
@@ -86,7 +86,7 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
                                         <small>
                                             <?php
                                             /* translators: %1$d = quota, %2$d = used, %3$.1f = percentage with one decimal */printf(
-                                                __('Quota: %1$d interventions | Utilisé: %2$d (%3$.1f%%)', 'suivi-interventions'),
+                                                __('Quota: %1$d interventions | Utilisé: %2$d (%3$.1f%%)', 'suivi-des-interventions'),
                                                 (int) $progression['quota'],
                                                 (int) $progression['used'],
                                                 (float) $progression['percentage']
@@ -113,7 +113,7 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
                                 <?php if ($projet_meta['date_expiration']) : ?>
                                     <div class="projet-expiration">
                                         <small>
-                                            <strong><?php esc_attr_e('Expiration:', 'suivi-interventions'); ?></strong>
+                                            <strong><?php esc_attr_e('Expiration:', 'suivi-des-interventions'); ?></strong>
                                             <?php echo date_i18n(get_option('date_format'), strtotime($projet_meta['date_expiration'])); ?>
                                         </small>
                                     </div>
@@ -123,7 +123,7 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
                                     <div class="projet-url">
                                         <small>
                                             <a href="<?php echo esc_url($projet_meta['projet_url']); ?>" target="_blank" rel="noopener">
-                                                <?php esc_attr_e('Voir le site', 'suivi-interventions'); ?> ↗
+                                                <?php esc_attr_e('Voir le site', 'suivi-des-interventions'); ?> ↗
                                             </a>
                                         </small>
                                     </div>
@@ -134,23 +134,23 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
                 </div>
                 
                 <p class="description">
-                    <?php esc_attr_e('Sélectionnez les projets que ce client peut voir. Le client ne pourra consulter que les interventions liées à ces projets.', 'suivi-interventions'); ?>
+                    <?php esc_attr_e('Sélectionnez les projets que ce client peut voir. Le client ne pourra consulter que les interventions liées à ces projets.', 'suivi-des-interventions'); ?>
                 </p>
                 
                 <div class="client-projets-actions">
                     <button type="button" id="select-all-projets" class="button">
-                        <?php esc_attr_e('Tout sélectionner', 'suivi-interventions'); ?>
+                        <?php esc_attr_e('Tout sélectionner', 'suivi-des-interventions'); ?>
                     </button>
                     <button type="button" id="deselect-all-projets" class="button">
-                        <?php esc_attr_e('Tout désélectionner', 'suivi-interventions'); ?>
+                        <?php esc_attr_e('Tout désélectionner', 'suivi-des-interventions'); ?>
                     </button>
                 </div>
                 
             <?php else : ?>
                 <p class="no-projets">
-                    <?php esc_attr_e('Aucun projet disponible.', 'suivi-interventions'); ?>
+                    <?php esc_attr_e('Aucun projet disponible.', 'suivi-des-interventions'); ?>
                     <a href="<?php echo admin_url('edit-tags.php?taxonomy=projet&post_type=intervention'); ?>">
-                        <?php esc_attr_e('Créez d\'abord des projets', 'suivi-interventions'); ?> →
+                        <?php esc_attr_e('Créez d\'abord des projets', 'suivi-des-interventions'); ?> →
                     </a>
                 </p>
             <?php endif; ?>
@@ -159,7 +159,7 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
 </table>
 
 <?php if (!empty($selected_projets)) : ?>
-<h3><?php esc_attr_e('Résumé des accès', 'suivi-interventions'); ?></h3>
+<h3><?php esc_attr_e('Résumé des accès', 'suivi-des-interventions'); ?></h3>
 <div class="client-access-summary">
     <div class="access-stats">
         <?php 
@@ -167,15 +167,15 @@ $client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
         ?>
         <div class="stat-item">
             <span class="stat-number"><?php echo $stats['projets_count']; ?></span>
-            <span class="stat-label"><?php esc_attr_e('Projet(s) autorisé(s)', 'suivi-interventions'); ?></span>
+            <span class="stat-label"><?php esc_attr_e('Projet(s) autorisé(s)', 'suivi-des-interventions'); ?></span>
         </div>
         <div class="stat-item">
             <span class="stat-number"><?php echo $stats['total_interventions']; ?></span>
-            <span class="stat-label"><?php esc_attr_e('Intervention(s) visible(s)', 'suivi-interventions'); ?></span>
+            <span class="stat-label"><?php esc_attr_e('Intervention(s) visible(s)', 'suivi-des-interventions'); ?></span>
         </div>
         <div class="stat-item">
             <span class="stat-number"><?php echo $stats['interventions_terminees']; ?></span>
-            <span class="stat-label"><?php esc_attr_e('Terminée(s)', 'suivi-interventions'); ?></span>
+            <span class="stat-label"><?php esc_attr_e('Terminée(s)', 'suivi-des-interventions'); ?></span>
         </div>
     </div>
 </div>
@@ -366,7 +366,7 @@ jQuery(document).ready(function($) {
     $('form').submit(function(e) {
         var checkedCount = $('.projet-checkbox:checked').length;
         if (checkedCount === 0) {
-            var confirm = window.confirm('<?php esc_attr_e("Aucun projet n\'est sélectionné. Le client ne pourra voir aucune intervention. Voulez-vous continuer ?", "suivi-interventions"); ?>');
+            var confirm = window.confirm('<?php esc_attr_e("Aucun projet n\'est sélectionné. Le client ne pourra voir aucune intervention. Voulez-vous continuer ?", "suivi-des-interventions"); ?>');
             if (!confirm) {
                 e.preventDefault();
                 return false;

@@ -73,7 +73,7 @@ class Suivi_Interventions {
      */
     private function init_hooks() {
         add_action('init', array($this, 'init'), 3);
-        add_action('plugins_loaded', array($this, 'load_textdomain'));
+        add_action('plugins_loaded', array($this, 'load_textdomain'), 3);
         
         // Fallback de sécurité au cas où les classes ne s'enregistrent pas
         add_action('init', array($this, 'fallback_register_post_types'), 3);
@@ -154,7 +154,7 @@ class Suivi_Interventions {
      */
     public function load_textdomain() {
         load_plugin_textdomain(
-            'suivi-interventions',
+            'suivi-des-interventions',
             false,
             dirname(SUIVI_INTERVENTIONS_PLUGIN_BASENAME) . '/languages/'
         );

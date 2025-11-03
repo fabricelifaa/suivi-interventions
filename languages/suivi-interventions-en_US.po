@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.0; wp-6.8.3; php-8.2.12\n"
-"X-Domain: suivi-interventions"
+"X-Domain: suivi-des-interventions"
 
 #. %1$d: remaining, %2$.1f: percentage with one decimal
 #: includes/class-client-dashboard.php:158

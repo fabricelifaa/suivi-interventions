@@ -1,3 +1,12 @@
+=== Suivi des Interventions ===
+Contributors: FAB2DEV
+Tags: management
+Requires at least: 6.6
+Requires PHP: 7.4
+Stable tag: 1.2.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
 # Suivi des Interventions
 
 Plugin professionnel de suivi des mises à jour et interventions sur les sites web.
@@ -252,3 +261,4 @@ Développé pour la gestion professionnelle des interventions web avec une appro
 **Version :** 1.0.0  
 **Testé jusqu'à :** WordPress 6.4  
 **Nécessite PHP :** 7.4 ou supérieur
+**License:** GPLv2

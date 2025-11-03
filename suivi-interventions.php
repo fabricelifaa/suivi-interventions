@@ -3,10 +3,10 @@
  * Plugin Name: Suivi des Interventions
  * Plugin URI: https://github.com/fabricelifaa/suivi-interventions/releases
  * Description: 📋 Plugin professionnel de suivi des interventions et mises à jour
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: FAB2DEV
  * Author URI: https://fab2dev.com
- * Text Domain: suivi-interventions
+ * Text Domain: suivi-des-interventions
  * Domain Path: /languages
  * License: GPLv2
  */

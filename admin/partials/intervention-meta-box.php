@@ -26,8 +26,8 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
         <tr>
             <th scope="row">
                 <label for="date_intervention">
-                    <?php esc_html_e('Date d\'intervention', 'suivi-interventions'); ?>
-                    <span class="description"><?php esc_html_e('(requis)', 'suivi-interventions'); ?></span>
+                    <?php esc_html_e('Date d\'intervention', 'suivi-des-interventions'); ?>
+                    <span class="description"><?php esc_html_e('(requis)', 'suivi-des-interventions'); ?></span>
                 </label>
             </th>
             <td>
@@ -40,19 +40,19 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                     required
                 />
                 <p class="description">
-                    <?php _e('Date à laquelle l\'intervention a été ou sera réalisée.', 'suivi-interventions'); ?>
+                    <?php _e('Date à laquelle l\'intervention a été ou sera réalisée.', 'suivi-des-interventions'); ?>
                 </p>
             </td>
         </tr>
         
         <tr>
             <th scope="row">
-                <?php esc_html_e('Statut de l\'intervention', 'suivi-interventions'); ?>
+                <?php esc_html_e('Statut de l\'intervention', 'suivi-des-interventions'); ?>
             </th>
             <td>
                 <fieldset>
                     <legend class="screen-reader-text">
-                        <span><?php esc_html_e('Statut de l\'intervention', 'suivi-interventions'); ?></span>
+                        <span><?php esc_html_e('Statut de l\'intervention', 'suivi-des-interventions'); ?></span>
                     </legend>
                     <label for="intervention_terminee">
                         <input 
@@ -62,10 +62,10 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                             value="1" 
                             <?php checked($intervention_terminee, '1'); ?>
                         />
-                        <?php esc_html_e('Intervention terminée', 'suivi-interventions'); ?>
+                        <?php esc_html_e('Intervention terminée', 'suivi-des-interventions'); ?>
                     </label>
                     <p class="description">
-                        <?php esc_html_e('Cochez cette case si l\'intervention est terminée. Cela comptera dans le quota du projet.', 'suivi-interventions'); ?>
+                        <?php esc_html_e('Cochez cette case si l\'intervention est terminée. Cela comptera dans le quota du projet.', 'suivi-des-interventions'); ?>
                     </p>
                 </fieldset>
             </td>
@@ -74,7 +74,7 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
         <tr>
             <th scope="row">
                 <label for="intervention_description">
-                    <?php esc_html_e('Description détaillée', 'suivi-interventions'); ?>
+                    <?php esc_html_e('Description détaillée', 'suivi-des-interventions'); ?>
                 </label>
             </th>
             <td>
@@ -91,7 +91,7 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                 );
                 ?>
                 <p class="description">
-                    <?php esc_html_e('Description détaillée de l\'intervention (optionnel).', 'suivi-interventions'); ?>
+                    <?php esc_html_e('Description détaillée de l\'intervention (optionnel).', 'suivi-des-interventions'); ?>
                 </p>
             </td>
         </tr>
@@ -105,7 +105,7 @@ jQuery(document).ready(function($) {
         var dateIntervention = $('#date_intervention').val();
         if (!dateIntervention) {
             e.preventDefault();
-            alert('<?php esc_html_e("La date d'intervention est requise.", "suivi-interventions"); ?>');
+            alert('<?php esc_html_e("La date d'intervention est requise.", "suivi-des-interventions"); ?>');
             $('#date_intervention').focus();
             return false;
         }
@@ -120,9 +120,9 @@ jQuery(document).ready(function($) {
         }
         
         if ($(this).is(':checked')) {
-            $status.html('<strong style="color: green;">✓ <?php esc_html_e("Cette intervention sera comptabilisée dans le quota", "suivi-interventions"); ?></strong>');
+            $status.html('<strong style="color: green;">✓ <?php esc_html_e("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions"); ?></strong>');
         } else {
-            $status.html('<strong style="color: orange;">⏳ <?php esc_html_e("Cette intervention ne sera pas comptabilisée dans le quota", "suivi-interventions"); ?></strong>');
+            $status.html('<strong style="color: orange;">⏳ <?php esc_html_e("Cette intervention ne sera pas comptabilisée dans le quota", "suivi-des-interventions"); ?></strong>');
         }
     }).trigger('change');
 });

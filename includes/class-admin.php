@@ -61,10 +61,10 @@ class SI_Admin {
         $new_columns = array();
         $new_columns['cb'] = $columns['cb'];
         $new_columns['title'] = $columns['title'];
-        $new_columns['intervention_date'] = _e('Date d\'intervention', 'suivi-interventions');
-        $new_columns['projet'] = _e('Projet', 'suivi-interventions');
-        $new_columns['quota_progress'] = _e('Progression Quota', 'suivi-interventions');
-        $new_columns['status'] = _e('Statut', 'suivi-interventions');
+        $new_columns['intervention_date'] = _e('Date d\'intervention', 'suivi-des-interventions');
+        $new_columns['projet'] = _e('Projet', 'suivi-des-interventions');
+        $new_columns['quota_progress'] = _e('Progression Quota', 'suivi-des-interventions');
+        $new_columns['status'] = _e('Statut', 'suivi-des-interventions');
         $new_columns['date'] = $columns['date'];
         
         return $new_columns;
@@ -102,7 +102,7 @@ class SI_Admin {
             $formatted_date = date_i18n(get_option('date_format'), strtotime($date));
             echo '<span class="intervention-date">' . esc_html($formatted_date) . '</span>';
         } else {
-            echo '<span class="intervention-date-empty">' . __('Non définie', 'suivi-interventions') . '</span>';
+            echo '<span class="intervention-date-empty">' . __('Non définie', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -119,7 +119,7 @@ class SI_Admin {
             }
             echo implode(', ', $projet_links);
         } else {
-            echo '<span class="no-projet">' . __('Aucun projet', 'suivi-interventions') . '</span>';
+            echo '<span class="no-projet">' . __('Aucun projet', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -135,7 +135,7 @@ class SI_Admin {
                 break; // Afficher seulement le premier projet
             }
         } else {
-            echo '<span class="no-quota">' . __('Pas de quota', 'suivi-interventions') . '</span>';
+            echo '<span class="no-quota">' . __('Pas de quota', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -145,9 +145,9 @@ class SI_Admin {
     private function display_intervention_status($post_id) {
         $terminee = get_post_meta($post_id, '_intervention_terminee', true);
         if ($terminee == '1') {
-            echo '<span class="status-completed">✓ ' . __('Terminée', 'suivi-interventions') . '</span>';
+            echo '<span class="status-completed">✓ ' . __('Terminée', 'suivi-des-interventions') . '</span>';
         } else {
-            echo '<span class="status-pending">⏳ ' . __('En cours', 'suivi-interventions') . '</span>';
+            echo '<span class="status-pending">⏳ ' . __('En cours', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -164,7 +164,7 @@ class SI_Admin {
         echo '</div>';
         echo '<div class="quota-text">';
         /* translators: %1$d: remaining, %2$d: quota, %3$.1f: percentage with one decimal */ printf(
-            __('%1$d/%2$d restant (%3$.1f%%)', 'suivi-interventions'),
+            __('%1$d/%2$d restant (%3$.1f%%)', 'suivi-des-interventions'),
             $progression['remaining'],
             $progression['quota'],
             $percentage
@@ -216,8 +216,8 @@ class SI_Admin {
         $date_from = isset($_GET['date_from']) ? sanitize_text_field($_GET['date_from']) : '';
         $date_to = isset($_GET['date_to']) ? sanitize_text_field($_GET['date_to']) : '';
         
-        echo '<input type="date" name="date_from" value="' . esc_attr($date_from) . '" placeholder="' . __('Date de début', 'suivi-interventions') . '" />';
-        echo '<input type="date" name="date_to" value="' . esc_attr($date_to) . '" placeholder="' . __('Date de fin', 'suivi-interventions') . '" />';
+        echo '<input type="date" name="date_from" value="' . esc_attr($date_from) . '" placeholder="' . __('Date de début', 'suivi-des-interventions') . '" />';
+        echo '<input type="date" name="date_to" value="' . esc_attr($date_to) . '" placeholder="' . __('Date de fin', 'suivi-des-interventions') . '" />';
     }
     
     /**
@@ -227,9 +227,9 @@ class SI_Admin {
         $current_status = isset($_GET['intervention_status']) ? sanitize_text_field($_GET['intervention_status']) : '';
         
         echo '<select name="intervention_status">';
-        echo '<option value="">' . __('Tous les statuts', 'suivi-interventions') . '</option>';
-        echo '<option value="completed"' . selected($current_status, 'completed', false) . '>' . __('Terminées', 'suivi-interventions') . '</option>';
-        echo '<option value="pending"' . selected($current_status, 'pending', false) . '>' . __('En cours', 'suivi-interventions') . '</option>';
+        echo '<option value="">' . __('Tous les statuts', 'suivi-des-interventions') . '</option>';
+        echo '<option value="completed"' . selected($current_status, 'completed', false) . '>' . __('Terminées', 'suivi-des-interventions') . '</option>';
+        echo '<option value="pending"' . selected($current_status, 'pending', false) . '>' . __('En cours', 'suivi-des-interventions') . '</option>';
         echo '</select>';
     }
     
@@ -249,7 +249,7 @@ class SI_Admin {
         $current_projet = isset($_GET['projet_filter']) ? sanitize_text_field($_GET['projet_filter']) : '';
         
         echo '<select name="projet_filter">';
-        echo '<option value="">' . __('Tous les projets', 'suivi-interventions') . '</option>';
+        echo '<option value="">' . __('Tous les projets', 'suivi-des-interventions') . '</option>';
         
         foreach ($projets as $projet) {
             echo '<option value="' . esc_attr($projet->term_id) . '"' . selected($current_projet, $projet->term_id, false) . '>';
@@ -425,7 +425,7 @@ class SI_Admin {
         // Afficher des notices si nécessaire
         if (isset($_GET['message']) && $_GET['message'] === 'project_updated') {
             echo '<div class="notice notice-success is-dismissible">';
-            echo '<p>' . __('Projet mis à jour avec succès.', 'suivi-interventions') . '</p>';
+            echo '<p>' . __('Projet mis à jour avec succès.', 'suivi-des-interventions') . '</p>';
             echo '</div>';
         }
     }
