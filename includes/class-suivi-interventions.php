@@ -72,9 +72,7 @@ class Suivi_Interventions {
      * Initialiser les hooks WordPress
      */
     private function init_hooks() {
-        add_action('init', array($this, 'init'), 3);
-        add_action('plugins_loaded', array($this, 'load_textdomain'), 3);
-        
+        add_action('init', array($this, 'init'), 3);        
         // Fallback de sécurité au cas où les classes ne s'enregistrent pas
         add_action('init', array($this, 'fallback_register_post_types'), 3);
     }
@@ -152,13 +150,13 @@ class Suivi_Interventions {
     /**
      * Charger le domaine de traduction
      */
-    public function load_textdomain() {
-        load_plugin_textdomain(
-            'suivi-des-interventions',
-            false,
-            dirname(SUIVI_INTERVENTIONS_PLUGIN_BASENAME) . '/languages/'
-        );
-    }
+    // public function load_textdomain() {
+    //     load_plugin_textdomain(
+    //         'suivi-des-interventions',
+    //         false,
+    //         dirname(SUIVI_INTERVENTIONS_PLUGIN_BASENAME) . '/languages/'
+    //     );
+    // }
     
     /**
      * Exécuter le plugin

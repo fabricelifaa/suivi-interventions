@@ -527,8 +527,8 @@ class SI_Client_Restrictions {
             ?>
             <div class="notice notice-warning">
                 <p>
-                    <strong><?php esc_attr_e('Attention :', 'suivi-interventions'); ?></strong>
-                    <?php esc_attr_e('Aucun projet ne vous a été assigné. Contactez l\'administrateur pour accéder aux interventions.', 'suivi-interventions'); ?>
+                    <strong><?php esc_attr_e('Attention :', 'suivi-des-interventions'); ?></strong>
+                    <?php esc_attr_e('Aucun projet ne vous a été assigné. Contactez l\'administrateur pour accéder aux interventions.', 'suivi-des-interventions'); ?>
                 </p>
             </div>
             <?php

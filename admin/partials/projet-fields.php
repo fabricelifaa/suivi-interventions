@@ -79,15 +79,16 @@ if ($is_edit_mode) {
             ?>
             <div class="quota-progress-display">
                 <div class="quota-progress-bar-large">
-                    <div class="quota-progress-fill-large <?php esc_attr_e($color_class); ?>" style="width: <?php echo min(100, $percentage); ?>%"></div>
-                </div>
-                <p class="quota-stats">
-                    <strong><?php /* translators: %1$d: used, %2$d: quota */ printf(_e('%1$d interventions terminées sur %2$d autorisées', 'suivi-des-interventions'), $progression['used'], $progression['quota']); ?></strong><br>
-                    <span class="quota-details">
+                        <div class="quota-progress-fill-large <?php echo esc_attr( $color_class ); ?>" style="width: <?php echo min(100, $percentage); ?>%"></div>
+                    </div>
+                    <p class="quota-stats">
+                        <?php /* translators: %1$d: used, %2$d: quota */ ?>
+                        <strong><?php printf( esc_html__('%1$d interventions terminées sur %2$d autorisées', 'suivi-des-interventions'), (int) $progression['used'], (int) $progression['quota'] ); ?></strong><br>
+                        <span class="quota-details">
                         
-                        <?php /* translators: %1$d: remaining, %2$.1f: percentage  */ printf(__('Restant : %1$d | Pourcentage utilisé : %2$.1f%%', 'suivi-des-interventions'), $progression['remaining'], $percentage); ?>
-                    </span>
-                </p>
+                            <?php /* translators: %1$d: remaining, %2$.1f: percentage  */ printf( esc_html__('Restant : %1$d | Pourcentage utilisé : %2$.1f%%', 'suivi-des-interventions'), (int) $progression['remaining'], (float) $percentage ); ?>
+                        </span>
+                    </p>
             </div>
         </td>
     </tr>
