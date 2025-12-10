@@ -1,14 +1,14 @@
-=== Intervention Tracking ===
+=== Suivi des Interventions ===
 Contributors: FAB2DEV
 Tags: management
 Requires at least: 6.6
 Requires PHP: 7.4
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-# Intervention Tracking (Suivi des Interventions)
+# Suivi des Interventions
 
 A professional plugin to track updates and technical interventions on websites.
 
@@ -57,7 +57,7 @@ This plugin helps you manage and track technical interventions performed across 
 
 2. **Activate the plugin**
    - Go to `WordPress Admin > Plugins`
-   - Activate "Intervention Tracking"
+   - Activate "Suivi des Interventions"
 
 3. **Initial setup**
    - The plugin automatically registers post types and taxonomies
