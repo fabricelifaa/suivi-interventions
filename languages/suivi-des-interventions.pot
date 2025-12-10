@@ -1,33 +1,32 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Suivi des Interventions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 10:24+0000\n"
-"PO-Revision-Date: 2025-10-31 12:04+0000\n"
-"Last-Translator: \n"
-"Language-Team: English (United States)\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"POT-Creation-Date: 2025-12-10 09:30+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Français\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.0; wp-6.8.3; php-8.2.12\n"
+"X-Loco-Version: 2.8.0; wp-6.9; php-8.2.12\n"
 "X-Domain: suivi-des-interventions"
 
 #. %1$d: remaining, %2$.1f: percentage with one decimal
 #: includes/class-client-dashboard.php:158
 #, php-format
-#| msgid "%d interventions restantes (%.1f%% utilisé)"
 msgid "%1$d interventions restantes (%2$.1f%% utilisé)"
-msgstr "%1$d interventions remaining (%2$.1f%% used)"
+msgstr ""
 
 #. %1$d: used, %2$d: quota
-#: admin/partials/projet-fields.php:85
+#: admin/partials/projet-fields.php:86
 #, php-format
-#| msgid "%d interventions terminées sur %d autorisées"
 msgid "%1$d interventions terminées sur %2$d autorisées"
-msgstr "%1$d interventions completed out of %2$d authorized"
+msgstr ""
 
 #. %1$d: used, %2$d: quota
 #: includes/class-client-dashboard.php:144
@@ -38,307 +37,294 @@ msgstr ""
 #. %1$d: remaining, %2$d: quota, %3$.1f: percentage with one decimal
 #: includes/class-admin.php:167
 #, php-format
-#| msgid "%d/%d restant (%.1f%%)"
 msgid "%1$d/%2$d restant (%3$.1f%%)"
-msgstr "%1$d/%2$d remaining (%3$.1f%%)"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:30
 msgid "(requis)"
-msgstr "(required)"
+msgstr ""
 
 #: includes/class-client-management.php:190
 msgid "-- Choisir un projet --"
-msgstr "-- Select a project --"
+msgstr ""
 
 #: includes/class-taxonomies.php:47
 msgid "Ajouter un nouveau projet"
-msgstr "Add a new project"
+msgstr ""
 
 #: includes/class-post-types.php:40
 msgid "Ajouter une intervention"
-msgstr "Add an intervention"
+msgstr ""
 
 #: includes/class-post-types.php:41
 msgid "Ajouter une nouvelle intervention"
-msgstr "Add a new intervention"
+msgstr ""
 
 #: includes/class-client-management.php:180
 msgid "Assignation rapide"
-msgstr "Quick assignment"
+msgstr ""
 
 #: includes/class-client-management.php:110
 msgid "Assigner des projets"
-msgstr "Assign projects"
+msgstr ""
 
 #: includes/class-client-management.php:216
 msgid "Assigner le projet aux clients sélectionnés"
-msgstr "Assign the project to selected clients"
+msgstr ""
 
 #: includes/class-client-restrictions.php:530
 msgid "Attention :"
-msgstr "Warning :"
+msgstr ""
 
 #: includes/class-admin.php:122
 msgid "Aucun projet"
-msgstr "No projects"
+msgstr ""
 
 #: includes/class-client-dashboard.php:184
 #: includes/class-client-management.php:156
 #: includes/class-client-restrictions.php:301
 msgid "Aucun projet assigné"
-msgstr "No projects assigned"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:151
 msgid "Aucun projet disponible."
-msgstr "No projects available."
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:369
 msgid ""
 "Aucun projet n\\'est sélectionné. Le client ne pourra voir aucune "
 "intervention. Voulez-vous continuer ?"
 msgstr ""
-"No projects have been selected. The customer will not be able to see any "
-"work. Do you want to continue ?"
 
 #: includes/class-client-dashboard.php:185
 msgid ""
 "Aucun projet ne vous a été assigné pour le moment. Veuillez contacter "
 "l'administrateur."
 msgstr ""
-"No projects have been assigned to you at this time. Please contact the "
-"administrator."
 
 #: includes/class-client-restrictions.php:531
 msgid ""
 "Aucun projet ne vous a été assigné. Contactez l'administrateur pour accéder "
 "aux interventions."
 msgstr ""
-"No projects have been assigned to you. Contact the administrator to access "
-"the interventions."
 
 #: includes/class-client-dashboard.php:293
 msgid "Aucune intervention"
-msgstr "No intervention"
+msgstr ""
 
 #: includes/class-client-dashboard.php:294
 msgid "Aucune intervention n'a encore été créée pour vos projets."
-msgstr "No interventions have been created for your projects yet."
+msgstr ""
 
 #: includes/class-client-dashboard.php:287
 msgid "Aucune intervention ne correspond à vos critères de recherche."
-msgstr "No results match your search criteria."
+msgstr ""
 
 #: includes/class-post-types.php:49
 msgid "Aucune intervention trouvée dans la corbeille."
-msgstr "No items found in the trash."
+msgstr ""
 
 #: includes/class-post-types.php:48
 msgid "Aucune intervention trouvée."
-msgstr "No interventions found."
+msgstr ""
 
 #: includes/class-client-dashboard.php:213
 msgid "Aujourd'hui"
-msgstr "Today"
+msgstr ""
 
 #: includes/class-client-dashboard.php:91
 msgid ""
 "Bienvenue sur votre tableau de bord. Vous pouvez consulter toutes les "
 "interventions réalisées sur vos projets."
 msgstr ""
-"Welcome to your dashboard. You can view all the interventions carried out on "
-"your projects."
 
 #. %s: Nom de l'utilisateur
 #: includes/class-client-dashboard.php:90
 #, php-format
 msgid "Bonjour, %s"
-msgstr "Hello, %s"
+msgstr ""
 
 #: includes/class-client-dashboard.php:215
 msgid "Ce mois"
-msgstr "This month"
+msgstr ""
 
 #: includes/class-client-dashboard.php:216
 msgid "Cette année"
-msgstr "This year"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:125
 msgid "Cette intervention ne sera pas comptabilisée dans le quota"
-msgstr "This intervention will not be counted in the quota"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:123
 msgid "Cette intervention sera comptabilisée dans le quota"
-msgstr "This intervention will be counted towards the quota"
+msgstr ""
 
 #: includes/class-client-dashboard.php:214
 msgid "Cette semaine"
-msgstr "This week"
+msgstr ""
 
 #: includes/class-user-roles.php:40
 msgid "Client"
-msgstr "Client"
+msgstr ""
 
 #: includes/class-client-management.php:32
 msgid "Clients & Projets"
-msgstr "Clients & Projects"
+msgstr ""
 
 #: includes/class-client-management.php:88
 msgid "Clients avec projets"
-msgstr "Clients with projects"
+msgstr ""
 
 #: includes/class-client-management.php:96
 msgid "Clients sans projet"
-msgstr "Clients without a project"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:68
 msgid ""
 "Cochez cette case si l'intervention est terminée. Cela comptera dans le "
 "quota du projet."
 msgstr ""
-"Check this box if the intervention is complete. This will count toward the "
-"project quota."
 
 #: admin/partials/client-projet-fields.php:153
 msgid "Créez d'abord des projets"
-msgstr "First, create projects"
+msgstr ""
 
 #. %1$s: Date
 #: includes/class-client-dashboard.php:279
 #, php-format
-#| msgid "Créée le %s"
 msgid "Créée le %1$s"
-msgstr "Created on %1$s"
+msgstr ""
 
 #: includes/class-client-dashboard.php:253
 msgid "Date :"
-msgstr "Date :"
+msgstr ""
 
-#: admin/partials/projet-fields.php:36 admin/partials/projet-fields.php:137
+#: admin/partials/projet-fields.php:36 admin/partials/projet-fields.php:138
 msgid "Date d'expiration du quota"
-msgstr "Quota expiration date"
+msgstr ""
 
 #: includes/class-admin.php:64 admin/partials/intervention-meta-box.php:29
 msgid "Date d'intervention"
-msgstr "Date of intervention"
+msgstr ""
 
 #: includes/class-admin.php:219 includes/class-client-dashboard.php:208
 msgid "Date de début"
-msgstr "Start date"
+msgstr ""
 
 #: includes/class-admin.php:220 includes/class-client-dashboard.php:210
 msgid "Date de fin"
-msgstr "End date"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:43
 msgid "Date à laquelle l'intervention a été ou sera réalisée."
-msgstr "Date on which the procedure was or will be performed."
+msgstr ""
 
-#: admin/partials/projet-fields.php:40 admin/partials/projet-fields.php:139
+#: admin/partials/projet-fields.php:40 admin/partials/projet-fields.php:140
 msgid "Date à partir de laquelle le quota sera réinitialisé (optionnel)."
-msgstr "Date from which the quota will be reset (optional)."
+msgstr ""
 
 #: includes/class-client-dashboard.php:272
 msgid "Description :"
-msgstr "Description :"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:77
 msgid "Description détaillée"
-msgstr "Detailed description"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:94
 msgid "Description détaillée de l'intervention (optionnel)."
-msgstr "Detailed description of the procedure (optional)."
+msgstr ""
 
 #: includes/class-post-types.php:93
 msgid "Détails de l'intervention"
-msgstr "Details of the intervention"
+msgstr ""
 
 #: includes/class-admin.php:150 includes/class-admin.php:232
 #: includes/class-client-dashboard.php:121
 #: includes/class-client-dashboard.php:203
 #: includes/class-client-dashboard.php:246
 msgid "En cours"
-msgstr "In progress"
+msgstr ""
 
 #: includes/class-client-management.php:62
 msgid "Erreur lors de la mise à jour"
-msgstr "Error during update"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:116
 msgid "Expiration:"
-msgstr "Expiration:"
+msgstr ""
 
 #. %1$s: expiration date
 #: includes/class-client-dashboard.php:166
 #, php-format
-#| msgid "Expire le : %s"
 msgid "Expire le : %1$s"
-msgstr "Expires on: %1$s"
+msgstr ""
 
 #. Author of the plugin
 msgid "FAB2DEV"
-msgstr "FAB2DEV"
+msgstr ""
 
 #: includes/class-client-management.php:31
 msgid "Gestion des Clients"
-msgstr "Clients Management"
+msgstr ""
 
 #: includes/class-client-management.php:82
 msgid "Gestion des Clients et Projets"
-msgstr "Clients and Projects Management"
+msgstr ""
 
 #. Author URI of the plugin
 msgid "https://fab2dev.com"
-msgstr "https://fab2dev.com"
+msgstr ""
 
 #. URI of the plugin
 msgid "https://github.com/fabricelifaa/suivi-interventions/releases"
-msgstr "https://github.com/fabricelifaa/suivi-interventions/releases"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:19
 msgid "Informations Client"
-msgstr "Client Information"
+msgstr ""
 
-#: admin/partials/projet-fields.php:56 admin/partials/projet-fields.php:149
+#: admin/partials/projet-fields.php:56 admin/partials/projet-fields.php:150
 msgid "Informations client"
-msgstr "Client Information"
+msgstr ""
 
-#: admin/partials/projet-fields.php:60 admin/partials/projet-fields.php:151
+#: admin/partials/projet-fields.php:60 admin/partials/projet-fields.php:152
 msgid ""
 "Informations sur le client : contact, notes spéciales, etc. (optionnel)."
-msgstr "Client information: contact details, special notes, etc. (optional)."
+msgstr ""
 
 #: includes/class-post-types.php:37 includes/class-post-types.php:39
 msgid "Intervention"
-msgstr "Intervention"
+msgstr ""
 
 #: includes/class-post-types.php:47
 msgid "Intervention parent :"
-msgstr "Parent intervention:"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:65
 msgid "Intervention terminée"
-msgstr "Intervention completed"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:174
 msgid "Intervention(s) visible(s)"
-msgstr "Visible intervention(s)"
+msgstr ""
 
 #: includes/class-post-types.php:36 includes/class-post-types.php:38
 msgid "Interventions"
-msgstr "Interventions"
+msgstr ""
 
 #: includes/class-client-dashboard.php:113
 msgid "Interventions terminées"
-msgstr "Interventions completed"
+msgstr ""
 
 #: includes/class-client-management.php:166
 msgid "Interventions visibles"
-msgstr "Visible interventions"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:108
 msgid "La date d'intervention est requise."
-msgstr "The date of intervention is required."
+msgstr ""
 
 #: includes/functions-helper.php:399
 #, php-format
@@ -346,292 +332,287 @@ msgid ""
 "Le plugin Suivi des Interventions nécessite WordPress %1s ou supérieur. "
 "Version actuelle: %2s"
 msgstr ""
-"The Intervention Tracking plugin requires WordPress %1$s or higher. Current "
-"version: %2$s"
 
 #: includes/class-client-management.php:211
 msgid ""
 "Le projet sera ajouté aux clients sélectionnés (sans supprimer leurs projets "
 "existants)"
 msgstr ""
-"The project will be added to selected clients (without deleting their "
-"existing projects)."
 
 #: includes/class-client-management.php:119
 msgid "Liaisons Client ↔ Projet existantes"
-msgstr "Existing Customer ↔ Project links"
+msgstr ""
 
 #: includes/class-client-management.php:61
 msgid "Liaisons mises à jour avec succès"
-msgstr "Links successfully updated"
+msgstr ""
 
 #: includes/class-client-dashboard.php:231
 msgid "Liste des interventions"
-msgstr "List of interventions"
+msgstr ""
 
 #: includes/class-client-dashboard.php:30
 #: includes/class-client-dashboard.php:31
 #: includes/class-client-dashboard.php:85
 msgid "Mes Interventions"
-msgstr "My Interventions"
+msgstr ""
 
 #: includes/class-taxonomies.php:46
 msgid "Mettre à jour le projet"
-msgstr "Update the project"
+msgstr ""
 
 #: includes/class-client-dashboard.php:95
 msgid "Mode Consultation"
-msgstr "Consultation Mode"
+msgstr ""
 
 #: includes/class-client-restrictions.php:307
 msgid "Mode lecture seule"
-msgstr "Read-only mode"
+msgstr ""
 
 #: includes/class-client-management.php:129
 msgid "Modifier"
-msgstr "Edit"
+msgstr ""
 
 #: includes/class-post-types.php:43
 msgid "Modifier l'intervention"
-msgstr "Edit the intervention"
+msgstr ""
 
 #: includes/class-taxonomies.php:45
 msgid "Modifier le projet"
-msgstr "Edit the project"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:34
 msgid "Nom de la société ou organisation du client."
-msgstr "Name of the client's company or organization."
+msgstr ""
 
-#: admin/partials/projet-fields.php:30 admin/partials/projet-fields.php:133
+#: admin/partials/projet-fields.php:30 admin/partials/projet-fields.php:134
 msgid "Nombre maximum d'interventions autorisées pour ce projet."
-msgstr "Maximum number of interventions allowed for this project."
+msgstr ""
 
 #: includes/class-admin.php:105 includes/class-client-dashboard.php:341
 msgid "Non définie"
-msgstr "Not defined"
+msgstr ""
 
 #: includes/class-taxonomies.php:48
 msgid "Nouveau nom de projet"
-msgstr "New project name"
+msgstr ""
 
 #: includes/class-post-types.php:42
 msgid "Nouvelle intervention"
-msgstr "New intervention"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:50
 msgid "Numéro de téléphone de contact du client."
-msgstr "Client's contact phone number."
+msgstr ""
 
 #: includes/class-admin.php:138
 msgid "Pas de quota"
-msgstr "No quota"
+msgstr ""
 
 #: admin/partials/projet-fields.php:67
 msgid "Progression actuelle"
-msgstr "Current progress"
+msgstr ""
 
 #: includes/class-admin.php:66
 msgid "Progression Quota"
-msgstr "Quota Progression"
+msgstr ""
 
 #: includes/class-admin.php:65 includes/class-taxonomies.php:40
 msgid "Projet"
-msgstr "Project"
+msgstr ""
 
 #: includes/class-client-dashboard.php:259
 msgid "Projet :"
-msgstr "Project :"
+msgstr ""
 
 #: includes/class-admin.php:428
 msgid "Projet mis à jour avec succès."
-msgstr "Project successfully updated."
+msgstr ""
 
 #: includes/class-taxonomies.php:43
 msgid "Projet parent"
-msgstr "Parent project"
+msgstr ""
 
 #: includes/class-taxonomies.php:44
 msgid "Projet parent :"
-msgstr "Parent project :"
+msgstr ""
 
 #: includes/class-client-dashboard.php:105
 msgid "Projet(s)"
-msgstr "Projetc(s)"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:170
 msgid "Projet(s) autorisé(s)"
-msgstr "Authorized project(s)"
+msgstr ""
 
 #: includes/class-taxonomies.php:39 includes/class-taxonomies.php:49
 #: admin/partials/client-projet-fields.php:60
 msgid "Projets"
-msgstr "Projects"
+msgstr ""
 
 #: includes/class-client-management.php:135
 msgid "Projets assignés:"
-msgstr "Assigned projects:"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:55
 msgid "Projets autorisés"
-msgstr "Authorized projects"
+msgstr ""
 
 #: includes/class-client-management.php:92
 msgid "Projets total"
-msgstr "Total projects"
+msgstr ""
 
-#: admin/partials/projet-fields.php:26 admin/partials/projet-fields.php:131
+#: admin/partials/projet-fields.php:26 admin/partials/projet-fields.php:132
 msgid "Quota d'interventions"
-msgstr "Intervention quota"
+msgstr ""
 
 #. %1$d = quota, %2$d = used, %3$.1f = percentage with one decimal
 #: admin/partials/client-projet-fields.php:89
 #, php-format
 msgid "Quota: %1$d interventions | Utilisé: %2$d (%3$.1f%%)"
-msgstr "Quota: %1$d interventions | Used: %2$d (%3$.1f%%)"
+msgstr ""
 
 #: includes/class-post-types.php:46
 msgid "Rechercher des interventions"
-msgstr "Search for interventions"
+msgstr ""
 
 #: includes/class-taxonomies.php:41
 msgid "Rechercher des projets"
-msgstr "Search for projects"
+msgstr ""
 
 #: includes/class-client-dashboard.php:220
 msgid "Rechercher..."
-msgstr "Search..."
+msgstr ""
 
 #. %1$d: remaining, %2$.1f: percentage
-#: admin/partials/projet-fields.php:88
+#: admin/partials/projet-fields.php:89
 #, php-format
 msgid "Restant : %1$d | Pourcentage utilisé : %2$.1f%%"
-msgstr "Remaining: %1$d | Percentage used: %2$.1f%%"
+msgstr ""
 
 #: includes/class-client-dashboard.php:224
 msgid "Réinitialiser"
-msgstr "Reset"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:162
 msgid "Résumé des accès"
-msgstr "Summary of accesses"
+msgstr ""
 
 #: includes/class-client-dashboard.php:332
 msgid "Sans projet"
-msgstr "Without a project"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:24
 msgid "Société/Organisation"
-msgstr "Company/Organization"
+msgstr ""
 
 #: includes/class-admin.php:67
 msgid "Statut"
-msgstr "Status"
+msgstr ""
 
 #: admin/partials/intervention-meta-box.php:50
 #: admin/partials/intervention-meta-box.php:55
 msgid "Statut de l'intervention"
-msgstr "Status of the intervention"
+msgstr ""
 
 #. Name of the plugin
 msgid "Suivi des Interventions"
-msgstr "Follow-up on Interventions"
+msgstr ""
 
 #: includes/class-client-management.php:198
 msgid "Sélectionner des clients"
-msgstr "Select clients"
+msgstr ""
 
 #: includes/class-client-management.php:187
 msgid "Sélectionner un projet"
-msgstr "Select a project"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:137
 msgid ""
 "Sélectionnez les projets que ce client peut voir. Le client ne pourra "
 "consulter que les interventions liées à ces projets."
 msgstr ""
-"Select the projects that this client can see. The client will only be able "
-"to view the tasks related to these projects."
 
 #: includes/class-client-restrictions.php:292
 msgid "Tableau de bord Client"
-msgstr "Client Dashboard"
+msgstr ""
 
 #: includes/class-admin.php:148 includes/class-client-dashboard.php:246
 msgid "Terminée"
-msgstr "Finished"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:178
 msgid "Terminée(s)"
-msgstr "Finished"
+msgstr ""
 
 #: includes/class-admin.php:231 includes/class-client-dashboard.php:202
 #: includes/class-client-management.php:170
 msgid "Terminées"
-msgstr "Finished"
+msgstr ""
 
 #: includes/class-client-dashboard.php:129
 msgid "Total interventions"
-msgstr "Total interventions"
+msgstr ""
 
 #: includes/class-admin.php:252 includes/class-client-dashboard.php:194
 #: includes/class-taxonomies.php:42
 msgid "Tous les projets"
-msgstr "All projects"
+msgstr ""
 
 #: includes/class-admin.php:230 includes/class-client-dashboard.php:201
 msgid "Tous les statuts"
-msgstr "All statuses"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:145
 msgid "Tout désélectionner"
-msgstr "Deselect all"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:142
 msgid "Tout sélectionner"
-msgstr "Select All"
+msgstr ""
 
 #: includes/class-post-types.php:45
 msgid "Toutes les interventions"
-msgstr "All interventions"
+msgstr ""
 
 #: admin/partials/client-projet-fields.php:40
 msgid "Téléphone de contact"
-msgstr "Phone number"
+msgstr ""
 
-#: admin/partials/projet-fields.php:46 admin/partials/projet-fields.php:143
+#: admin/partials/projet-fields.php:46 admin/partials/projet-fields.php:144
 msgid "URL du projet"
-msgstr "Project URL"
+msgstr ""
 
-#: admin/partials/projet-fields.php:50 admin/partials/projet-fields.php:145
+#: admin/partials/projet-fields.php:50 admin/partials/projet-fields.php:146
 msgid "URL du site web ou du projet (optionnel)."
-msgstr "Website or project URL (optional)."
+msgstr ""
 
 #: includes/class-post-types.php:44
 msgid "Voir l'intervention"
-msgstr "See the intervention"
+msgstr ""
 
 #: includes/class-client-dashboard.php:173
 #: admin/partials/client-projet-fields.php:126
 msgid "Voir le site"
-msgstr "Visit website"
+msgstr ""
 
 #: includes/class-client-dashboard.php:137
 msgid "Vos Projets"
-msgstr "Your Projects"
+msgstr ""
 
 #: includes/class-client-restrictions.php:295
 msgid "Vos projets autorisés :"
-msgstr "Your approved projects:"
+msgstr ""
 
 #: includes/class-client-management.php:60
 msgid "Êtes-vous sûr de vouloir supprimer cette liaison ?"
-msgstr "Are you sure you want to delete this link?"
+msgstr ""
 
 #: includes/class-client-management.php:103
 msgid "⚠ Clients sans projets assignés"
-msgstr "⚠ Clients without assigned projects"
+msgstr ""
 
 #. Description of the plugin
-msgid "📋 Plugin professionnel de suivi des interventions et mises à jour"
-msgstr "📋 Professional plugin for tracking interventions and updates"
+msgid ""
+"📋 Plugin professionnel pour le suivi des interventions et des mises à jour"
+msgstr ""

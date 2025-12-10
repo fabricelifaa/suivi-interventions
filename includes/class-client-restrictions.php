@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class SI_Client_Restrictions {
+class SUIVDEIN_Client_Restrictions {
     
     /**
      * Constructeur
@@ -126,7 +126,7 @@ class SI_Client_Restrictions {
         
         // Rediriger depuis le dashboard WordPress natif
         if ($pagenow === 'index.php') {
-            wp_redirect(admin_url('admin.php?page=client-interventions'));
+            wp_safe_redirect(admin_url('admin.php?page=client-interventions'));
             exit;
         }
     }
@@ -149,7 +149,7 @@ class SI_Client_Restrictions {
         if ($pagenow === 'admin.php') {
             $page = isset($_GET['page']) ? $_GET['page'] : '';
             if ($page !== 'client-interventions') {
-                wp_redirect(admin_url('admin.php?page=client-interventions'));
+                wp_safe_redirect(admin_url('admin.php?page=client-interventions'));
                 exit;
             }
             return; // Page autorisée
@@ -161,7 +161,7 @@ class SI_Client_Restrictions {
         }
         
         // Bloquer toutes les autres pages et rediriger
-        wp_redirect(admin_url('admin.php?page=client-interventions'));
+        wp_safe_redirect(admin_url('admin.php?page=client-interventions'));
         exit;
     }
     
@@ -179,7 +179,7 @@ class SI_Client_Restrictions {
         }
         
         $user_id = get_current_user_id();
-        $client_projets = SI_User_Roles::get_client_projets($user_id);
+        $client_projets = SUIVDEIN_User_Roles::get_client_projets($user_id);
         
         if (!empty($client_projets)) {
             // Afficher seulement les interventions des projets autorisés
@@ -212,7 +212,7 @@ class SI_Client_Restrictions {
      */
     public function hide_interface_elements() {
         $user_id = get_current_user_id();
-        $client_projets = SI_User_Roles::get_client_projets($user_id);
+        $client_projets = SUIVDEIN_User_Roles::get_client_projets($user_id);
         $projet_names = array();
         
         // Récupérer les noms des projets
@@ -224,100 +224,6 @@ class SI_Client_Restrictions {
                 }
             }
         }
-        
-        ?>
-        <style>
-            /* Masquer les éléments d'ajout/édition */
-            .page-title-action,
-            .add-new-h2,
-            .add-new,
-            .row-actions .edit,
-            .row-actions .trash,
-            .row-actions .delete,
-            .row-actions .inline,
-            .tablenav .actions,
-            .check-column,
-            .column-cb,
-            #bulk-action-selector-top,
-            #bulk-action-selector-bottom,
-            .bulkactions,
-            #doaction,
-            #doaction2 {
-                display: none !important;
-            }
-            
-            /* Styles pour la zone d'informations client */
-            .client-info-banner {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 15px;
-                margin: 10px 0 20px 0;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-            
-            .client-info-banner h3 {
-                margin: 0 0 10px 0;
-                color: white;
-                font-size: 16px;
-            }
-            
-            .client-info-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .client-projets-list {
-                background: rgba(255,255,255,0.2);
-                padding: 8px 12px;
-                border-radius: 4px;
-                display: inline-block;
-            }
-            
-            /* Responsive */
-            @media (max-width: 768px) {
-                .client-info-content {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 10px;
-                }
-            }
-        </style>
-        
-        <script>
-        jQuery(document).ready(function($) {
-            // Ajouter la bannière d'informations client
-            var bannerHtml = '<div class="client-info-banner">' +
-                '<h3><?php esc_attr_e("Tableau de bord Client", "suivi-interventions"); ?></h3>' +
-                '<div class="client-info-content">' +
-                '<div>' +
-                '<strong><?php esc_attr_e("Vos projets autorisés :", "suivi-interventions"); ?></strong><br>' +
-                '<span class="client-projets-list">';
-            
-            <?php if (!empty($projet_names)) : ?>
-                bannerHtml += '<?php echo implode(", ", $projet_names); ?>';
-            <?php else : ?>
-                bannerHtml += '<?php esc_attr_e("Aucun projet assigné", "suivi-interventions"); ?>';
-            <?php endif; ?>
-            
-            bannerHtml += '</span>' +
-                '</div>' +
-                '<div>' +
-                '<small><?php esc_attr_e("Mode lecture seule", "suivi-interventions"); ?></small>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-            
-            $('.wrap h1').first().after(bannerHtml);
-            
-            // Masquer la colonne de sélection dans les tableaux
-            $('.wp-list-table .check-column').remove();
-            $('.wp-list-table thead tr th:first-child').remove();
-            $('.wp-list-table tbody tr td:first-child').remove();
-        });
-        </script>
-        <?php
     }
     
     /**
@@ -337,7 +243,7 @@ class SI_Client_Restrictions {
                 error_log('Redirecting from dashboard to interventions');
             }
             
-            wp_redirect(admin_url('edit.php?post_type=intervention'));
+            wp_safe_redirect(admin_url('edit.php?post_type=intervention'));
             exit;
         }
     }
@@ -398,77 +304,6 @@ class SI_Client_Restrictions {
     public function force_hide_menus() {
         global $pagenow;
         
-        ?>
-        <style>
-            /* Masquer tous les menus sauf interventions */
-            #menu-dashboard,
-            #menu-posts,
-            #menu-media,
-            #menu-pages,
-            #menu-comments,
-            #menu-appearance,
-            #menu-plugins,
-            #menu-users,
-            #menu-tools,
-            #menu-settings,
-            .wp-menu-separator {
-                display: none !important;
-            }
-            
-            /* S'assurer que le menu interventions est visible */
-            #menu-posts-intervention {
-                display: block !important;
-            }
-            
-            /* Simplifier le menu interventions */
-            #menu-posts-intervention .wp-submenu li:not(.wp-first-item) {
-                display: none !important;
-            }
-        </style>
-        
-        <script>
-        jQuery(document).ready(function($) {
-            console.log('=== FORCE HIDE MENUS ACTIVE ===');
-            console.log('Page actuelle: <?php echo $pagenow; ?>');
-            
-            // Ne vérifier le menu que sur les pages où il devrait être visible
-            var checkPages = ['edit.php', 'index.php'];
-            var currentPage = '<?php echo $pagenow; ?>';
-            
-            if (checkPages.indexOf(currentPage) === -1 && currentPage !== '') {
-                console.log('Page profil ou autre, pas de vérification du menu');
-                return; // Ne pas vérifier sur profile.php
-            }
-            
-            // Vérifier si le menu interventions existe
-            var interventionMenu = $('#menu-posts-intervention');
-            console.log('Menu interventions trouvé:', interventionMenu.length > 0);
-            
-            if (interventionMenu.length === 0) {
-                console.error('ATTENTION: Menu interventions introuvable !');
-                
-                // Afficher un message d'erreur UNIQUEMENT sur la page des interventions
-                if (window.location.href.indexOf('post_type=intervention') !== -1) {
-                    $('.wrap').prepend('<div class="notice notice-error"><p><strong>Erreur:</strong> Le menu des interventions n\'est pas accessible. Contactez l\'administrateur.</p></div>');
-                }
-            } else {
-                console.log('Menu interventions OK');
-                
-                // Masquer les sous-menus sauf "Toutes les interventions"
-                interventionMenu.find('.wp-submenu li').each(function() {
-                    if (!$(this).hasClass('wp-first-item')) {
-                        $(this).remove();
-                    }
-                });
-            }
-            
-            // Log tous les menus visibles
-            console.log('Menus visibles:', $('.wp-menu-name').map(function() {
-                return $(this).text();
-            }).get());
-        });
-        </script>
-        <?php
     }
     
     /**
@@ -521,7 +356,7 @@ class SI_Client_Restrictions {
         }
         
         $user_id = get_current_user_id();
-        $client_info = SI_User_Roles::get_client_info($user_id);
+        $client_info = SUIVDEIN_User_Roles::get_client_info($user_id);
         
         if (empty($client_info['projets'])) {
             ?>
@@ -544,7 +379,7 @@ class SI_Client_Restrictions {
         }
         
         // Récupérer les projets du client
-        $client_projets = SI_User_Roles::get_client_projets($user_id);
+        $client_projets = SUIVDEIN_User_Roles::get_client_projets($user_id);
         
         if (empty($client_projets)) {
             return false;
@@ -571,7 +406,7 @@ class SI_Client_Restrictions {
             $user_id = get_current_user_id();
         }
         
-        $client_projets = SI_User_Roles::get_client_projets($user_id);
+        $client_projets = SUIVDEIN_User_Roles::get_client_projets($user_id);
         
         if (empty($client_projets)) {
             return array(

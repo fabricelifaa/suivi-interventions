@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Suivi des Interventions
  * Plugin URI: https://github.com/fabricelifaa/suivi-interventions/releases
- * Description: 📋 Plugin professionnel de suivi des interventions et mises à jour
- * Version: 1.2.2
+ * Description: 📋 Professional plugin for tracking interventions and updates
+ * Version: 1.2.3
  * Author: FAB2DEV
  * Author URI: https://fab2dev.com
  * Text Domain: suivi-des-interventions
@@ -17,16 +17,16 @@ if (!defined('ABSPATH')) {
 }
 
 // Définir les constantes du plugin
-if (!defined('SUIVI_INTERVENTIONS_VERSION')) {
-    define('SUIVI_INTERVENTIONS_VERSION', '1.0.0');
+if (!defined('SUIVDEIN_VERSION')) {
+    define('SUIVDEIN_VERSION', '1.0.0');
 }
 
-if (!defined('SUIVI_INTERVENTIONS_PLUGIN_DIR')) {
-    define('SUIVI_INTERVENTIONS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+if (!defined('SUIVDEIN_PLUGIN_DIR')) {
+    define('SUIVDEIN_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-if (!defined('SUIVI_INTERVENTIONS_PLUGIN_URL')) {
-    define('SUIVI_INTERVENTIONS_PLUGIN_URL', plugin_dir_url(__FILE__));
+if (!defined('SUIVDEIN_PLUGIN_URL')) {
+    define('SUIVDEIN_PLUGIN_URL', plugin_dir_url(__FILE__));
 }
 
 if (!defined('SUIVI_INTERVENTIONS_PLUGIN_BASENAME')) {
@@ -36,17 +36,17 @@ if (!defined('SUIVI_INTERVENTIONS_PLUGIN_BASENAME')) {
 /**
  * Charger les fichiers requis
  */
-function suivi_interventions_load_files() {
+function suivdein_load_files() {
     // Charger la classe principale
-    require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/functions-helper.php';
-    require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-suivi-interventions.php';
+    require_once SUIVDEIN_PLUGIN_DIR . 'includes/functions-helper.php';
+    require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-suivi-interventions.php';
 }
 
 /**
  * Initialiser le plugin
  */
-function suivi_interventions_init() {
-    suivi_interventions_load_files();
+function suivdein_init() {
+    suivdein_load_files();
     
     // Instancier la classe principale
     $plugin = Suivi_Interventions::get_instance();
@@ -56,8 +56,8 @@ function suivi_interventions_init() {
 /**
  * Activation du plugin
  */
-function suivi_interventions_activate() {
-    suivi_interventions_load_files();
+function suivdein_activate() {
+    suivdein_load_files();
     $plugin = Suivi_Interventions::get_instance();
     $plugin->activate();
 }
@@ -65,15 +65,15 @@ function suivi_interventions_activate() {
 /**
  * Désactivation du plugin
  */
-function suivi_interventions_deactivate() {
-    suivi_interventions_load_files();
+function suivdein_deactivate() {
+    suivdein_load_files();
     $plugin = Suivi_Interventions::get_instance();
     $plugin->deactivate();
 }
 
 // Hooks d'activation et désactivation
-register_activation_hook(__FILE__, 'suivi_interventions_activate');
-register_deactivation_hook(__FILE__, 'suivi_interventions_deactivate');
+register_activation_hook(__FILE__, 'suivdein_activate');
+register_deactivation_hook(__FILE__, 'suivdein_deactivate');
 
 // Initialiser le plugin - PRIORITÉ HAUTE pour s'assurer du chargement
-add_action('init', 'suivi_interventions_init', 2);
+add_action('init', 'suivdein_init', 2);

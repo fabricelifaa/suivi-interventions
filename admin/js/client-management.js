@@ -289,21 +289,21 @@
          * Mise à jour AJAX des projets client
          */
         updateClientProjects: function(clientId, projectIds) {
-            $.post(siClientManagement.ajaxurl, {
+            $.post(suivdeinClientManagement.ajaxurl, {
                 action: 'si_update_client_projects',
-                nonce: siClientManagement.nonce,
+                nonce: suivdeinClientManagement.nonce,
                 client_id: clientId,
                 project_ids: projectIds
             })
             .done(function(response) {
                 if (response.success) {
-                    ClientManagement.showNotification(siClientManagement.strings.success_update, 'success');
+                    ClientManagement.showNotification(suivdeinClientManagement.strings.success_update, 'success');
                 } else {
-                    ClientManagement.showNotification(siClientManagement.strings.error_update, 'error');
+                    ClientManagement.showNotification(suivdeinClientManagement.strings.error_update, 'error');
                 }
             })
             .fail(function() {
-                ClientManagement.showNotification(siClientManagement.strings.error_update, 'error');
+                ClientManagement.showNotification(suivdeinClientManagement.strings.error_update, 'error');
             });
         }
     };

@@ -59,13 +59,13 @@ class Suivi_Interventions {
      */
     private function load_dependencies() {
         // Classes principales
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-post-types.php';
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-taxonomies.php';
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-user-roles.php';
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-admin.php';
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-client-restrictions.php';
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-client-management.php';
-        require_once SUIVI_INTERVENTIONS_PLUGIN_DIR . 'includes/class-client-dashboard.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-post-types.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-taxonomies.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-user-roles.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-admin.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-client-restrictions.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-client-management.php';
+        require_once SUIVDEIN_PLUGIN_DIR . 'includes/class-client-dashboard.php';
     }
     
     /**
@@ -128,22 +128,22 @@ class Suivi_Interventions {
      */
     public function init() {
         // Instancier les classes - elles s'enregistreront automatiquement
-        $this->post_types = new SI_Post_Types();
-        $this->taxonomies = new SI_Taxonomies();
-        $this->user_roles = new SI_User_Roles();
+        $this->post_types = new SUIVDEIN_Post_Types();
+        $this->taxonomies = new SUIVDEIN_Taxonomies();
+        $this->user_roles = new SUIVDEIN_User_Roles();
         
         if (is_admin()) {
-            $this->admin = new SI_Admin();
-            $this->client_management = new SI_Client_Management();
+            $this->admin = new SUIVDEIN_Admin();
+            $this->client_management = new SUIVDEIN_Client_Management();
             // Dashboard client uniquement pour les clients
             if (current_user_can('bsdclient') && !current_user_can('administrator')) {
-                $this->client_dashboard = new SI_Client_Dashboard();
+                $this->client_dashboard = new SUIVDEIN_Client_Dashboard();
             }
         }
         
         // Restrictions clients
         if (current_user_can('bsdclient') && !current_user_can('administrator')) {
-            $this->client_restrictions = new SI_Client_Restrictions();
+            $this->client_restrictions = new SUIVDEIN_Client_Restrictions();
         }
     }
     
@@ -170,9 +170,9 @@ class Suivi_Interventions {
      */
     public function activate() {
         // Créer les post types et taxonomies
-        $this->post_types = new SI_Post_Types();
-        $this->taxonomies = new SI_Taxonomies();
-        $this->user_roles = new SI_User_Roles();
+        $this->post_types = new SUIVDEIN_Post_Types();
+        $this->taxonomies = new SUIVDEIN_Taxonomies();
+        $this->user_roles = new SUIVDEIN_User_Roles();
         
         $this->post_types->register_post_type();
         $this->taxonomies->register_taxonomy();

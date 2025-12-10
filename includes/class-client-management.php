@@ -11,15 +11,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class SI_Client_Management {
+class SUIVDEIN_Client_Management {
     
     /**
      * Constructeur
      */
     public function __construct() {
         add_action('admin_menu', array($this, 'add_management_page'));
-        add_action('wp_ajax_si_update_client_projects', array($this, 'ajax_update_client_projects'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('wp_ajax_suivdein_update_client_projects', array($this, 'ajax_update_client_projects'));
+        add_action('admin_enqueue_scripts', array($this, 'suivdein_enqueue_scripts'));
     }
     
     /**
@@ -39,7 +39,7 @@ class SI_Client_Management {
     /**
      * Enqueue les scripts
      */
-    public function enqueue_scripts($hook) {
+    public function suivdein_enqueue_scripts($hook) {
         if (strpos($hook, 'si-client-management') === false) {
             return;
         }
@@ -47,19 +47,19 @@ class SI_Client_Management {
         wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script(
             'si-client-management',
-            SUIVI_INTERVENTIONS_PLUGIN_URL . 'admin/js/client-management.js',
+            SUIVDEIN_PLUGIN_URL . 'admin/js/client-management.js',
             array('jquery', 'jquery-ui-sortable'),
-            SUIVI_INTERVENTIONS_VERSION,
+            SUIVDEIN_VERSION,
             true
         );
         
-        wp_localize_script('si-client-management', 'siClientManagement', array(
+        wp_localize_script('si-client-management', 'suivdeinClientManagement', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('si_client_management'),
             'strings' => array(
-                'confirm_delete' => esc_attr_e('Êtes-vous sûr de vouloir supprimer cette liaison ?', 'suivi-des-interventions'),
-                'success_update' => esc_attr_e('Liaisons mises à jour avec succès', 'suivi-des-interventions'),
-                'error_update' => esc_attr_e('Erreur lors de la mise à jour', 'suivi-des-interventions')
+                'confirm_delete' => esc_html__('Êtes-vous sûr de vouloir supprimer cette liaison ?', 'suivi-des-interventions'),
+                'success_update' => esc_html__('Liaisons mises à jour avec succès', 'suivi-des-interventions'),
+                'error_update' => esc_html__('Erreur lors de la mise à jour', 'suivi-des-interventions')
             )
         ));
     }
@@ -106,7 +106,7 @@ class SI_Client_Management {
                         <div class="unassigned-client">
                             <strong><?php echo esc_html($client->display_name); ?></strong>
                             <span>(<?php echo esc_html($client->user_email); ?>)</span>
-                            <a href="<?php echo admin_url('user-edit.php?user_id=' . $client->ID); ?>" class="button button-small">
+                            <a href="<?php echo esc_url(admin_url('user-edit.php?user_id=' . $client->ID)); ?>" class="button button-small">
                                 <?php esc_attr_e('Assigner des projets', 'suivi-des-interventions'); ?>
                             </a>
                         </div>
@@ -120,12 +120,12 @@ class SI_Client_Management {
             
             <div class="si-client-projects-grid">
                 <?php foreach ($clients as $client_data) : ?>
-                    <div class="client-project-card" data-client-id="<?php echo $client_data['client']->ID; ?>">
+                    <div class="client-project-card" data-client-id="<?php echo esc_attr($client_data['client']->ID); ?>">
                         <div class="client-header">
                             <h3><?php echo esc_html($client_data['client']->display_name); ?></h3>
                             <span class="client-email"><?php echo esc_html($client_data['client']->user_email); ?></span>
                             <div class="client-actions">
-                                <a href="<?php echo admin_url('user-edit.php?user_id=' . $client_data['client']->ID); ?>" class="button button-small">
+                                <a href="<?php echo esc_url(admin_url('user-edit.php?user_id=' . $client_data['client']->ID)); ?>" class="button button-small">
                                     <?php esc_attr_e('Modifier', 'suivi-des-interventions'); ?>
                                 </a>
                             </div>
@@ -139,15 +139,15 @@ class SI_Client_Management {
                                         <li class="project-item">
                                             <span class="project-name"><?php echo esc_html($project->name); ?></span>
                                             <?php
-                                            $progression = SI_Taxonomies::get_projet_progression($project->term_id);
-                                            $color_class = si_get_progress_color_class($progression['percentage']);
+                                            $progression = SUIVDEIN_Taxonomies::get_projet_progression($project->term_id);
+                                            $color_class = suivdein_get_progress_color_class($progression['percentage']);
                                             ?>
                                             <div class="mini-progress">
                                                 <div class="mini-progress-bar">
-                                                    <div class="mini-progress-fill <?php echo $color_class; ?>" 
-                                                         style="width: <?php echo min(100, $progression['percentage']); ?>%"></div>
+                                                    <div class="mini-progress-fill <?php echo esc_attr($color_class); ?>" 
+                                                         style="width: <?php echo esc_attr(min(100, $progression['percentage'])); ?>%"></div>
                                                 </div>
-                                                <span class="progress-text"><?php echo $progression['used']; ?>/<?php echo $progression['quota']; ?></span>
+                                                <span class="progress-text"><?php echo esc_html($progression['used']); ?>/<?php echo esc_html($progression['quota']); ?></span>
                                             </div>
                                         </li>
                                     <?php endforeach; ?>
@@ -159,14 +159,14 @@ class SI_Client_Management {
                             <!-- Statistiques du client -->
                             <div class="client-stats">
                                 <?php
-                                $stats = SI_Client_Restrictions::get_client_stats($client_data['client']->ID);
+                                $stats = SUIVDEIN_Client_Restrictions::get_client_stats($client_data['client']->ID);
                                 ?>
                                 <div class="stat-item">
-                                    <span class="stat-number"><?php echo $stats['total_interventions']; ?></span>
+                                    <span class="stat-number"><?php echo esc_html($stats['total_interventions']); ?></span>
                                     <span class="stat-label"><?php esc_attr_e('Interventions visibles', 'suivi-des-interventions'); ?></span>
                                 </div>
                                 <div class="stat-item">
-                                    <span class="stat-number"><?php echo $stats['interventions_terminees']; ?></span>
+                                    <span class="stat-number"><?php echo esc_html($stats['interventions_terminees']); ?></span>
                                     <span class="stat-label"><?php esc_attr_e('Terminées', 'suivi-des-interventions'); ?></span>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@ class SI_Client_Management {
                                 <select name="bulk_project" id="bulk_project" required>
                                     <option value=""><?php esc_attr_e('-- Choisir un projet --', 'suivi-des-interventions'); ?></option>
                                     <?php foreach ($projects as $project) : ?>
-                                        <option value="<?php echo $project->term_id; ?>"><?php echo esc_html($project->name); ?></option>
+                                        <option value="<?php echo esc_attr($project->term_id); ?>"><?php echo esc_html($project->name); ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
@@ -203,7 +203,7 @@ class SI_Client_Management {
                                     foreach ($all_clients as $client) :
                                     ?>
                                         <label class="client-checkbox-label">
-                                            <input type="checkbox" name="bulk_clients[]" value="<?php echo $client->ID; ?>">
+                                            <input type="checkbox" name="bulk_clients[]" value="<?php echo esc_attr($client->ID); ?>">
                                             <?php echo esc_html($client->display_name); ?> (<?php echo esc_html($client->user_email); ?>)
                                         </label>
                                     <?php endforeach; ?>
@@ -217,196 +217,7 @@ class SI_Client_Management {
                 </form>
             </div>
         </div>
-        
-        <style>
-        .si-stats-cards {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .stats-card {
-            background: white;
-            border: 1px solid #ccd0d4;
-            border-radius: 4px;
-            padding: 20px;
-            text-align: center;
-            min-width: 120px;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-        }
-        
-        .stats-card h3 {
-            font-size: 32px;
-            margin: 0 0 10px 0;
-            color: #0073aa;
-        }
-        
-        .stats-card p {
-            margin: 0;
-            color: #646970;
-            font-size: 13px;
-        }
-        
-        .si-unassigned-section {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 4px;
-            padding: 15px;
-            margin: 20px 0;
-        }
-        
-        .unassigned-clients {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .unassigned-client {
-            background: white;
-            padding: 10px 15px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .si-client-projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .client-project-card {
-            background: white;
-            border: 1px solid #ccd0d4;
-            border-radius: 6px;
-            padding: 20px;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-        }
-        
-        .client-header {
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .client-header h3 {
-            margin: 0 0 5px 0;
-            color: #1d2327;
-        }
-        
-        .client-email {
-            color: #646970;
-            font-size: 13px;
-        }
-        
-        .client-actions {
-            margin-top: 10px;
-        }
-        
-        .project-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        
-        .project-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .project-item:last-child {
-            border-bottom: none;
-        }
-        
-        .mini-progress {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .mini-progress-bar {
-            width: 60px;
-            height: 8px;
-            background: #f0f0f0;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .mini-progress-fill {
-            height: 100%;
-            transition: width 0.3s ease;
-        }
-        
-        .progress-text {
-            font-size: 11px;
-            color: #646970;
-        }
-        
-        .client-stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #f0f0f0;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            display: block;
-            font-size: 18px;
-            font-weight: 600;
-            color: #0073aa;
-        }
-        
-        .stat-label {
-            font-size: 11px;
-            color: #646970;
-            text-transform: uppercase;
-        }
-        
-        .si-bulk-assignment {
-            background: white;
-            border: 1px solid #ccd0d4;
-            border-radius: 4px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .client-checkboxes {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            background: #fafafa;
-        }
-        
-        .client-checkbox-label {
-            display: block;
-            padding: 5px;
-            margin-bottom: 5px;
-        }
-        
-        .client-checkbox-label:hover {
-            background: rgba(0,115,170,0.1);
-            border-radius: 3px;
-        }
-        
-        .no-projects {
-            color: #d63384;
-            font-style: italic;
-            margin: 0;
-        }
-        </style>
+
         <?php
     }
     
@@ -418,7 +229,7 @@ class SI_Client_Management {
         $clients_with_projects = array();
         
         foreach ($clients as $client) {
-            $project_ids = SI_User_Roles::get_client_projets($client->ID);
+            $project_ids = SUIVDEIN_User_Roles::get_client_projets($client->ID);
             
             if (!empty($project_ids)) {
                 $projects = get_terms(array(
@@ -455,7 +266,7 @@ class SI_Client_Management {
         $unassigned = array();
         
         foreach ($clients as $client) {
-            $project_ids = SI_User_Roles::get_client_projets($client->ID);
+            $project_ids = SUIVDEIN_User_Roles::get_client_projets($client->ID);
             if (empty($project_ids)) {
                 $unassigned[] = $client;
             }
@@ -481,7 +292,7 @@ class SI_Client_Management {
         $updated_count = 0;
         
         foreach ($client_ids as $client_id) {
-            $existing_projects = SI_User_Roles::get_client_projets($client_id);
+            $existing_projects = SUIVDEIN_User_Roles::get_client_projets($client_id);
             
             if (!in_array($project_id, $existing_projects)) {
                 $existing_projects[] = $project_id;
@@ -490,8 +301,9 @@ class SI_Client_Management {
             }
         }
         
+        // translators: %d: number of clients
         add_action('admin_notices', function() use ($updated_count) {
-            echo '<div class="notice notice-success"><p>' . sprintf('Projet assigné à %d client(s) avec succès.', $updated_count) . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . sprintf(esc_html__('Projet assigné à %d client(s) avec succès.', 'suivi-des-interventions'), $updated_count) . '</p></div>';
         });
     }
     

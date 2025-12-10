@@ -6,9 +6,9 @@
  */
 
 // Ajouter ceci temporairement dans functions.php ou comme plugin de test
-add_action('admin_init', 'si_debug_plugin_status');
+add_action('admin_init', 'suivdein_debug_plugin_status');
 
-function si_debug_plugin_status() {
+function suivdein_debug_plugin_status() {
     if (!current_user_can('administrator')) {
         return;
     }
@@ -31,8 +31,8 @@ function si_debug_plugin_status() {
     
     // Vérifier si les classes existent
     $classes_exist = array(
-        'SI_Post_Types' => class_exists('SI_Post_Types'),
-        'SI_Taxonomies' => class_exists('SI_Taxonomies'),
+        'SUIVDEIN_Post_Types' => class_exists('SUIVDEIN_Post_Types'),
+        'SUIVDEIN_Taxonomies' => class_exists('SUIVDEIN_Taxonomies'),
         'Suivi_Interventions' => class_exists('Suivi_Interventions')
     );
     
@@ -45,28 +45,28 @@ function si_debug_plugin_status() {
         echo '<p><strong>Capacités utilisateur:</strong></p>';
         echo '<ul>';
         foreach ($has_caps as $cap => $has_cap) {
-            echo '<li>' . $cap . ': ' . ($has_cap ? 'OUI' : 'NON') . '</li>';
+            echo '<li>' . esc_html($cap) . ': ' . ($has_cap ? 'OUI' : 'NON') . '</li>';
         }
         echo '</ul>';
         echo '<p><strong>Classes chargées:</strong></p>';
         echo '<ul>';
         foreach ($classes_exist as $class => $exists) {
-            echo '<li>' . $class . ': ' . ($exists ? 'OUI' : 'NON') . '</li>';
+            echo '<li>' . esc_html($class) . ': ' . ($exists ? 'OUI' : 'NON') . '</li>';
         }
         echo '</ul>';
         
         // Vérifier les hooks
         global $wp_filter;
         $init_hooks = isset($wp_filter['init']) ? count($wp_filter['init']) : 0;
-        echo '<p><strong>Hooks "init" enregistrés:</strong> ' . $init_hooks . '</p>';
+        echo '<p><strong>Hooks "init" enregistrés:</strong> ' . esc_html($init_hooks) . '</p>';
         
         echo '</div>';
     });
 }
 
 // Test direct d'enregistrement du post type
-add_action('init', 'si_force_register_post_type', 5);
-function si_force_register_post_type() {
+add_action('init', 'suivdein_force_register_post_type', 5);
+function suivdein_force_register_post_type() {
     if (!post_type_exists('intervention')) {
         register_post_type('intervention', array(
             'labels' => array(

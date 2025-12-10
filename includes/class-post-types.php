@@ -11,22 +11,22 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class SI_Post_Types {
+class SUIVDEIN_Post_Types {
     
     /**
      * Constructeur
      */
     public function __construct() {
         // Enregistrer immédiatement le post type
-        add_action('init', array($this, 'register_post_type'), 3);
-        add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
-        add_action('save_post', array($this, 'save_meta_boxes'));
+        add_action('init', array($this, 'suivdein_register_post_type'), 3);
+        add_action('add_meta_boxes', array($this, 'suivdein_add_meta_boxes'));
+        add_action('save_post', array($this, 'suivdein_save_meta_boxes'));
     }
     
     /**
      * Enregistrer le post type intervention
      */
-    public function register_post_type() {
+    public function suivdein_register_post_type() {
         // Vérifier si le post type n'existe pas déjà
         if (post_type_exists('intervention')) {
             return;
@@ -87,7 +87,7 @@ class SI_Post_Types {
     /**
      * Ajouter les meta boxes
      */
-    public function add_meta_boxes() {
+    public function suivdein_add_meta_boxes() {
         add_meta_box(
             'intervention_details',
             __('Détails de l\'intervention', 'suivi-des-interventions'),
@@ -103,13 +103,13 @@ class SI_Post_Types {
      */
     public function render_meta_box($post) {
         // Inclure le template
-        include SUIVI_INTERVENTIONS_PLUGIN_DIR . 'admin/partials/intervention-meta-box.php';
+        include SUIVDEIN_PLUGIN_DIR . 'admin/partials/intervention-meta-box.php';
     }
     
     /**
      * Sauvegarder les meta boxes
      */
-    public function save_meta_boxes($post_id) {
+    public function suivdein_save_meta_boxes($post_id) {
         // Vérifications de sécurité
         if (!isset($_POST['intervention_meta_nonce'])) {
             return;

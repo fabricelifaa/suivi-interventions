@@ -1,4 +1,4 @@
-=== Suivi des Interventions ===
+=== Intervention Tracking ===
 Contributors: FAB2DEV
 Tags: management
 Requires at least: 6.6
@@ -8,258 +8,259 @@ Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-# Suivi des Interventions
+# Intervention Tracking (Suivi des Interventions)
 
-Plugin professionnel de suivi des mises à jour et interventions sur les sites web.
+A professional plugin to track updates and technical interventions on websites.
 
 ## 📋 Description
 
-Ce plugin permet de gérer et suivre les interventions techniques effectuées sur différents projets web. Il offre un système complet de gestion des quotas, des clients et des projets avec des restrictions d'accès granulaires.
+This plugin helps you manage and track technical interventions performed across multiple web projects. It provides a full-featured system for quotas, clients and projects with fine-grained access controls.
 
-## ✨ Fonctionnalités principales
+## ✨ Key Features
 
-### 🔧 Gestion des Interventions
-- **Custom Post Type "Intervention"** avec slug `maj`
-- Champs personnalisés : date d'intervention, statut (terminée/en cours)
-- Description détaillée avec éditeur WYSIWYG
-- Interface d'administration complète
+### 🔧 Intervention Management
+- **Custom Post Type "Intervention"** (slug `maj`)
+- Custom fields: intervention date, status (completed/in progress)
+- Detailed description with WYSIWYG editor
+- Full admin interface
 
-### 📁 Gestion des Projets
-- **Taxonomie "Projet"** liée aux interventions
-- Quota d'interventions par projet
-- Date d'expiration des quotas
-- Informations client et URL du projet
-- Calcul automatique de la progression
+### 📁 Project Management
+- **"Project" taxonomy** linked to interventions
+- Intervention quota per project
+- Quota expiration date
+- Client information and project URL
+- Automatic progress calculation
 
-### 👥 Rôles Utilisateurs
-- **Rôle "Client" (bsdclient)** avec accès restreint
-- Liaison clients ↔ projets
-- Interface en lecture seule pour les clients
-- Informations supplémentaires (société, téléphone)
+### 👥 User Roles
+- **"Client" role (`bsdclient`)** with restricted access
+- Client ↔ project associations
+- Read-only interface for clients
+- Additional client fields (company, phone)
 
-### 📊 Fonctionnalités avancées
-- **Barres de progression colorées** pour les quotas
-  - 🟢 Vert : 0-45% utilisé
-  - 🔵 Bleu : 46-80% utilisé
-  - 🔴 Rouge : 81-100%+ utilisé
-- **Filtres avancés** : date, statut, projet
-- **Colonnes personnalisées** dans les listes
-- **Dashboard client** personnalisé
+### 📊 Advanced Features
+- **Color-coded progress bars** for quotas
+  - 🟢 Green: 0–45% used
+  - 🔵 Blue: 46–80% used
+  - 🔴 Red: 81–100%+ used
+- **Advanced filters**: by date, status, project
+- **Custom columns** in lists
+- **Personalized client dashboard**
 
 ## 🚀 Installation
 
-1. **Télécharger le plugin**
+1. **Download the plugin**
    ```bash
-   # Cloner ou télécharger dans wp-content/plugins/
+   # Clone or copy into wp-content/plugins/
    cd wp-content/plugins/
-   # Copier le dossier suivi-interventions/
+   # Copy the folder suivi-interventions/
    ```
 
-2. **Activer le plugin**
-   - Aller dans `WordPress Admin > Extensions`
-   - Activer "Suivi des Interventions"
+2. **Activate the plugin**
+   - Go to `WordPress Admin > Plugins`
+   - Activate "Intervention Tracking"
 
-3. **Configuration initiale**
-   - Le plugin crée automatiquement les post types et taxonomies
-   - Ajouter des projets via `Interventions > Projets`
-   - Créer des utilisateurs avec le rôle "Client"
+3. **Initial setup**
+   - The plugin automatically registers post types and taxonomies
+   - Add projects via `Interventions > Projects`
+   - Create users and assign the "Client" role
 
-## 📝 Guide d'utilisation
+## 📝 Usage Guide
 
-### Pour les Administrateurs
+### For Administrators
 
-#### 1. Créer des projets
+#### 1. Create Projects
 ```
-Interventions > Projets > Ajouter un nouveau projet
+Interventions > Projects > Add New Project
 ```
-- **Nom du projet** : Identifiant principal
-- **Quota** : Nombre maximum d'interventions
-- **Date d'expiration** : Renouvellement du quota
-- **URL du projet** : Lien vers le site
-- **Informations client** : Notes et contacts
+- **Project name**: primary identifier
+- **Quota**: maximum number of interventions
+- **Expiration date**: quota renewal date
+- **Project URL**: link to the project/site
+- **Client information**: notes and contacts
 
-#### 2. Gérer les utilisateurs clients
+#### 2. Manage Client Users
 ```
-Utilisateurs > Modifier un utilisateur (rôle Client)
+Users > Edit user (assign Client role)
 ```
-- Assigner des **projets autorisés**
-- Renseigner les **informations de contact**
-- Le client ne verra que ses projets
+- Assign **authorized projects**
+- Fill in **contact information**
+- Clients will only see their assigned projects
 
-#### 3. Ajouter des interventions
+#### 3. Add Interventions
 ```
-Interventions > Ajouter une intervention
+Interventions > Add New Intervention
 ```
-- **Titre** : Description courte
-- **Date d'intervention** : Date de réalisation
-- **Projet** : Associer à un ou plusieurs projets
-- **Statut** : Terminée (compte dans le quota) ou En cours
-- **Description** : Détails complets
+- **Title**: short description
+- **Intervention date**: date of the work
+- **Project**: associate one or more projects
+- **Status**: Completed (counts toward quota) or In Progress
+- **Description**: full details
 
-### Pour les Clients
+### For Clients
 
-#### Interface simplifiée
-- Accès uniquement aux **interventions** de leurs projets
-- **Mode lecture seule** (pas d'édition/suppression)
-- **Filtres par date** disponibles
-- **Dashboard personnalisé** avec leurs projets
+#### Simplified Interface
+- Access only to **interventions** for their projects
+- **Read-only** (no edit/delete)
+- **Date filters** available
+- **Personalized dashboard** showing assigned projects
 
-#### Informations visibles
-- Liste des interventions avec dates et statuts
-- Progression des quotas par projet
-- Projets autorisés affichés en haut de page
+#### Visible Information
+- List of interventions with dates and statuses
+- Quota progress per project
+- Assigned projects shown prominently
 
-## 🎨 Interface utilisateur
+## 🎨 User Interface
 
-### Barres de progression
-Les quotas sont visualisés avec des barres colorées :
-- **Animation fluide** lors du chargement
-- **Tooltips informatifs** au survol
-- **Mise à jour automatique** toutes les 30 secondes
+### Progress Bars
+Quotas are displayed with color-coded progress bars:
+- **Smooth animation** on load
+- **Informative tooltips** on hover
+- **Auto-refresh** every 30 seconds
 
-### Filtres avancés
-- **Plage de dates** : Filtrer par période d'intervention
-- **Statut** : Terminées, En cours, Toutes
-- **Projet** : Filtrer par projet spécifique
-- **Recherche** : Recherche textuelle en temps réel
+### Advanced Filters
+- **Date range** filter
+- **Status**: Completed, In Progress, All
+- **Project** filter
+- **Live text search**
 
-## 🔧 Architecture technique
+## 🔧 Technical Architecture
 
-### Structure des fichiers
+### File structure
 ```
 suivi-interventions/
-├── suivi-interventions.php          # Fichier principal
-├── includes/                        # Classes principales
+├── suivi-interventions.php          # Main plugin file
+├── includes/                        # Core classes
 │   ├── class-suivi-interventions.php
 │   ├── class-post-types.php
 │   ├── class-taxonomies.php
 │   ├── class-user-roles.php
 │   ├── class-admin.php
 │   └── class-client-restrictions.php
-├── admin/                           # Interface admin
+├── admin/                           # Admin UI
 │   ├── css/admin-style.css
 │   ├── js/admin-script.js
 │   └── partials/
 │       ├── intervention-meta-box.php
 │       ├── projet-fields.php
 │       └── client-projet-fields.php
-├── uninstall.php                    # Script de désinstallation
+├── uninstall.php                    # Uninstall script
 └── README.md                        # Documentation
 ```
 
-### Base de données
-Le plugin utilise les tables WordPress existantes :
-- **wp_posts** : Interventions
-- **wp_terms** : Projets
-- **wp_termmeta** : Métadonnées des projets
-- **wp_postmeta** : Métadonnées des interventions
-- **wp_usermeta** : Liaisons clients-projets
+### Database
+The plugin uses WordPress core tables:
+- **wp_posts**: Interventions
+- **wp_terms**: Projects
+- **wp_termmeta**: Project metadata
+- **wp_postmeta**: Intervention metadata
+- **wp_usermeta**: Client ↔ project associations
 
-## 🔒 Sécurité
+## 🔒 Security
 
-### Contrôles d'accès
-- **Nonces** sur tous les formulaires
-- **Capabilities** WordPress respectées
-- **Sanitisation** de toutes les entrées utilisateur
-- **Échappement** de toutes les sorties
+### Access Controls
+- **Nonces** on all forms
+- WordPress **capabilities** respected
+- **Sanitization** of all user input
+- **Escaping** of all outputs
 
-### Restrictions clients
-- **Filtrage automatique** des contenus par projet
-- **Interface read-only** stricte
-- **Vérifications multiples** des permissions
-- **Redirection automatique** vers les interventions
+### Client Restrictions
+- **Automatic filtering** of content by project
+- Strict **read-only** client interface
+- Multiple **permission checks** in place
+- **Automatic redirection** to interventions when needed
 
-## 🎯 API et hooks
+## 🎯 API & Hooks
 
-### Hooks disponibles
+### Available hooks
 ```php
-// Après création d'une intervention
+// After creating an intervention
 do_action('si_intervention_created', $post_id);
 
-// Avant suppression d'un projet
+// Before deleting a project
 do_action('si_before_delete_projet', $term_id);
 
-// Filtrer les projets visibles pour un client
+// Filter projects visible to a client
 apply_filters('si_client_visible_projets', $projets, $user_id);
 ```
 
-### Fonctions utiles
+### Useful functions
 ```php
-// Obtenir la progression d'un projet
-SI_Taxonomies::get_projet_progression($term_id);
+// Get project progression
+SUIVDEIN_Taxonomies::get_projet_progression($term_id);
 
-// Vérifier l'accès client à un projet
-SI_User_Roles::client_has_projet_access($user_id, $projet_id);
+// Check client access to a project
+SUIVDEIN_User_Roles::client_has_projet_access($user_id, $projet_id);
 
-// Obtenir les statistiques d'un client
-SI_Client_Restrictions::get_client_stats($user_id);
+// Get client statistics
+SUIVDEIN_Client_Restrictions::get_client_stats($user_id);
 ```
 
-## 📱 Responsive & Accessibilité
+## 📱 Responsive & Accessibility
 
-### Design adaptatif
-- **Mobile-first** approach
-- **Breakpoints** optimisés pour tablettes/mobiles
-- **Interface tactile** friendly
+### Responsive design
+- Mobile-first approach
+- Breakpoints optimized for tablets and phones
+- Touch-friendly UI
 
-### Accessibilité
-- **Contraste** respectant WCAG 2.1
-- **Navigation clavier** complète
-- **Screen readers** compatibles
-- **Aria labels** appropriés
+### Accessibility
+- Color contrast following WCAG 2.1
+- Full keyboard navigation
+- Screen-reader friendly
+- Proper ARIA attributes where appropriate
 
-## 🔄 Mise à jour et maintenance
+## 🔄 Updates & Maintenance
 
-### Désinstallation propre
-Le fichier `uninstall.php` supprime :
-- ✅ Tous les posts "intervention"
-- ✅ Tous les termes "projet" 
-- ✅ Métadonnées utilisateurs
-- ✅ Rôle "Client"
-- ✅ Capacités ajoutées
-- ✅ Options du plugin
+### Clean uninstall
+`uninstall.php` removes:
+- ✅ All "intervention" posts
+- ✅ All "project" terms
+- ✅ User metadata
+- ✅ "Client" role
+- ✅ Added capabilities
+- ✅ Plugin options
 
-### Compatibilité
-- **WordPress** : 5.0+
-- **PHP** : 7.4+
-- **MySQL** : 5.6+
-- **Multisite** : Compatible
+### Compatibility
+- **WordPress**: 5.0+
+- **PHP**: 7.4+
+- **MySQL**: 5.6+
+- **Multisite**: Compatible
 
-## 🤝 Support et contribution
+## 🤝 Support & Contribution
 
-### Problèmes courants
-1. **Les barres de progression ne s'affichent pas**
-   - Vérifier que les projets ont un quota défini
-   - S'assurer que JavaScript est activé
+### Common issues
+1. **Progress bars not showing**
+   - Ensure projects have a quota set
+   - Make sure JavaScript is enabled
 
-2. **Les clients ne voient pas leurs projets**
-   - Vérifier que des projets leur sont assignés
-   - Contrôler les permissions du rôle
+2. **Clients don't see their projects**
+   - Verify projects are assigned to the client
+   - Check the client role permissions
 
-3. **Erreur 403 lors de l'édition**
-   - Les clients n'ont que l'accès en lecture
-   - Seuls les administrateurs peuvent modifier
+3. **403 when editing**
+   - Clients are read-only
+   - Only administrators can edit
 
-### Logs de débogage
+### Debug logs
 ```php
-// Activer le debug WordPress
+// Enable WordPress debug
 define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
 
-// Les logs du plugin apparaîtront dans wp-content/debug.log
+// Plugin logs will appear in wp-content/debug.log
 ```
 
-## 📄 Licence
+## 📄 License
 
-Ce plugin est distribué sous licence GPL v2 ou ultérieure.
+This plugin is distributed under the GPL v2 (or later) license.
 
-## 🏆 Crédits
+## 🏆 Credits
 
-Développé pour la gestion professionnelle des interventions web avec une approche moderne et sécurisée.
+Developed for professional web intervention tracking with a secure and modern approach.
 
 ---
 
-**Version :** 1.0.0  
-**Testé jusqu'à :** WordPress 6.4  
-**Nécessite PHP :** 7.4 ou supérieur
+**Version:** 1.0.0  
+**Tested up to:** WordPress 6.4  
+**Requires PHP:** 7.4 or greater
 **License:** GPLv2
+````

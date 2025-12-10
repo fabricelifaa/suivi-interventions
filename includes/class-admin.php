@@ -11,15 +11,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class SI_Admin {
+class SUIVDEIN_Admin {
     
     /**
      * Constructeur
      */
     public function __construct() {
         add_action('admin_init', array($this, 'init'), 3);
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
-        add_action('admin_notices', array($this, 'admin_notices'));
+        add_action('admin_enqueue_scripts', array($this, 'suivdein_enqueue_scripts'));
+        add_action('admin_notices', array($this, 'suivdein_admin_notices'));
     }
     
     /**
@@ -61,10 +61,10 @@ class SI_Admin {
         $new_columns = array();
         $new_columns['cb'] = $columns['cb'];
         $new_columns['title'] = $columns['title'];
-        $new_columns['intervention_date'] = _e('Date d\'intervention', 'suivi-des-interventions');
-        $new_columns['projet'] = _e('Projet', 'suivi-des-interventions');
-        $new_columns['quota_progress'] = _e('Progression Quota', 'suivi-des-interventions');
-        $new_columns['status'] = _e('Statut', 'suivi-des-interventions');
+        $new_columns['intervention_date'] = esc_html__('Date d\'intervention', 'suivi-des-interventions');
+        $new_columns['projet'] = esc_html__('Projet', 'suivi-des-interventions');
+        $new_columns['quota_progress'] = esc_html__('Progression Quota', 'suivi-des-interventions');
+        $new_columns['status'] = esc_html__('Statut', 'suivi-des-interventions');
         $new_columns['date'] = $columns['date'];
         
         return $new_columns;
@@ -102,7 +102,7 @@ class SI_Admin {
             $formatted_date = date_i18n(get_option('date_format'), strtotime($date));
             echo '<span class="intervention-date">' . esc_html($formatted_date) . '</span>';
         } else {
-            echo '<span class="intervention-date-empty">' . __('Non définie', 'suivi-des-interventions') . '</span>';
+            echo '<span class="intervention-date-empty">' . esc_html__('Non définie', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -119,7 +119,7 @@ class SI_Admin {
             }
             echo implode(', ', $projet_links);
         } else {
-            echo '<span class="no-projet">' . __('Aucun projet', 'suivi-des-interventions') . '</span>';
+            echo '<span class="no-projet">' . esc_html__('Aucun projet', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -130,12 +130,12 @@ class SI_Admin {
         $terms = get_the_terms($post_id, 'projet');
         if ($terms && !is_wp_error($terms)) {
             foreach ($terms as $term) {
-                $progression = SI_Taxonomies::get_projet_progression($term->term_id);
+                $progression = SUIVDEIN_Taxonomies::get_projet_progression($term->term_id);
                 $this->render_progress_bar($progression);
                 break; // Afficher seulement le premier projet
             }
         } else {
-            echo '<span class="no-quota">' . __('Pas de quota', 'suivi-des-interventions') . '</span>';
+            echo '<span class="no-quota">' . esc_html__('Pas de quota', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -145,9 +145,9 @@ class SI_Admin {
     private function display_intervention_status($post_id) {
         $terminee = get_post_meta($post_id, '_intervention_terminee', true);
         if ($terminee == '1') {
-            echo '<span class="status-completed">✓ ' . __('Terminée', 'suivi-des-interventions') . '</span>';
+            echo '<span class="status-completed">✓ ' . esc_html__('Terminée', 'suivi-des-interventions') . '</span>';
         } else {
-            echo '<span class="status-pending">⏳ ' . __('En cours', 'suivi-des-interventions') . '</span>';
+            echo '<span class="status-pending">⏳ ' . esc_html__('En cours', 'suivi-des-interventions') . '</span>';
         }
     }
     
@@ -160,11 +160,11 @@ class SI_Admin {
         
         echo '<div class="quota-progress-container">';
         echo '<div class="quota-progress-bar">';
-        echo '<div class="quota-progress-fill ' . esc_attr($color_class) . '" style="width: ' . min(100, $percentage) . '%"></div>';
+        echo '<div class="quota-progress-fill ' . esc_attr($color_class) . '" style="width: ' . esc_attr(min(100, $percentage)) . '%"></div>';
         echo '</div>';
         echo '<div class="quota-text">';
         /* translators: %1$d: remaining, %2$d: quota, %3$.1f: percentage with one decimal */ printf(
-            __('%1$d/%2$d restant (%3$.1f%%)', 'suivi-des-interventions'),
+            esc_html__('%1$d/%2$d restant (%3$.1f%%)', 'suivi-des-interventions'),
             $progression['remaining'],
             $progression['quota'],
             $percentage
@@ -216,8 +216,8 @@ class SI_Admin {
         $date_from = isset($_GET['date_from']) ? sanitize_text_field($_GET['date_from']) : '';
         $date_to = isset($_GET['date_to']) ? sanitize_text_field($_GET['date_to']) : '';
         
-        echo '<input type="date" name="date_from" value="' . esc_attr($date_from) . '" placeholder="' . __('Date de début', 'suivi-des-interventions') . '" />';
-        echo '<input type="date" name="date_to" value="' . esc_attr($date_to) . '" placeholder="' . __('Date de fin', 'suivi-des-interventions') . '" />';
+        echo '<input type="date" name="date_from" value="' . esc_attr($date_from) . '" placeholder="' . esc_html__('Date de début', 'suivi-des-interventions') . '" />';
+        echo '<input type="date" name="date_to" value="' . esc_attr($date_to) . '" placeholder="' . esc_html__('Date de fin', 'suivi-des-interventions') . '" />';
     }
     
     /**
@@ -227,9 +227,9 @@ class SI_Admin {
         $current_status = isset($_GET['intervention_status']) ? sanitize_text_field($_GET['intervention_status']) : '';
         
         echo '<select name="intervention_status">';
-        echo '<option value="">' . __('Tous les statuts', 'suivi-des-interventions') . '</option>';
-        echo '<option value="completed"' . selected($current_status, 'completed', false) . '>' . __('Terminées', 'suivi-des-interventions') . '</option>';
-        echo '<option value="pending"' . selected($current_status, 'pending', false) . '>' . __('En cours', 'suivi-des-interventions') . '</option>';
+        echo '<option value="">' . esc_html__('Tous les statuts', 'suivi-des-interventions') . '</option>';
+        echo '<option value="completed"' . selected($current_status, 'completed', false) . '>' . esc_html__('Terminées', 'suivi-des-interventions') . '</option>';
+        echo '<option value="pending"' . selected($current_status, 'pending', false) . '>' . esc_html__('En cours', 'suivi-des-interventions') . '</option>';
         echo '</select>';
     }
     
@@ -249,7 +249,7 @@ class SI_Admin {
         $current_projet = isset($_GET['projet_filter']) ? sanitize_text_field($_GET['projet_filter']) : '';
         
         echo '<select name="projet_filter">';
-        echo '<option value="">' . __('Tous les projets', 'suivi-des-interventions') . '</option>';
+        echo '<option value="">' . esc_html__('Tous les projets', 'suivi-des-interventions') . '</option>';
         
         foreach ($projets as $projet) {
             echo '<option value="' . esc_attr($projet->term_id) . '"' . selected($current_projet, $projet->term_id, false) . '>';
@@ -379,24 +379,26 @@ class SI_Admin {
     /**
      * Enqueue les scripts et styles admin
      */
-    public function enqueue_scripts($hook) {
+    public function suivdein_enqueue_scripts($hook) {
         // Scripts pour toutes les pages admin
         wp_enqueue_style(
             'si-admin-style',
-            SUIVI_INTERVENTIONS_PLUGIN_URL . 'admin/css/admin-style.css',
+            SUIVDEIN_PLUGIN_URL . 'admin/css/admin-style.css',
             array(),
-            SUIVI_INTERVENTIONS_VERSION
+            SUIVDEIN_VERSION
         );
         
         // Scripts spécifiques aux interventions
         if ('edit.php' === $hook && isset($_GET['post_type']) && 'intervention' === $_GET['post_type']) {
             wp_enqueue_script(
                 'si-admin-script',
-                SUIVI_INTERVENTIONS_PLUGIN_URL . 'admin/js/admin-script.js',
+                SUIVDEIN_PLUGIN_URL . 'admin/js/admin-script.js',
                 array('jquery'),
-                SUIVI_INTERVENTIONS_VERSION,
+                SUIVDEIN_VERSION,
                 true
             );
+            // wp_localize_script('suivdein-admin-script', 'suivdeinAdminError', array('msg' => esc_html__("La date d\'intervention est requise.", "suivi-des-interventions"), 'quotaMsg' => esc_html__("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions")));
+            
         }
     }
     
@@ -415,17 +417,51 @@ class SI_Admin {
             .status-completed { color: #46b450; font-weight: 600; }
             .status-pending { color: #ffb900; font-weight: 600; }
             .intervention-date-empty, .no-projet, .no-quota { color: #999; font-style: italic; }
-        </style>';
+        
+        
+        .form-table th {
+    width: 200px;
+    font-weight: 600;
+}
+
+.form-table .description {
+    font-size: 13px;
+    color: #666;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+.intervention-status-preview {
+    margin-top: 8px !important;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+#date_intervention {
+    max-width: 200px;
+}
+
+.required-field {
+    color: #d63384;
+}
+</style>
+<script>
+        suivdeinAdminError = {
+            msg: "' . esc_html__("La date d'intervention est requise.", "suivi-des-interventions") . '",
+            quotaMsg: "' . esc_html__("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions") . '"
+        }
+</script>';
     }
     
     /**
      * Notices admin
      */
-    public function admin_notices() {
+    public function suivdein_admin_notices() {
         // Afficher des notices si nécessaire
         if (isset($_GET['message']) && $_GET['message'] === 'project_updated') {
             echo '<div class="notice notice-success is-dismissible">';
-            echo '<p>' . __('Projet mis à jour avec succès.', 'suivi-des-interventions') . '</p>';
+            echo '<p>' . esc_html__('Projet mis à jour avec succès.', 'suivi-des-interventions') . '</p>';
             echo '</div>';
         }
     }

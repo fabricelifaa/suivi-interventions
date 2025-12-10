@@ -12,10 +12,10 @@ if (!defined('ABSPATH')) {
 }
 
 // Récupérer les données existantes
-$intervention_meta = SI_Post_Types::get_intervention_meta($post->ID);
-$date_intervention = $intervention_meta['date_intervention'];
-$intervention_terminee = $intervention_meta['intervention_terminee'];
-$description = $intervention_meta['description'];
+$suivdein_intervention_meta = SUIVDEIN_Post_Types::get_intervention_meta($post->ID);
+$suivdein_date_intervention = $suivdein_intervention_meta['date_intervention'];
+$suivdein_intervention_terminee = $suivdein_intervention_meta['intervention_terminee'];
+$suivdein_description = $suivdein_intervention_meta['description'];
 
 // Nonce pour la sécurité
 wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
@@ -35,12 +35,12 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                     type="date" 
                     id="date_intervention" 
                     name="date_intervention" 
-                    value="<?php echo esc_attr($date_intervention); ?>"
+                    value="<?php echo esc_attr($suivdein_date_intervention); ?>"
                     class="regular-text"
                     required
                 />
                 <p class="description">
-                    <?php _e('Date à laquelle l\'intervention a été ou sera réalisée.', 'suivi-des-interventions'); ?>
+                    <?php esc_html_e('Date à laquelle l\'intervention a été ou sera réalisée.', 'suivi-des-interventions'); ?>
                 </p>
             </td>
         </tr>
@@ -60,7 +60,7 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
                             id="intervention_terminee" 
                             name="intervention_terminee" 
                             value="1" 
-                            <?php checked($intervention_terminee, '1'); ?>
+                            <?php checked($suivdein_intervention_terminee, '1'); ?>
                         />
                         <?php esc_html_e('Intervention terminée', 'suivi-des-interventions'); ?>
                     </label>
@@ -80,7 +80,7 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
             <td>
                 <?php
                 wp_editor(
-                    $description,
+                    $suivdein_description,
                     'intervention_description',
                     array(
                         'textarea_rows' => 5,
@@ -97,62 +97,3 @@ wp_nonce_field('intervention_meta_box', 'intervention_meta_nonce');
         </tr>
     </tbody>
 </table>
-
-<script>
-jQuery(document).ready(function($) {
-    // Validation côté client
-    $('#post').submit(function(e) {
-        var dateIntervention = $('#date_intervention').val();
-        if (!dateIntervention) {
-            e.preventDefault();
-            alert('<?php esc_html_e("La date d'intervention est requise.", "suivi-des-interventions"); ?>');
-            $('#date_intervention').focus();
-            return false;
-        }
-    });
-    
-    // Mettre à jour l'aperçu du statut
-    $('#intervention_terminee').change(function() {
-        var $status = $('.intervention-status-preview');
-        if (!$status.length) {
-            $('#intervention_terminee').parent().append('<p class="intervention-status-preview"></p>');
-            $status = $('.intervention-status-preview');
-        }
-        
-        if ($(this).is(':checked')) {
-            $status.html('<strong style="color: green;">✓ <?php esc_html_e("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions"); ?></strong>');
-        } else {
-            $status.html('<strong style="color: orange;">⏳ <?php esc_html_e("Cette intervention ne sera pas comptabilisée dans le quota", "suivi-des-interventions"); ?></strong>');
-        }
-    }).trigger('change');
-});
-</script>
-
-<style>
-.form-table th {
-    width: 200px;
-    font-weight: 600;
-}
-
-.form-table .description {
-    font-size: 13px;
-    color: #666;
-    margin-top: 5px;
-    font-weight: normal;
-}
-
-.intervention-status-preview {
-    margin-top: 8px !important;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-}
-
-#date_intervention {
-    max-width: 200px;
-}
-
-.required-field {
-    color: #d63384;
-}
-</style>

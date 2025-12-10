@@ -17,13 +17,13 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 /**
  * Supprimer toutes les données du plugin
  */
-function suivi_interventions_uninstall() {
+function suivdein_uninstall() {
     global $wpdb;
     
     // === 1. SUPPRIMER TOUS LES POSTS "INTERVENTION" ===
     
     // Récupérer tous les posts d'intervention
-    $interventions = get_posts(array(
+    $suivdein_interventions = get_posts(array(
         'post_type' => 'intervention',
         'numberposts' => -1,
         'post_status' => 'any',
@@ -31,7 +31,7 @@ function suivi_interventions_uninstall() {
     ));
     
     // Supprimer chaque intervention et ses métadonnées
-    foreach ($interventions as $intervention_id) {
+    foreach ($suivdein_interventions as $intervention_id) {
         // Sécuriser l'ID et vérifier avant suppression
         $intervention_id = (int) $intervention_id;
         if ($intervention_id <= 0) {
@@ -167,7 +167,7 @@ function suivi_interventions_uninstall() {
     // === 6. SUPPRIMER LES OPTIONS DU PLUGIN ===
     
     $options_to_delete = array(
-        'suivi_interventions_version',
+        'SUIVDEIN_VERSION',
         'suivi_interventions_settings',
         'suivi_interventions_db_version',
         'suivi_interventions_activation_time',
@@ -224,15 +224,20 @@ function suivi_interventions_uninstall() {
     "));
     
     // === 9. NETTOYER LE CACHE ET LES TRANSIENTS ===
-    
+    $transients_to_delete = array(
+        '_transient_si_%',
+        '_transient_timeout_si_%',
+        '_site_transient_si_%',
+        '_site_transient_timeout_si_%'
+    )
     // Supprimer les transients du plugin
     $wpdb->query($wpdb->prepare("
         DELETE FROM {$wpdb->options} 
-        WHERE option_name LIKE '_transient_si_%' 
-        OR option_name LIKE '_transient_timeout_si_%'
-        OR option_name LIKE '_site_transient_si_%'
-        OR option_name LIKE '_site_transient_timeout_si_%'
-    "));
+        WHERE option_name LIKE %s 
+        OR option_name LIKE %s
+        OR option_name LIKE %s
+        OR option_name LIKE %s
+    ", $transients_to_delete[0], $transients_to_delete[1], $transients_to_delete[2], $transients_to_delete[3]));
     
     // Vider les caches d'objet si disponibles
     if (function_exists('wp_cache_flush')) {
@@ -245,7 +250,7 @@ function suivi_interventions_uninstall() {
     $plugin_upload_dir = $upload_dir['basedir'] . '/suivi-interventions/';
     
     if (is_dir($plugin_upload_dir)) {
-        suivi_interventions_remove_directory($plugin_upload_dir);
+        suivdein_remove_directory($plugin_upload_dir);
     }
     
     // === 11. FLUSH REWRITE RULES ===
@@ -266,7 +271,7 @@ function suivi_interventions_uninstall() {
     // === 13. STATISTIQUES DE DÉSINSTALLATION ===
     
     $uninstall_stats = array(
-        'interventions_deleted' => count($interventions),
+        'interventions_deleted' => count($suivdein_interventions),
         'projets_deleted' => is_array($projets) ? count($projets) : 0,
         'users_updated' => count($client_users),
         'uninstall_date' => current_time('mysql'),
@@ -304,7 +309,7 @@ function suivi_interventions_uninstall() {
 /**
  * Fonction utilitaire pour supprimer un dossier récursivement
  */
-function suivi_interventions_remove_directory($dir) {
+function suivdein_remove_directory($dir) {
     if (!is_dir($dir)) {
         return false;
     }
@@ -315,7 +320,7 @@ function suivi_interventions_remove_directory($dir) {
         $path = $dir . DIRECTORY_SEPARATOR . $file;
         
         if (is_dir($path)) {
-            suivi_interventions_remove_directory($path);
+            suivdein_remove_directory($path);
         } else {
             unlink($path);
         }
@@ -327,7 +332,7 @@ function suivi_interventions_remove_directory($dir) {
 /**
  * Fonction de confirmation et vérification avant désinstallation
  */
-function suivi_interventions_confirm_uninstall() {
+function suivdein_confirm_uninstall() {
     // Vérifier les permissions
     if (!current_user_can('activate_plugins')) {
         return false;
@@ -352,7 +357,7 @@ function suivi_interventions_confirm_uninstall() {
 /**
  * Fonction de sauvegarde des données avant suppression (optionnelle)
  */
-function suivi_interventions_backup_data() {
+function suivdein_backup_data() {
     global $wpdb;
     
     $backup_data = array(
@@ -363,14 +368,14 @@ function suivi_interventions_backup_data() {
     );
     
     // Sauvegarder les interventions
-    $interventions = $wpdb->get_results($wpdb->prepare("
+    $suivdein_interventions = $wpdb->get_results($wpdb->prepare("
         SELECT p.*, pm.meta_key, pm.meta_value 
         FROM {$wpdb->posts} p
         LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
         WHERE p.post_type = 'intervention'
     ", ARRAY_A));
     
-    $backup_data['interventions'] = $interventions;
+    $backup_data['interventions'] = $suivdein_interventions;
     
     // Sauvegarder les projets
     $projets = $wpdb->get_results($wpdb->prepare("
@@ -394,32 +399,32 @@ function suivi_interventions_backup_data() {
     
     // Sauvegarder dans un fichier JSON
     $upload_dir = wp_upload_dir();
-    $backup_file = $upload_dir['basedir'] . '/suivi-interventions-backup-' . date('Y-m-d-H-i-s') . '.json';
+    $suivdein_backup_file = $upload_dir['basedir'] . '/suivi-interventions-backup-' . gmdate('Y-m-d-H-i-s') . '.json';
     
-    file_put_contents($backup_file, json_encode($backup_data, JSON_PRETTY_PRINT));
+    file_put_contents($suivdein_backup_file, json_encode($backup_data, JSON_PRETTY_PRINT));
     
-    return $backup_file;
+    return $suivdein_backup_file;
 }
 
 // === EXÉCUTION DE LA DÉSINSTALLATION ===
 
 // Vérifier et exécuter la désinstallation
-if (suivi_interventions_confirm_uninstall()) {
+if (suivdein_confirm_uninstall()) {
     
     // Optionnel : Créer une sauvegarde avant suppression
     if (defined('SUIVI_INTERVENTIONS_BACKUP_ON_UNINSTALL') && SUIVI_INTERVENTIONS_BACKUP_ON_UNINSTALL) {
-        $backup_file = suivi_interventions_backup_data();
+        $suivdein_backup_file = suivdein_backup_data();
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('Suivi Interventions: Sauvegarde créée avant désinstallation: ' . $backup_file);
+            error_log('Suivi Interventions: Sauvegarde créée avant désinstallation: ' . $suivdein_backup_file);
         }
     }
     
     // Exécuter la désinstallation complète
-    suivi_interventions_uninstall();
+    suivdein_uninstall();
     
     // Log final de confirmation
     if (defined('WP_DEBUG') && WP_DEBUG) {
-        error_log('Plugin Suivi des Interventions: Désinstallation terminée avec succès le ' . date('Y-m-d H:i:s'));
+        error_log('Plugin Suivi des Interventions: Désinstallation terminée avec succès le ' . gmdate('Y-m-d H:i:s'));
     }
     
 } else {
@@ -430,12 +435,12 @@ if (suivi_interventions_confirm_uninstall()) {
 }
     
     // Supprimer tous les posts du type 'intervention'
-    $interventions = get_posts(array(
+    $suivdein_interventions = get_posts(array(
         'post_type' => 'intervention',
         'numberposts' => -1,
         'post_status' => 'any'
     ));
     
-    foreach ($interventions as $intervention) {
+    foreach ($suivdein_interventions as $intervention) {
         wp_delete_post($intervention->ID); // Peut laisser des traces
     }   

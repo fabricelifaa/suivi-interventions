@@ -11,25 +11,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class SI_Taxonomies {
+class SUIVDEIN_Taxonomies {
     
     /**
      * Constructeur
      */
     public function __construct() {
         // Enregistrer immédiatement la taxonomie
-        add_action('init', array($this, 'register_taxonomy'), 3);
-        add_action('projet_add_form_fields', array($this, 'add_projet_fields'));
-        add_action('projet_edit_form_fields', array($this, 'edit_projet_fields'));
-        add_action('edited_projet', array($this, 'save_projet_fields'));
-        add_action('create_projet', array($this, 'save_projet_fields'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_taxonomy_scripts'));
+        add_action('init', array($this, 'suivdein_register_taxonomy'), 3);
+        add_action('projet_add_form_fields', array($this, 'suivdein_add_projet_fields'));
+        add_action('projet_edit_form_fields', array($this, 'suivdein_edit_projet_fields'));
+        add_action('edited_projet', array($this, 'suivdein_save_projet_fields'));
+        add_action('create_projet', array($this, 'suivdein_save_projet_fields'));
+        add_action('admin_enqueue_scripts', array($this, 'suivdein_enqueue_taxonomy_scripts'));
     }
     
     /**
      * Enregistrer la taxonomie projet
      */
-    public function register_taxonomy() {
+    public function suivdein_register_taxonomy() {
         // Vérifier si la taxonomie n'existe pas déjà
         if (taxonomy_exists('projet')) {
             return;
@@ -76,25 +76,25 @@ class SI_Taxonomies {
     /**
      * Ajouter les champs personnalisés lors de l'ajout d'un projet
      */
-    public function add_projet_fields($taxonomy) {
-        include SUIVI_INTERVENTIONS_PLUGIN_DIR . 'admin/partials/projet-fields.php';
+    public function suivdein_add_projet_fields($taxonomy) {
+        include SUIVDEIN_PLUGIN_DIR . 'admin/partials/projet-fields.php';
     }
     
     /**
      * Ajouter les champs personnalisés lors de l'édition d'un projet
      */
-    public function edit_projet_fields($term) {
+    public function suivdein_edit_projet_fields($term) {
         $quota = get_term_meta($term->term_id, 'quota', true);
         $date_expiration = get_term_meta($term->term_id, 'date_expiration', true);
         $client = get_term_meta($term->term_id, 'client_info', true);
         
-        include SUIVI_INTERVENTIONS_PLUGIN_DIR . 'admin/partials/projet-fields.php';
+        include SUIVDEIN_PLUGIN_DIR . 'admin/partials/projet-fields.php';
     }
     
     /**
      * Sauvegarder les champs personnalisés du projet
      */
-    public function save_projet_fields($term_id) {
+    public function suivdein_save_projet_fields($term_id) {
         // Quota
         if (isset($_POST['quota'])) {
             update_term_meta($term_id, 'quota', absint($_POST['quota']));
@@ -131,7 +131,7 @@ class SI_Taxonomies {
     /**
      * Enqueue les scripts pour la taxonomie
      */
-    public function enqueue_taxonomy_scripts($hook) {
+    public function suivdein_enqueue_taxonomy_scripts($hook) {
         if ('edit-tags.php' === $hook && isset($_GET['taxonomy']) && 'projet' === $_GET['taxonomy']) {
             wp_enqueue_script('jquery');
         }

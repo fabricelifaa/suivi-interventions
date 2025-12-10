@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
  * @param array $args Arguments supplémentaires pour la requête
  * @return array Liste des interventions avec détails
  */
-function si_get_interventions_by_projet($projet_id, $args = array()) {
+function suivdein_get_interventions_by_projet($projet_id, $args = array()) {
     $default_args = array(
         'post_type' => 'intervention',
         'post_status' => 'publish',
@@ -40,7 +40,7 @@ function si_get_interventions_by_projet($projet_id, $args = array()) {
     
     $result = array();
     foreach ($interventions as $intervention) {
-        $meta = SI_Post_Types::get_intervention_meta($intervention->ID);
+        $meta = SUIVDEIN_Post_Types::get_intervention_meta($intervention->ID);
         $result[] = array(
             'ID' => $intervention->ID,
             'title' => $intervention->post_title,
@@ -61,7 +61,7 @@ function si_get_interventions_by_projet($projet_id, $args = array()) {
  * 
  * @return array Statistiques complètes
  */
-function si_get_global_stats() {
+function suivdein_get_global_stats() {
     global $wpdb;
     
     // Compter les interventions
@@ -126,8 +126,8 @@ function si_get_global_stats() {
  * @param int $projet_id ID du projet
  * @return array Informations sur le dépassement
  */
-function si_check_quota_exceeded($projet_id) {
-    $progression = SI_Taxonomies::get_projet_progression($projet_id);
+function suivdein_check_quota_exceeded($projet_id) {
+    $progression = SUIVDEIN_Taxonomies::get_projet_progression($projet_id);
     
     return array(
         'exceeded' => $progression['percentage'] > 100,
@@ -146,7 +146,7 @@ function si_check_quota_exceeded($projet_id) {
  * @param int $threshold Seuil de pourcentage (défaut: 80%)
  * @return array Projets proches de la limite
  */
-function si_get_projects_near_quota_limit($threshold = 80) {
+function suivdein_get_projects_near_quota_limit($threshold = 80) {
     $projets = get_terms(array(
         'taxonomy' => 'projet',
         'hide_empty' => false
@@ -158,7 +158,7 @@ function si_get_projects_near_quota_limit($threshold = 80) {
         $quota = get_term_meta($projet->term_id, 'quota', true);
         if (!$quota) continue;
         
-        $progression = SI_Taxonomies::get_projet_progression($projet->term_id);
+        $progression = SUIVDEIN_Taxonomies::get_projet_progression($projet->term_id);
         
         if ($progression['percentage'] >= $threshold) {
             $projects_near_limit[] = array(
@@ -185,7 +185,7 @@ function si_get_projects_near_quota_limit($threshold = 80) {
  * @param string $format Format personnalisé (optionnel)
  * @return string Date formatée
  */
-function si_format_date($date, $format = null) {
+function suivdein_format_date($date, $format = null) {
     if (!$date) return '';
     
     $format = $format ?: get_option('date_format');
@@ -198,7 +198,7 @@ function si_format_date($date, $format = null) {
  * @param float $percentage Pourcentage
  * @return string Classe CSS
  */
-function si_get_progress_color_class($percentage) {
+function suivdein_get_progress_color_class($percentage) {
     if ($percentage > 80) {
         return 'quota-red';
     } elseif ($percentage > 45) {
@@ -214,7 +214,7 @@ function si_get_progress_color_class($percentage) {
  * @param int $projet_id ID du projet
  * @return bool
  */
-function si_user_can_manage_projet_interventions($user_id, $projet_id) {
+function suivdein_user_can_manage_projet_interventions($user_id, $projet_id) {
     // Les administrateurs peuvent tout gérer
     if (user_can($user_id, 'manage_options')) {
         return true;
@@ -235,11 +235,11 @@ function si_user_can_manage_projet_interventions($user_id, $projet_id) {
  * @param int $user_id ID du client
  * @return string Nom formaté avec projets
  */
-function si_get_client_display_name($user_id) {
+function suivdein_get_client_display_name($user_id) {
     $user = get_user_by('ID', $user_id);
     if (!$user) return '';
     
-    $client_projets = SI_User_Roles::get_client_projets($user_id);
+    $client_projets = SUIVDEIN_User_Roles::get_client_projets($user_id);
     $projet_names = array();
     
     foreach ($client_projets as $projet_id) {
@@ -264,7 +264,7 @@ function si_get_client_display_name($user_id) {
  * @param array $project_ids IDs des projets à assigner
  * @return int|WP_Error ID de l'utilisateur créé ou erreur
  */
-function si_create_client_user($user_data, $project_ids = array()) {
+function suivdein_create_client_user($user_data, $project_ids = array()) {
     // Données par défaut
     $default_data = array(
         'role' => 'bsdclient',
@@ -299,8 +299,8 @@ function si_create_client_user($user_data, $project_ids = array()) {
  * @param int $limit Nombre d'interventions à retourner
  * @return array Liste des interventions récentes
  */
-function si_get_client_recent_interventions($user_id, $limit = 10) {
-    $client_projets = SI_User_Roles::get_client_projets($user_id);
+function suivdein_get_client_recent_interventions($user_id, $limit = 10) {
+    $client_projets = SUIVDEIN_User_Roles::get_client_projets($user_id);
     
     if (empty($client_projets)) {
         return array();
@@ -331,8 +331,8 @@ function si_get_client_recent_interventions($user_id, $limit = 10) {
  * @param int $projet_id ID du projet
  * @return array Informations sur le statut du quota
  */
-function si_is_projet_quota_exceeded($projet_id) {
-    return si_check_quota_exceeded($projet_id);
+function suivdein_is_projet_quota_exceeded($projet_id) {
+    return suivdein_check_quota_exceeded($projet_id);
 }
 
 
@@ -342,7 +342,7 @@ function si_is_projet_quota_exceeded($projet_id) {
  * @param string $message Message à logger
  * @param string $level Niveau de log (info, warning, error)
  */
-function si_log($message, $level = 'info') {
+function suivdein_log($message, $level = 'info') {
     if (defined('WP_DEBUG') && WP_DEBUG) {
         $formatted_message = '[Suivi Interventions] [' . strtoupper($level) . '] ' . $message;
         error_log($formatted_message);
@@ -354,7 +354,7 @@ function si_log($message, $level = 'info') {
  * 
  * @return string URL de la page
  */
-function si_get_client_management_url() {
+function suivdein_get_client_management_url() {
     return admin_url('edit.php?post_type=intervention&page=si-client-management');
 }
 
@@ -364,11 +364,11 @@ function si_get_client_management_url() {
  * @param int $projet_id ID du projet
  * @return string|false Chemin vers le fichier PDF ou false
  */
-function si_generate_projet_report($projet_id) {
+function suivdein_generate_projet_report($projet_id) {
     // Cette fonction pourrait être implémentée pour générer des rapports PDF
     // Pour l'instant, c'est un placeholder
     
-    si_log("Génération de rapport demandée pour le projet {$projet_id}", 'info');
+    suivdein_log("Génération de rapport demandée pour le projet {$projet_id}", 'info');
     
     // TODO: Implémenter la génération de rapport PDF
     return false;
@@ -379,7 +379,7 @@ function si_generate_projet_report($projet_id) {
  * 
  * @return bool Succès de l'opération
  */
-function si_cleanup_plugin_data() {
+function suivdein_cleanup_plugin_data() {
     // Cette fonction est utilisée par uninstall.php
     return true;
 }
@@ -389,14 +389,14 @@ function si_cleanup_plugin_data() {
  * 
  * @return bool|string True si compatible, message d'erreur sinon
  */
-function si_check_wordpress_compatibility() {
+function suivdein_check_wordpress_compatibility() {
     global $wp_version;
     
-    $required_wp_version = '5.0';
+    $required_wp_version = '6.6';
     
     if (version_compare($wp_version, $required_wp_version, '<')) {
         return sprintf(
-            esc_attr_e('Le plugin Suivi des Interventions nécessite WordPress %1s ou supérieur. Version actuelle: %2s', 'suivi-des-interventions'),
+            esc_attr('Le plugin Suivi des Interventions nécessite WordPress %1s ou supérieur. Version actuelle: %2s', 'suivi-des-interventions'),
             $required_wp_version,
             $wp_version
         );
