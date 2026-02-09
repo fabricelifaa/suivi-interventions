@@ -19,7 +19,7 @@ This plugin helps you manage and track technical interventions performed across 
 ## ✨ Key Features
 
 ### 🔧 Intervention Management
-- **Custom Post Type "Intervention"** (slug `maj`)
+- **Custom Post Type "Intervention"** (slug `suivdein_projet`)
 - Custom fields: intervention date, status (completed/in progress)
 - Detailed description with WYSIWYG editor
 - Full admin interface
