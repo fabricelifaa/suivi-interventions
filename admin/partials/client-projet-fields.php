@@ -149,7 +149,7 @@ $suivdein_client_phone = get_user_meta($user->ID, 'client_contact_phone', true);
             <?php else : ?>
                 <p class="no-projets">
                     <?php esc_attr_e('Aucun projet disponible.', 'suivi-des-interventions'); ?>
-                    <a href="<?php echo esc_url(admin_url('edit-tags.php?taxonomy=projet&post_type=intervention')); ?>">
+                    <a href="<?php echo esc_url(admin_url('edit-tags.php?taxonomy=suivdein_projet&post_type=suivdein_post')); ?>">
                         <?php esc_attr_e('Créez d\'abord des projets', 'suivi-des-interventions'); ?> →
                     </a>
                 </p>

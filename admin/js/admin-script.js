@@ -530,7 +530,7 @@
         selectedProjects.push(projectName);
       });
 
-      console.log("Projets sélectionnés:", selectedProjects);
+      // console.log("Projets sélectionnés:", selectedProjects);
 
       var $preview = $("#client-project-preview");
       if (!$preview.length) {

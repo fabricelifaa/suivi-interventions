@@ -106,7 +106,7 @@ class SUIVDEIN_User_Roles
 
         // Récupérer tous les projets
         $suivdein_projets = get_terms(array(
-            'taxonomy' => 'projet',
+            'taxonomy' => 'suivdein_projet',
             'hide_empty' => false,
             'orderby' => 'name',
             'order' => 'ASC'
@@ -135,13 +135,13 @@ class SUIVDEIN_User_Roles
         // Vérifier le nonce
         if (
             !isset($_POST['client_projets_nonce']) ||
-            !wp_verify_nonce($_POST['client_projets_nonce'], 'suivdein_save_client_projets')
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['client_projets_nonce'])), 'suivdein_save_client_projets')
         ) {
             return false;
         }
 
         $client_projets = isset($_POST['client_projets']) ?
-            array_map('intval', $_POST['client_projets']) :
+            array_map(fn($n)=> intval(sanitize_text_field($n)), $_POST['client_projets']) :
             array();
 
         update_user_meta($user_id, 'client_projets', $client_projets);

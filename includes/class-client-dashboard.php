@@ -163,7 +163,7 @@ class SUIVDEIN_Client_Dashboard {
                             <?php if ($projet['date_expiration']) : ?>
                                 <div class="project-expiration">
                                     <span class="expiration-icon">📅</span>
-                                    <?php /* translators: %1$s: expiration date */ printf(esc_html__('Expire le : %1$s', 'suivi-des-interventions'), date_i18n(get_option('date_format'), strtotime($projet['date_expiration']))); ?>
+                                    <?php /* translators: %1$s: expiration date */ printf(esc_html__('Expire le : %1$s', 'suivi-des-interventions'), esc_html(date_i18n(get_option('date_format'), strtotime($projet['date_expiration'])))); ?>
                                 </div>
                             <?php endif; ?>
                             
@@ -270,13 +270,13 @@ class SUIVDEIN_Client_Dashboard {
                             <?php if (!empty($intervention['description'])) : ?>
                                 <div class="intervention-description">
                                     <strong><?php esc_html_e('Description :', 'suivi-des-interventions'); ?></strong>
-                                    <?php echo wpautop($intervention['description']); ?>
+                                    <?php echo wpautop(wp_kses_post($intervention['description'])); ?>
                                 </div>
                             <?php endif; ?>
                             
                             <div class="intervention-footer">
                                 <span class="intervention-date-created">
-                                    <?php /* translators: %1$s: Date */ printf(esc_html__('Créée le %1$s', 'suivi-des-interventions'), date_i18n(get_option('date_format'), strtotime($intervention['date_created']))); ?>
+                                    <?php /* translators: %1$s: Date */ printf(esc_html__('Créée le %1$s', 'suivi-des-interventions'), esc_html(date_i18n(get_option('date_format'), strtotime($intervention['date_created'])))); ?>
                                 </span>
                             </div>
                         </div>
@@ -307,7 +307,7 @@ class SUIVDEIN_Client_Dashboard {
         }
         
         $args = array(
-            'post_type' => 'intervention',
+            'post_type' => 'suivdein_post',
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'orderby' => 'meta_value',
@@ -315,7 +315,7 @@ class SUIVDEIN_Client_Dashboard {
             'order' => 'DESC',
             'tax_query' => array(
                 array(
-                    'taxonomy' => 'projet',
+                    'taxonomy' => 'suivdein_projet',
                     'field' => 'term_id',
                     'terms' => $client_projets,
                     'operator' => 'IN'
@@ -328,7 +328,7 @@ class SUIVDEIN_Client_Dashboard {
         
         foreach ($posts as $post) {
             $meta = SUIVDEIN_Post_Types::get_intervention_meta($post->ID);
-            $terms = wp_get_post_terms($post->ID, 'projet');
+            $terms = wp_get_post_terms($post->ID, 'suivdein_projet');
             $projet_name = !empty($terms) ? $terms[0]->name : esc_html__('Sans projet', 'suivi-des-interventions');
             $projet_id = !empty($terms) ? $terms[0]->term_id : 0;
             
@@ -338,7 +338,7 @@ class SUIVDEIN_Client_Dashboard {
                 'content' => $post->post_content,
                 'date_created' => $post->post_date,
                 'date_intervention' => $meta['date_intervention'],
-                'date_formatted' => $meta['date_intervention'] ? date_i18n(get_option('date_format'), strtotime($meta['date_intervention'])) : esc_html__('Non définie', 'suivi-des-interventions'),
+                'date_formatted' => $meta['date_intervention'] ? esc_html(date_i18n(get_option('date_format'), strtotime($meta['date_intervention']))) : esc_html__('Non définie', 'suivi-des-interventions'),
                 'terminee' => $meta['intervention_terminee'] == '1',
                 'description' => $meta['description'],
                 'projet_name' => $projet_name,
@@ -358,7 +358,7 @@ class SUIVDEIN_Client_Dashboard {
         }
         
         $projets = get_terms(array(
-            'taxonomy' => 'projet',
+            'taxonomy' => 'suivdein_projet',
             'include' => $client_projets,
             'hide_empty' => false
         ));

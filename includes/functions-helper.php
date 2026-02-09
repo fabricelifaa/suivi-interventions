@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
  */
 function suivdein_get_interventions_by_projet($projet_id, $args = array()) {
     $default_args = array(
-        'post_type' => 'intervention',
+        'post_type' => 'suivdein_post',
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'meta_key' => '_date_intervention',
@@ -28,7 +28,7 @@ function suivdein_get_interventions_by_projet($projet_id, $args = array()) {
         'order' => 'DESC',
         'tax_query' => array(
             array(
-                'taxonomy' => 'projet',
+                'taxonomy' => 'suivdein_projet',
                 'field' => 'term_id',
                 'terms' => $projet_id
             )
@@ -65,7 +65,7 @@ function suivdein_get_global_stats() {
     global $wpdb;
     
     // Compter les interventions
-    $total_interventions = wp_count_posts('intervention')->publish;
+    $total_interventions = wp_count_posts('suivdein_post')->publish;
     
     // Compter les interventions terminées
     // Requête sécurisée : utiliser $wpdb->prepare et COUNT(DISTINCT p.ID)
@@ -79,13 +79,13 @@ function suivdein_get_global_stats() {
              AND p.post_status = %s",
              '_intervention_terminee',
              '1',
-             'intervention',
+             'suivdein_post',
              'publish'
         )
     );
     
     // Compter les projets
-    $total_projets = wp_count_terms('projet');
+    $total_projets = wp_count_terms('suivdein_projet');
     
     // Compter les clients
     $total_clients = count(get_users(array('role' => 'bsdclient')));
@@ -97,8 +97,8 @@ function suivdein_get_global_stats() {
          INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
          INNER JOIN {$wpdb->term_relationships} tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
          INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID
-         WHERE tt.taxonomy = 'projet' 
-         AND p.post_type = 'intervention' 
+         WHERE tt.taxonomy = 'suivdein_projet' 
+         AND p.post_type = 'suivdein_post' 
          AND p.post_status = 'publish'
          GROUP BY t.term_id, t.name
          ORDER BY intervention_count DESC
@@ -148,7 +148,7 @@ function suivdein_check_quota_exceeded($projet_id) {
  */
 function suivdein_get_projects_near_quota_limit($threshold = 80) {
     $projets = get_terms(array(
-        'taxonomy' => 'projet',
+        'taxonomy' => 'suivdein_projet',
         'hide_empty' => false
     ));
     
@@ -243,7 +243,7 @@ function suivdein_get_client_display_name($user_id) {
     $projet_names = array();
     
     foreach ($client_projets as $projet_id) {
-        $term = get_term($projet_id, 'projet');
+        $term = get_term($projet_id, 'suivdein_projet');
         if ($term && !is_wp_error($term)) {
             $projet_names[] = $term->name;
         }
@@ -307,14 +307,14 @@ function suivdein_get_client_recent_interventions($user_id, $limit = 10) {
     }
     
     $args = array(
-        'post_type' => 'intervention',
+        'post_type' => 'suivdein_post',
         'post_status' => 'publish',
         'posts_per_page' => $limit,
         'orderby' => 'date',
         'order' => 'DESC',
         'tax_query' => array(
             array(
-                'taxonomy' => 'projet',
+                'taxonomy' => 'suivdein_projet',
                 'field' => 'term_id',
                 'terms' => $client_projets,
                 'operator' => 'IN'

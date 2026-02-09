@@ -1,5 +1,5 @@
 === Suivi des Interventions ===
-Contributors: FAB2DEV
+Contributors: fabricelifaa
 Tags: management
 Requires at least: 6.6
 Requires PHP: 7.4

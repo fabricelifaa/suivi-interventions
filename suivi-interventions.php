@@ -5,7 +5,6 @@
  * Description: 📋 Professional plugin for tracking interventions and updates
  * Version: 1.2.3
  * Author: FAB2DEV
- * Author URI: https://fab2dev.com
  * Text Domain: suivi-des-interventions
  * Domain Path: /languages
  * License: GPLv2

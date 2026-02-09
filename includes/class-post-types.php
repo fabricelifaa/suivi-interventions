@@ -28,7 +28,7 @@ class SUIVDEIN_Post_Types {
      */
     public function suivdein_register_post_type() {
         // Vérifier si le post type n'existe pas déjà
-        if (post_type_exists('intervention')) {
+        if (post_type_exists('suivdein_post')) {
             return;
         }
         
@@ -56,7 +56,7 @@ class SUIVDEIN_Post_Types {
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,
-            'rewrite'            => array('slug' => 'maj'),
+            'rewrite'            => array('slug' => 'sdi'),
             'capability_type'    => 'post',
             'capabilities'       => array(
                 'edit_post'          => 'read',
@@ -76,7 +76,7 @@ class SUIVDEIN_Post_Types {
             'show_in_rest'       => false
         );
         
-        register_post_type('intervention', $args);
+        register_post_type('suivdein_post', $args);
         
         // Log pour débogage
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -115,7 +115,7 @@ class SUIVDEIN_Post_Types {
             return;
         }
         
-        if (!wp_verify_nonce($_POST['intervention_meta_nonce'], 'intervention_meta_box')) {
+        if (!wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['intervention_meta_nonce'])), 'intervention_meta_box')) {
             return;
         }
         

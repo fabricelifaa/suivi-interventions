@@ -31,7 +31,7 @@ class SUIVDEIN_Taxonomies {
      */
     public function suivdein_register_taxonomy() {
         // Vérifier si la taxonomie n'existe pas déjà
-        if (taxonomy_exists('projet')) {
+        if (taxonomy_exists('suivdein_projet')) {
             return;
         }
         
@@ -55,7 +55,7 @@ class SUIVDEIN_Taxonomies {
             'show_ui'           => true,
             'show_admin_column' => true,
             'query_var'         => true,
-            'rewrite'           => array('slug' => 'projet'),
+            'rewrite'           => array('slug' => 'suivdein_projet'),
             'show_in_rest'      => false,
             'capabilities'      => array(
                 'manage_terms' => 'manage_options', // Simplifié
@@ -65,11 +65,11 @@ class SUIVDEIN_Taxonomies {
             )
         );
         
-        register_taxonomy('projet', array('intervention'), $args);
+        register_taxonomy('suivdein_projet', array('suivdein_post'), $args);
         
         // Log pour débogage
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('Taxonomie "projet" enregistrée avec succès');
+            error_log('Taxonomie "Projet" enregistrée avec succès');
         }
     }
     
@@ -97,7 +97,7 @@ class SUIVDEIN_Taxonomies {
     public function suivdein_save_projet_fields($term_id) {
         // Quota
         if (isset($_POST['quota'])) {
-            update_term_meta($term_id, 'quota', absint($_POST['quota']));
+            update_term_meta($term_id, 'quota', absint(sanitize_text_field($_POST['quota'])));
         }
         
         // Date d'expiration
@@ -132,7 +132,7 @@ class SUIVDEIN_Taxonomies {
      * Enqueue les scripts pour la taxonomie
      */
     public function suivdein_enqueue_taxonomy_scripts($hook) {
-        if ('edit-tags.php' === $hook && isset($_GET['taxonomy']) && 'projet' === $_GET['taxonomy']) {
+        if ('edit-tags.php' === $hook && isset($_GET['taxonomy']) && 'suivdein_projet' === $_GET['taxonomy']) {
             wp_enqueue_script('jquery');
         }
     }
@@ -165,12 +165,12 @@ class SUIVDEIN_Taxonomies {
         
         // Compter les interventions terminées pour ce projet
         $args = array(
-            'post_type' => 'intervention',
+            'post_type' => 'suivdein_post',
             'posts_per_page' => -1,
             'fields' => 'ids',
             'tax_query' => array(
                 array(
-                    'taxonomy' => 'projet',
+                    'taxonomy' => 'suivdein_projet',
                     'field' => 'term_id',
                     'terms' => $term_id,
                 ),

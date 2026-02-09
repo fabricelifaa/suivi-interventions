@@ -15,11 +15,11 @@ function suivdein_debug_plugin_status() {
     
     // Vérifier si le post type est enregistré
     $post_types = get_post_types();
-    $intervention_registered = isset($post_types['intervention']);
+    $intervention_registered = isset($post_types['suivdein_post']);
     
     // Vérifier si la taxonomie est enregistrée
     $taxonomies = get_taxonomies();
-    $projet_registered = isset($taxonomies['projet']);
+    $projet_registered = isset($taxonomies['suivdein_projet']);
     
     // Vérifier les capacités de l'utilisateur
     $current_user = wp_get_current_user();
@@ -67,8 +67,8 @@ function suivdein_debug_plugin_status() {
 // Test direct d'enregistrement du post type
 add_action('init', 'suivdein_force_register_post_type', 5);
 function suivdein_force_register_post_type() {
-    if (!post_type_exists('intervention')) {
-        register_post_type('intervention', array(
+    if (!post_type_exists('suivdein_post')) {
+        register_post_type('suivdein_post', array(
             'labels' => array(
                 'name' => 'Interventions (Debug)',
                 'singular_name' => 'Intervention',
@@ -81,7 +81,7 @@ function suivdein_force_register_post_type() {
             'supports' => array('title', 'editor')
         ));
         
-        register_taxonomy('projet', array('intervention'), array(
+        register_taxonomy('suivdein_projet', array('suivdein_post'), array(
             'labels' => array(
                 'name' => 'Projets (Debug)',
                 'singular_name' => 'Projet'

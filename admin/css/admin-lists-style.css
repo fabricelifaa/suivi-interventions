@@ -1,0 +1,38 @@
+.inline-quota-progress-container { width: 180px; }
+            .inline-quota-progress-bar { width: 100%; height: 20px; background-color: #f0f0f0; border-radius: 10px; overflow: hidden; margin-bottom: 5px; }
+            .inline-quota-progress-fill { height: 100%; transition: width 0.3s ease; }
+            .inline-quota-green { background-color: #4CAF50; }
+            .inline-quota-blue { background-color: #2196F3; }
+            .inline-quota-red { background-color: #f44336; }
+            .inline-quota-text { font-size: 11px; text-align: center; color: #666; }
+            .status-completed { color: #46b450; font-weight: 600; }
+            .inline-status-pending { color: #ffb900; font-weight: 600; }
+            .inline-intervention-date-empty, .no-projet, .no-quota { color: #999; font-style: italic; }
+        
+        
+        .form-table th {
+    width: 200px;
+    font-weight: 600;
+}
+
+.form-table .description {
+    font-size: 13px;
+    color: #666;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+.intervention-status-preview {
+    margin-top: 8px !important;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+#date_intervention {
+    max-width: 200px;
+}
+
+.required-field {
+    color: #d63384;
+}

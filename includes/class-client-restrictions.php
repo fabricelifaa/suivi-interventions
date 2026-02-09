@@ -109,9 +109,9 @@ class SUIVDEIN_Client_Restrictions {
         }
         
         // Supprimer tous les sous-menus possibles
-        remove_submenu_page('edit.php?post_type=intervention', 'post-new.php?post_type=intervention');
-        remove_submenu_page('edit.php?post_type=intervention', 'edit-tags.php?taxonomy=projet&post_type=intervention');
-        remove_submenu_page('edit.php?post_type=intervention', 'si-client-management');
+        remove_submenu_page('edit.php?post_type=suivdein_post', 'post-new.php?post_type=suivdein_post');
+        remove_submenu_page('edit.php?post_type=suivdein_post', 'edit-tags.php?taxonomy=suivdein_projet&post_type=suivdein_post');
+        remove_submenu_page('edit.php?post_type=suivdein_post', 'si-client-management');
         
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('Menus restreints pour le client ID: ' . get_current_user_id());
@@ -147,7 +147,7 @@ class SUIVDEIN_Client_Restrictions {
         
         // Vérifier si on est sur une page admin.php autorisée
         if ($pagenow === 'admin.php') {
-            $page = isset($_GET['page']) ? $_GET['page'] : '';
+            $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : '';
             if ($page !== 'client-interventions') {
                 wp_safe_redirect(admin_url('admin.php?page=client-interventions'));
                 exit;
@@ -174,7 +174,7 @@ class SUIVDEIN_Client_Restrictions {
         }
         
         // Filtrer uniquement les interventions
-        if (!isset($query->query['post_type']) || $query->query['post_type'] !== 'intervention') {
+        if (!isset($query->query['post_type']) || $query->query['post_type'] !== 'suivdein_post') {
             return;
         }
         
@@ -185,7 +185,7 @@ class SUIVDEIN_Client_Restrictions {
             // Afficher seulement les interventions des projets autorisés
             $tax_query = $query->get('tax_query') ?: array();
             $tax_query[] = array(
-                'taxonomy' => 'projet',
+                'taxonomy' => 'suivdein_projet',
                 'field'    => 'term_id',
                 'terms'    => $client_projets,
                 'operator' => 'IN'
@@ -218,7 +218,7 @@ class SUIVDEIN_Client_Restrictions {
         // Récupérer les noms des projets
         if (!empty($client_projets)) {
             foreach ($client_projets as $projet_id) {
-                $term = get_term($projet_id, 'projet');
+                $term = get_term($projet_id, 'suivdein_projet');
                 if ($term && !is_wp_error($term)) {
                     $projet_names[] = $term->name;
                 }
@@ -351,7 +351,7 @@ class SUIVDEIN_Client_Restrictions {
         // Afficher seulement sur les pages d'interventions
         if ($pagenow !== 'edit.php' || 
             !isset($_GET['post_type']) || 
-            $_GET['post_type'] !== 'intervention') {
+            $_GET['post_type'] !== 'suivdein_post') {
             return;
         }
         
@@ -386,7 +386,7 @@ class SUIVDEIN_Client_Restrictions {
         }
         
         // Vérifier si l'intervention appartient à un des projets du client
-        $intervention_projets = wp_get_post_terms($post_id, 'projet', array(
+        $intervention_projets = wp_get_post_terms($post_id, 'suivdein_projet', array(
             'fields' => 'ids'
         ));
         
@@ -419,13 +419,13 @@ class SUIVDEIN_Client_Restrictions {
         
         // Compter toutes les interventions
         $args_total = array(
-            'post_type' => 'intervention',
+            'post_type' => 'suivdein_post',
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'fields' => 'ids',
             'tax_query' => array(
                 array(
-                    'taxonomy' => 'projet',
+                    'taxonomy' => 'suivdein_projet',
                     'field' => 'term_id',
                     'terms' => $client_projets,
                     'operator' => 'IN'

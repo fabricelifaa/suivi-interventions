@@ -82,8 +82,8 @@ class Suivi_Interventions {
      */
     public function fallback_register_post_types() {
         // Si le post type n'existe toujours pas, l'enregistrer directement
-        if (!post_type_exists('intervention')) {
-            register_post_type('intervention', array(
+        if (!post_type_exists('suivdein_post')) {
+            register_post_type('suivdein_post', array(
                 'labels' => array(
                     'name' => 'Interventions',
                     'singular_name' => 'Intervention',
@@ -109,8 +109,8 @@ class Suivi_Interventions {
         }
         
         // Si la taxonomie n'existe toujours pas, l'enregistrer directement
-        if (!taxonomy_exists('projet')) {
-            register_taxonomy('projet', array('intervention'), array(
+        if (!taxonomy_exists('suivdein_projet')) {
+            register_taxonomy('suivdein_projet', array('suivdein_post'), array(
                 'labels' => array(
                     'name' => 'Projets',
                     'singular_name' => 'Projet',
@@ -174,8 +174,8 @@ class Suivi_Interventions {
         $this->taxonomies = new SUIVDEIN_Taxonomies();
         $this->user_roles = new SUIVDEIN_User_Roles();
         
-        $this->post_types->register_post_type();
-        $this->taxonomies->register_taxonomy();
+        $this->post_types->suivdein_register_post_type();
+        $this->taxonomies->suivdein_register_taxonomy();
         $this->user_roles->add_client_role();
         
         // Flush rewrite rules

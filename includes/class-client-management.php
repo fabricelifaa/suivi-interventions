@@ -69,7 +69,7 @@ class SUIVDEIN_Client_Management {
      */
     public function render_management_page() {
         // Traiter les soumissions de formulaire
-        if (isset($_POST['action']) && $_POST['action'] === 'bulk_assign' && wp_verify_nonce($_POST['_wpnonce'], 'si_bulk_assign')) {
+        if (isset($_POST['action']) && sanitize_text_field($_POST['action']) === 'bulk_assign' && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'si_bulk_assign') && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'si_bulk_assign')) {
             $this->handle_bulk_assignment();
         }
         
@@ -233,7 +233,7 @@ class SUIVDEIN_Client_Management {
             
             if (!empty($project_ids)) {
                 $projects = get_terms(array(
-                    'taxonomy' => 'projet',
+                    'taxonomy' => 'suivdein_projet',
                     'include' => $project_ids,
                     'hide_empty' => false
                 ));
@@ -253,7 +253,7 @@ class SUIVDEIN_Client_Management {
      */
     private function get_all_projects() {
         return get_terms(array(
-            'taxonomy' => 'projet',
+            'taxonomy' => 'suivdein_projet',
             'hide_empty' => false
         ));
     }
@@ -279,8 +279,8 @@ class SUIVDEIN_Client_Management {
      * Gérer l'assignation en lot
      */
     private function handle_bulk_assignment() {
-        $project_id = intval($_POST['bulk_project']);
-        $client_ids = isset($_POST['bulk_clients']) ? array_map('intval', $_POST['bulk_clients']) : array();
+        $project_id = intval(sanitize_text_field($_POST['bulk_project']));
+        $client_ids = isset($_POST['bulk_clients']) ? array_map(fn($n)=> intval(sanitize_text_field($n)), $_POST['bulk_clients']) : array();
         
         if (!$project_id || empty($client_ids)) {
             add_action('admin_notices', function() {
@@ -311,7 +311,7 @@ class SUIVDEIN_Client_Management {
      * AJAX pour mise à jour des projets clients
      */
     public function ajax_update_client_projects() {
-        if (!wp_verify_nonce($_POST['nonce'], 'si_client_management')) {
+        if (!wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'si_client_management')) {
             wp_die('Erreur de sécurité');
         }
         
@@ -319,8 +319,8 @@ class SUIVDEIN_Client_Management {
             wp_die('Permissions insuffisantes');
         }
         
-        $client_id = intval($_POST['client_id']);
-        $project_ids = isset($_POST['project_ids']) ? array_map('intval', $_POST['project_ids']) : array();
+        $client_id = intval(sanitize_text_field($_POST['client_id']));
+        $project_ids = isset($_POST['project_ids']) ? array_map(fn($n)=> intval(sanitize_text_field($n)), $_POST['project_ids']) : array();
         
         update_user_meta($client_id, 'client_projets', $project_ids);
         

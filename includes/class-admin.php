@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gestion de l'interface d'administration
  * 
@@ -11,52 +12,55 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class SUIVDEIN_Admin {
-    
+class SUIVDEIN_Admin
+{
+
     /**
      * Constructeur
      */
-    public function __construct() {
+    public function __construct()
+    {
         add_action('admin_init', array($this, 'init'), 3);
         add_action('admin_enqueue_scripts', array($this, 'suivdein_enqueue_scripts'));
         add_action('admin_notices', array($this, 'suivdein_admin_notices'));
     }
-    
+
     /**
      * Initialisation de l'admin
      */
-    public function init() {
+    public function init()
+    {
         $this->setup_list_table_hooks();
         $this->setup_filters();
     }
-    
+
     /**
      * Configuration des hooks pour les listes
      */
-    private function setup_list_table_hooks() {
+    private function setup_list_table_hooks()
+    {
         // Colonnes personnalisées pour les interventions
         add_filter('manage_intervention_posts_columns', array($this, 'set_intervention_columns'));
         add_action('manage_intervention_posts_custom_column', array($this, 'fill_intervention_columns'), 10, 2);
         add_filter('manage_edit-intervention_sortable_columns', array($this, 'intervention_sortable_columns'));
-        
-        // Styles pour les listes
-        add_action('admin_head', array($this, 'admin_styles'));
     }
-    
+
     /**
      * Configuration des filtres
      */
-    private function setup_filters() {
+    private function setup_filters()
+    {
         add_action('restrict_manage_posts', array($this, 'add_intervention_filters'));
         add_filter('parse_query', array($this, 'filter_interventions_by_date'));
         add_filter('parse_query', array($this, 'filter_interventions_by_status'));
         add_filter('parse_query', array($this, 'filter_interventions_by_projet'));
     }
-    
+
     /**
      * Définir les colonnes des interventions
      */
-    public function set_intervention_columns($columns) {
+    public function set_intervention_columns($columns)
+    {
         // Réorganiser les colonnes
         $new_columns = array();
         $new_columns['cb'] = $columns['cb'];
@@ -66,51 +70,54 @@ class SUIVDEIN_Admin {
         $new_columns['quota_progress'] = esc_html__('Progression Quota', 'suivi-des-interventions');
         $new_columns['status'] = esc_html__('Statut', 'suivi-des-interventions');
         $new_columns['date'] = $columns['date'];
-        
+
         return $new_columns;
     }
-    
+
     /**
      * Remplir les colonnes personnalisées
      */
-    public function fill_intervention_columns($column, $post_id) {
+    public function fill_intervention_columns($column, $post_id)
+    {
         switch ($column) {
             case 'intervention_date':
                 $this->display_intervention_date($post_id);
                 break;
-                
+
             case 'projet':
                 $this->display_intervention_projet($post_id);
                 break;
-                
+
             case 'quota_progress':
                 $this->display_quota_progress($post_id);
                 break;
-                
+
             case 'status':
                 $this->display_intervention_status($post_id);
                 break;
         }
     }
-    
+
     /**
      * Afficher la date d'intervention
      */
-    private function display_intervention_date($post_id) {
+    private function display_intervention_date($post_id)
+    {
         $date = get_post_meta($post_id, '_date_intervention', true);
         if ($date) {
             $formatted_date = date_i18n(get_option('date_format'), strtotime($date));
             echo '<span class="intervention-date">' . esc_html($formatted_date) . '</span>';
         } else {
-            echo '<span class="intervention-date-empty">' . esc_html__('Non définie', 'suivi-des-interventions') . '</span>';
+            echo '<span class="inline-intervention-date-empty">' . esc_html__('Non définie', 'suivi-des-interventions') . '</span>';
         }
     }
-    
+
     /**
      * Afficher le projet de l'intervention
      */
-    private function display_intervention_projet($post_id) {
-        $terms = get_the_terms($post_id, 'projet');
+    private function display_intervention_projet($post_id)
+    {
+        $terms = get_the_terms($post_id, 'suivdein_projet');
         if ($terms && !is_wp_error($terms)) {
             $projet_links = array();
             foreach ($terms as $term) {
@@ -122,12 +129,13 @@ class SUIVDEIN_Admin {
             echo '<span class="no-projet">' . esc_html__('Aucun projet', 'suivi-des-interventions') . '</span>';
         }
     }
-    
+
     /**
      * Afficher la progression du quota
      */
-    private function display_quota_progress($post_id) {
-        $terms = get_the_terms($post_id, 'projet');
+    private function display_quota_progress($post_id)
+    {
+        $terms = get_the_terms($post_id, 'suivdein_projet');
         if ($terms && !is_wp_error($terms)) {
             foreach ($terms as $term) {
                 $progression = SUIVDEIN_Taxonomies::get_projet_progression($term->term_id);
@@ -138,32 +146,35 @@ class SUIVDEIN_Admin {
             echo '<span class="no-quota">' . esc_html__('Pas de quota', 'suivi-des-interventions') . '</span>';
         }
     }
-    
+
     /**
      * Afficher le statut de l'intervention
      */
-    private function display_intervention_status($post_id) {
+    private function display_intervention_status($post_id)
+    {
         $terminee = get_post_meta($post_id, '_intervention_terminee', true);
         if ($terminee == '1') {
             echo '<span class="status-completed">✓ ' . esc_html__('Terminée', 'suivi-des-interventions') . '</span>';
         } else {
-            echo '<span class="status-pending">⏳ ' . esc_html__('En cours', 'suivi-des-interventions') . '</span>';
+            echo '<span class="inline-status-pending">⏳ ' . esc_html__('En cours', 'suivi-des-interventions') . '</span>';
         }
     }
-    
+
     /**
      * Rendu de la barre de progression
      */
-    private function render_progress_bar($progression) {
+    private function render_progress_bar($progression)
+    {
         $percentage = $progression['percentage'];
         $color_class = $this->get_progress_color_class($percentage);
-        
-        echo '<div class="quota-progress-container">';
-        echo '<div class="quota-progress-bar">';
-        echo '<div class="quota-progress-fill ' . esc_attr($color_class) . '" style="width: ' . esc_attr(min(100, $percentage)) . '%"></div>';
+
+        echo '<div class="inline-quota-progress-container">';
+        echo '<div class="inline-quota-progress-bar">';
+        echo '<div class="inline-quota-progress-fill ' . esc_attr($color_class) . '" style="width: ' . esc_attr(min(100, $percentage)) . '%"></div>';
         echo '</div>';
-        echo '<div class="quota-text">';
-        /* translators: %1$d: remaining, %2$d: quota, %3$.1f: percentage with one decimal */ printf(
+        echo '<div class="inline-quota-text">';
+        printf(
+            /* translators: %1$d: remaining, %2$d: quota, %3$.1f: percentage with one decimal */
             esc_html__('%1$d/%2$d restant (%3$.1f%%)', 'suivi-des-interventions'),
             $progression['remaining'],
             $progression['quota'],
@@ -172,112 +183,119 @@ class SUIVDEIN_Admin {
         echo '</div>';
         echo '</div>';
     }
-    
+
     /**
      * Obtenir la classe CSS pour la couleur de progression
      */
-    private function get_progress_color_class($percentage) {
+    private function get_progress_color_class($percentage)
+    {
         if ($percentage > 80) {
-            return 'quota-red';
+            return 'inline-quota-red';
         } elseif ($percentage > 45) {
-            return 'quota-blue';
+            return 'inline-quota-blue';
         }
-        return 'quota-green';
+        return 'inline-quota-green';
     }
-    
+
     /**
      * Colonnes triables
      */
-    public function intervention_sortable_columns($columns) {
+    public function intervention_sortable_columns($columns)
+    {
         $columns['intervention_date'] = 'intervention_date';
         $columns['status'] = 'status';
         return $columns;
     }
-    
+
     /**
      * Ajouter les filtres dans la liste des interventions
      */
-    public function add_intervention_filters() {
+    public function add_intervention_filters()
+    {
         global $typenow;
-        
-        if ($typenow !== 'intervention') {
+
+        if ($typenow !== 'suivdein_post') {
             return;
         }
-        
+
         $this->add_date_filters();
         $this->add_status_filter();
         $this->add_projet_filter();
     }
-    
+
     /**
      * Ajouter les filtres de date
      */
-    private function add_date_filters() {
+    private function add_date_filters()
+    {
         $date_from = isset($_GET['date_from']) ? sanitize_text_field($_GET['date_from']) : '';
         $date_to = isset($_GET['date_to']) ? sanitize_text_field($_GET['date_to']) : '';
-        
+
         echo '<input type="date" name="date_from" value="' . esc_attr($date_from) . '" placeholder="' . esc_html__('Date de début', 'suivi-des-interventions') . '" />';
         echo '<input type="date" name="date_to" value="' . esc_attr($date_to) . '" placeholder="' . esc_html__('Date de fin', 'suivi-des-interventions') . '" />';
     }
-    
+
     /**
      * Ajouter le filtre de statut
      */
-    private function add_status_filter() {
+    private function add_status_filter()
+    {
         $current_status = isset($_GET['intervention_status']) ? sanitize_text_field($_GET['intervention_status']) : '';
-        
+
         echo '<select name="intervention_status">';
         echo '<option value="">' . esc_html__('Tous les statuts', 'suivi-des-interventions') . '</option>';
         echo '<option value="completed"' . selected($current_status, 'completed', false) . '>' . esc_html__('Terminées', 'suivi-des-interventions') . '</option>';
         echo '<option value="pending"' . selected($current_status, 'pending', false) . '>' . esc_html__('En cours', 'suivi-des-interventions') . '</option>';
         echo '</select>';
     }
-    
+
     /**
      * Ajouter le filtre de projet
      */
-    private function add_projet_filter() {
+    private function add_projet_filter()
+    {
         $projets = get_terms(array(
-            'taxonomy' => 'projet',
+            'taxonomy' => 'suivdein_projet',
             'hide_empty' => false
         ));
-        
+
         if (empty($projets)) {
             return;
         }
-        
+
         $current_projet = isset($_GET['projet_filter']) ? sanitize_text_field($_GET['projet_filter']) : '';
-        
+
         echo '<select name="projet_filter">';
         echo '<option value="">' . esc_html__('Tous les projets', 'suivi-des-interventions') . '</option>';
-        
+
         foreach ($projets as $projet) {
             echo '<option value="' . esc_attr($projet->term_id) . '"' . selected($current_projet, $projet->term_id, false) . '>';
             echo esc_html($projet->name);
             echo '</option>';
         }
-        
+
         echo '</select>';
     }
-    
+
     /**
      * Filtrer par date
      */
-    public function filter_interventions_by_date($query) {
+    public function filter_interventions_by_date($query)
+    {
         if (!$this->is_intervention_admin_page($query)) {
             return;
         }
-        
+
         $date_from = isset($_GET['date_from']) ? sanitize_text_field($_GET['date_from']) : '';
         $date_to = isset($_GET['date_to']) ? sanitize_text_field($_GET['date_to']) : '';
-        
+
         if (!$date_from && !$date_to) {
             return;
         }
-        
+
         $meta_query = $query->get('meta_query') ?: array();
         $meta_query['relation'] = 'AND';
-        
+
         if ($date_from) {
             $meta_query[] = array(
                 'key' => '_date_intervention',
@@ -286,7 +304,7 @@ class SUIVDEIN_Admin {
                 'type' => 'DATE'
             );
         }
-        
+
         if ($date_to) {
             $meta_query[] = array(
                 'key' => '_date_intervention',
@@ -295,26 +313,27 @@ class SUIVDEIN_Admin {
                 'type' => 'DATE'
             );
         }
-        
+
         $query->set('meta_query', $meta_query);
     }
-    
+
     /**
      * Filtrer par statut
      */
-    public function filter_interventions_by_status($query) {
+    public function filter_interventions_by_status($query)
+    {
         if (!$this->is_intervention_admin_page($query)) {
             return;
         }
-        
+
         $status = isset($_GET['intervention_status']) ? sanitize_text_field($_GET['intervention_status']) : '';
-        
+
         if (!$status) {
             return;
         }
-        
+
         $meta_query = $query->get('meta_query') ?: array();
-        
+
         if ($status === 'completed') {
             $meta_query[] = array(
                 'key' => '_intervention_terminee',
@@ -335,61 +354,70 @@ class SUIVDEIN_Admin {
                 )
             );
         }
-        
+
         $query->set('meta_query', $meta_query);
     }
-    
+
     /**
      * Filtrer par projet
      */
-    public function filter_interventions_by_projet($query) {
+    public function filter_interventions_by_projet($query)
+    {
         if (!$this->is_intervention_admin_page($query)) {
             return;
         }
-        
-        $projet_id = isset($_GET['projet_filter']) ? intval($_GET['projet_filter']) : 0;
-        
+
+        $projet_id = isset($_GET['projet_filter']) ? intval(sanitize_text_field($_GET['projet_filter'])) : 0;
+
         if (!$projet_id) {
             return;
         }
-        
+
         $tax_query = $query->get('tax_query') ?: array();
         $tax_query[] = array(
-            'taxonomy' => 'projet',
+            'taxonomy' => 'suivdein_projet',
             'field' => 'term_id',
             'terms' => $projet_id
         );
-        
+
         $query->set('tax_query', $tax_query);
     }
-    
+
     /**
      * Vérifier si on est sur la page admin des interventions
      */
-    private function is_intervention_admin_page($query) {
+    private function is_intervention_admin_page($query)
+    {
         global $pagenow;
-        
-        return is_admin() && 
-               $query->is_main_query() && 
-               $pagenow === 'edit.php' && 
-               isset($_GET['post_type']) && 
-               $_GET['post_type'] === 'intervention';
+
+        return is_admin() &&
+            $query->is_main_query() &&
+            $pagenow === 'edit.php' &&
+            isset($_GET['post_type']) &&
+            $_GET['post_type'] === 'suivdein_post';
     }
-    
+
     /**
      * Enqueue les scripts et styles admin
      */
-    public function suivdein_enqueue_scripts($hook) {
-        // Scripts pour toutes les pages admin
+    public function suivdein_enqueue_scripts($hook)
+    {
+        // Styles pour toutes les pages admin
         wp_enqueue_style(
             'si-admin-style',
             SUIVDEIN_PLUGIN_URL . 'admin/css/admin-style.css',
             array(),
             SUIVDEIN_VERSION
         );
-        
+
         // Scripts spécifiques aux interventions
-        if ('edit.php' === $hook && isset($_GET['post_type']) && 'intervention' === $_GET['post_type']) {
+        if ('edit.php' === $hook && isset($_GET['post_type']) && 'suivdein_post' === $_GET['post_type']) {
+            wp_enqueue_style(
+                'si-admin-lists-style',
+                SUIVDEIN_PLUGIN_URL . 'admin/css/admin-lists-style.css',
+                array(),
+                SUIVDEIN_VERSION
+            );
             wp_enqueue_script(
                 'si-admin-script',
                 SUIVDEIN_PLUGIN_URL . 'admin/js/admin-script.js',
@@ -397,67 +425,20 @@ class SUIVDEIN_Admin {
                 SUIVDEIN_VERSION,
                 true
             );
-            // wp_localize_script('suivdein-admin-script', 'suivdeinAdminError', array('msg' => esc_html__("La date d\'intervention est requise.", "suivi-des-interventions"), 'quotaMsg' => esc_html__("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions")));
-            
+            // Localiser le script APRÈS l'enqueue
+            wp_localize_script('si-admin-script', 'suivdeinAdminError', array(
+                'msg' => esc_html__("La date d\'intervention est requise.", "suivi-des-interventions"),
+                'quotaMsg' => esc_html__("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions")
+            ));
         }
     }
-    
-    /**
-     * Styles admin inline
-     */
-    public function admin_styles() {
-        echo '<style>
-            .quota-progress-container { width: 180px; }
-            .quota-progress-bar { width: 100%; height: 20px; background-color: #f0f0f0; border-radius: 10px; overflow: hidden; margin-bottom: 5px; }
-            .quota-progress-fill { height: 100%; transition: width 0.3s ease; }
-            .quota-green { background-color: #4CAF50; }
-            .quota-blue { background-color: #2196F3; }
-            .quota-red { background-color: #f44336; }
-            .quota-text { font-size: 11px; text-align: center; color: #666; }
-            .status-completed { color: #46b450; font-weight: 600; }
-            .status-pending { color: #ffb900; font-weight: 600; }
-            .intervention-date-empty, .no-projet, .no-quota { color: #999; font-style: italic; }
-        
-        
-        .form-table th {
-    width: 200px;
-    font-weight: 600;
-}
 
-.form-table .description {
-    font-size: 13px;
-    color: #666;
-    margin-top: 5px;
-    font-weight: normal;
-}
 
-.intervention-status-preview {
-    margin-top: 8px !important;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-}
-
-#date_intervention {
-    max-width: 200px;
-}
-
-.required-field {
-    color: #d63384;
-}
-</style>
-<script>
-        suivdeinAdminError = {
-            msg: "' . esc_html__("La date d'intervention est requise.", "suivi-des-interventions") . '",
-            quotaMsg: "' . esc_html__("Cette intervention sera comptabilisée dans le quota", "suivi-des-interventions") . '"
-        }
-</script>';
-    }
-    
     /**
      * Notices admin
      */
-    public function suivdein_admin_notices() {
+    public function suivdein_admin_notices()
+    {
         // Afficher des notices si nécessaire
         if (isset($_GET['message']) && $_GET['message'] === 'project_updated') {
             echo '<div class="notice notice-success is-dismissible">';
